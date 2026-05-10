@@ -1,0 +1,236 @@
+import base64
+
+def image_to_base64(path):
+    with open(path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+# 画像パス（アップロードされたファイル名に基づき）
+leaf_b64 = image_to_base64('leaf.png')
+kousha_b64 = image_to_base64('kousha.png')
+landscape_b64 = image_to_base64('image.png')
+leaf2_b64 = image_to_base64('leaf2.png')
+
+html_content = f"""
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五十歳の同窓会 | 米子市立東山中学校</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {{
+            --bg-color: #fdfaf5;
+            --main-text: #4a3e31;
+            --border-sepia: #7a6a53;
+        }}
+
+        body {{
+            background-color: #d1c7bc;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Shippori Mincho', serif;
+            color: var(--main-text);
+            display: flex;
+            justify-content: center;
+        }}
+
+        .poster {{
+            background-color: var(--bg-color);
+            width: 100%;
+            max-width: 800px;
+            padding: 60px 50px;
+            position: relative;
+            box-sizing: border-box;
+            border: 1px solid var(--border-sepia);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }}
+
+        .poster::before {{
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid var(--border-sepia);
+            pointer-events: none;
+        }}
+
+        header {{ text-align: center; margin-bottom: 20px; }}
+        .school-name {{ font-size: 1.4rem; letter-spacing: 0.3em; margin-bottom: 5px; }}
+        .grad-year {{ font-size: 1.1rem; letter-spacing: 0.1em; }}
+        
+        h1 {{
+            font-size: 4rem;
+            margin: 15px 0;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+        }}
+
+        .divider {{
+            width: 150px;
+            margin: 0 auto 30px;
+            display: block;
+        }}
+
+        .catchphrase {{
+            font-size: 1.8rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            padding-left: 10%;
+        }}
+
+        .landscape-view {{
+            width: 100%;
+            margin-bottom: 20px;
+        }}
+        .landscape-view img {{
+            width: 100%;
+            display: block;
+        }}
+
+        .info-container {{
+            border: 1.5px solid var(--border-sepia);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+        }}
+
+        .info-row {{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px dotted var(--border-sepia);
+            padding-bottom: 15px;
+        }}
+        .info-row:last-child {{ border-bottom: none; margin-bottom: 0; }}
+
+        .label {{
+            background-color: var(--main-text);
+            color: #fff;
+            padding: 6px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            margin-right: 30px;
+            min-width: 60px;
+            text-align: center;
+        }}
+
+        .value {{ font-size: 1.5rem; font-weight: bold; }}
+        .value small {{ font-size: 1.1rem; font-weight: normal; margin-left: 8px; }}
+
+        .rsvp-section {{ text-align: center; margin-top: 30px; }}
+        .rsvp-title {{
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; margin-bottom: 20px;
+        }}
+        .rsvp-title::before, .rsvp-title::after {{
+            content: ''; flex-grow: 1; height: 1px; background: var(--border-sepia); margin: 0 20px;
+        }}
+
+        .qr-layout {{
+            display: flex; justify-content: center; align-items: flex-end;
+            gap: 40px; margin-bottom: 20px;
+        }}
+
+        .qr-placeholder {{
+            width: 100px; height: 100px; border: 1px solid #000; background: #fff; padding: 5px;
+        }}
+
+        .school-illust {{ width: 220px; }}
+
+        .deadline-box {{ font-size: 1.1rem; margin-bottom: 15px; }}
+        .deadline-label {{ background: var(--main-text); color: #fff; padding: 2px 10px; margin-right: 10px; }}
+
+        .notice-pill {{
+            display: inline-block; border: 1px solid var(--main-text);
+            padding: 8px 40px; border-radius: 50px; font-size: 0.95rem;
+        }}
+
+        footer {{
+            margin-top: 40px; display: flex; align-items: center; justify-content: space-between;
+        }}
+
+        .leaf {{ width: 80px; }}
+        .leaf-left {{ transform: scaleX(-1); }}
+
+        .footer-msg {{
+            text-align: center; font-size: 1rem; line-height: 1.8; flex-grow: 1;
+        }}
+
+        @media (max-width: 600px) {{
+            .poster {{ padding: 30px 20px; }}
+            h1 {{ font-size: 2.2rem; }}
+            .catchphrase {{ font-size: 1.2rem; padding-left: 0; text-align: center; }}
+            .qr-layout {{ flex-direction: column; align-items: center; gap: 20px; }}
+            .school-illust {{ width: 100%; max-width: 200px; }}
+        }}
+    </style>
+</head>
+<body>
+
+<div class="poster">
+    <header>
+        <div class="school-name">米子市立 東山中学校</div>
+        <div class="grad-year">第〇〇期 卒業生</div>
+        <h1>五十歳の同窓会</h1>
+        <img src="data:image/png;base64,{leaf2_b64}" class="divider">
+    </header>
+
+    <div class="catchphrase">
+        35年前の自分に<br>
+        少しだけ会いに行こうや。
+    </div>
+
+    <div class="landscape-view">
+        <img src="data:image/png;base64,{landscape_b64}">
+    </div>
+
+    <div class="info-container">
+        <div class="info-row">
+            <span class="label">日時</span>
+            <span class="value">2026年 8月15日 <small>(土) 18時より</small></span>
+        </div>
+        <div class="info-row">
+            <span class="label">会場</span>
+            <span class="value">ANAクラウンプラザホテル米子 <br><small>(米子市久米町53-2)</small></span>
+        </div>
+        <div class="info-row">
+            <span class="label">会費</span>
+            <span class="value">8,000円 <small>(当日でええけん)</small></span>
+        </div>
+    </div>
+
+    <div class="rsvp-section">
+        <div class="rsvp-title">出欠のご連絡はこちらから</div>
+        <div class="qr-layout">
+            <div style="font-size: 0.8rem; line-height: 1.4; text-align: right;">スマホで<br>読み取ってね！<br>／</div>
+            <div class="qr-placeholder">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=https://example.com" style="width:100%">
+            </div>
+            <img src="data:image/png;base64,{kousha_b64}" class="school-illust">
+        </div>
+        <div class="deadline-box">
+            <span class="deadline-label">ご連絡締切</span> 2026年 7月31日 (金) まで
+        </div>
+        <div class="notice-pill">
+            不参加の場合も、ご連絡先やメッセージ入力だけでもお願いします。
+        </div>
+    </div>
+
+    <footer>
+        <img src="data:image/png;base64,{leaf_b64}" class="leaf leaf-left">
+        <div class="footer-msg">
+            <strong>幹事より</strong><br>
+            みんなに会えるのを、めっちゃ楽しみにしとるけんね！<br>
+            たくさん話して、笑って、あの頃にちょっと戻ろうや。
+        </div>
+        <img src="data:image/png;base64,{leaf_b64}" class="leaf">
+    </footer>
+</div>
+
+</body>
+</html>
+"""
+
+with open("douSouKai.html", "w", encoding="utf-8") as f:
+    f.write(html_content)

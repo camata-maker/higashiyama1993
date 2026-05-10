@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>米子市立東山中学校 第●●期 2027年同窓会</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Klee+One&display=swap" rel="stylesheet">
+  <style>
+/* ─────────────────────────────────────────────
+   RESET & TOKENS
+───────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c:#faf5ec; --c2:#f3e9d4; --c3:#e8dbc4;
+  --br:#3d2b1f; --bm:#6b4a28; --bl:#9a7a5a;
+  --go:#c8a060;
+  --font:'Noto Serif JP','Yu Mincho','游明朝',serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidden}
+
+/* film grain */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size:200px
+}
+
+img{display:block;max-width:100%}
+
+/* scroll fade-in */
+.fi{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
+.fi.v{opacity:1;transform:none}
+.fi.d1{transition-delay:.12s} .fi.d2{transition-delay:.25s} .fi.d3{transition-delay:.4s}
+
+/* shared section parts */
+.lbl{font-size:.68rem;letter-spacing:.5em;color:var(--bl);text-transform:uppercase}
+.h2 {font-size:clamp(1.2rem,2.1vw,1.75rem);font-weight:400;line-height:1.65;letter-spacing:.06em}
+.rule{width:30px;height:1px;background:var(--go)}
+.txt{font-size:clamp(.86rem,1.4vw,.94rem);font-weight:300;line-height:2.1;color:var(--bm)}
+
+
+/* ─────────────────────────────────────────────
+   PAGE LAYOUT
+   PC  : flex row — scene sticky 63% | content 37%
+   SP  : column   — scene hero → sections
+───────────────────────────────────────────── */
+#page{display:flex;align-items:flex-start}
+@media(max-width:959px){#page{flex-direction:column}}
+
+#scene-wrap{
+  position:relative;overflow:hidden;
+  width:100%;height:100svh;flex-shrink:0;
+  background:linear-gradient(175deg,#9ecce4 0%,#c4dfa8 42%,#dfd090 68%,#cec070 100%);
+}
+#content-wrap{width:100%;background:var(--c)}
+
+@media(min-width:960px){
+  #scene-wrap{width:63%;position:sticky;top:0;height:100vh}
+  #content-wrap{width:37%;border-left:1px solid rgba(200,160,96,.18)}
+}
+
+
+/* ─────────────────────────────────────────────
+   ★ LAYER 1 : 景色スライドショー
+   ① 最初のスライドはセピア→カラー（3.2s）
+   ② 各スライドはケン・バーンズ（ゆっくりズーム）
+   ③ 8秒ごとにクロスフェードで次のスライドへ
+───────────────────────────────────────────── */
+#l-keshiki{
+  position:absolute;
+  top:-8%;left:0;width:100%;height:116%;
+  z-index:1;
+  animation:focusFar 26s ease-in-out infinite;
+}
+@keyframes focusFar{
+  0%,100%{ filter:blur(7px); }
+  50%    { filter:blur(0px); }
+}
+
+/* スライド共通 */
+.keshiki-slide{
+  position:absolute;inset:0;
+  opacity:0;
+  transition:opacity 2.2s ease;
+}
+.keshiki-slide.active{ opacity:1; }
+
+.keshiki-slide img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 30%;
+}
+@media(max-width:959px){
+  .keshiki-slide img{ object-position:45% 40%; }
+}
+
+/* ケン・バーンズ バリエーション */
+.kb-a img{ animation:kbA 11s ease-in-out forwards; }
+.kb-b img{ animation:kbB 11s ease-in-out forwards; }
+.kb-c img{ animation:kbC 11s ease-in-out forwards; }
+.kb-d img{ animation:kbD 11s ease-in-out forwards; }
+
+@keyframes kbA{
+  from{ transform:scale(1)    translate(0,0); }
+  to  { transform:scale(1.09) translate(-1.5%,-1%); }
+}
+@keyframes kbB{
+  from{ transform:scale(1.04) translate(2%,0); }
+  to  { transform:scale(1.10) translate(-1%,-0.5%); }
+}
+@keyframes kbC{
+  from{ transform:scale(1)    translate(-1.5%,1%); }
+  to  { transform:scale(1.08) translate(1%,-0.5%); }
+}
+@keyframes kbD{
+  from{ transform:scale(1.03) translate(0,0.5%); }
+  to  { transform:scale(1.09) translate(-2%,-1%); }
+}
+
+
+/* ─────────────────────────────────────────────
+   ★ LAYER 2 : 窓.png（透過PNG、中速パラックス）
+───────────────────────────────────────────── */
+#l-mado{
+  position:absolute;inset:0;z-index:3;
+  pointer-events:none;will-change:transform;
+  animation:focusNearMado 26s ease-in-out infinite;
+}
+@keyframes focusNearMado{
+  0%,100%{ filter:sepia(52%) brightness(1.07) contrast(.95) blur(0px); }
+  50%    { filter:sepia(52%) brightness(1.07) contrast(.95) blur(5px); }
+}
+#l-mado img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center;
+}
+
+
+/* ─────────────────────────────────────────────
+   ★ LAYER 3 : カーテン.png（スウェイアニメーション）
+   skewX + scaleX で風にゆれる
+───────────────────────────────────────────── */
+#l-katen{
+  position:absolute;inset:0;z-index:4;
+  pointer-events:none;
+  opacity:.88;
+  animation:focusNearKaten 26s ease-in-out infinite;
+}
+@keyframes focusNearKaten{
+  0%,100%{ filter:sepia(35%) brightness(1.10) blur(0px); }
+  50%    { filter:sepia(35%) brightness(1.10) blur(5px); }
+}
+#l-katen img{
+  position:absolute;
+  top:0;
+  /* カーテン透過.png の素材コンテンツは x=432〜812 に配置されているため
+     スケール後オフセットで左端に合わせる（432 × 1.061 ≈ 458px） */
+  left:-458px;
+  height:88%;
+  width:auto;
+  transform-origin:458px 0; /* コンテンツ左端＝シーン左端で揺れの軸 */
+  animation:curtainSway 9s ease-in-out infinite;
+}
+
+@keyframes curtainSway{
+  0%,100%{transform:skewX(0deg)    scaleX(1)   }
+  25%    {transform:skewX(2.2deg)  scaleX(1.022)}
+  60%    {transform:skewX(-1.5deg) scaleX(.985) }
+  80%    {transform:skewX(.8deg)   scaleX(1.01) }
+}
+
+/* SP */
+@media(max-width:959px){
+  #l-katen img{height:72%;left:-336px;transform-origin:336px 0}
+}
+
+
+/* ─────────────────────────────────────────────
+   ★ LAYER 3b : カーテン右（右側カーテン）
+───────────────────────────────────────────── */
+#l-katen-r{
+  position:absolute;inset:0;z-index:4;
+  pointer-events:none;
+  opacity:.88;
+  animation:focusNearKaten 26s ease-in-out infinite;
+}
+#l-katen-r img{
+  position:absolute;
+  top:0;
+  right:-432px;
+  height:88%;
+  width:auto;
+  transform-origin:calc(100% - 432px) 0;
+  animation:curtainSwayR 9.3s ease-in-out infinite;
+  animation-delay:-4.5s;
+}
+
+@keyframes curtainSwayR{
+  0%,100%{transform:skewX(0deg)    scaleX(1)   }
+  25%    {transform:skewX(-2.2deg) scaleX(1.022)}
+  60%    {transform:skewX(1.5deg)  scaleX(.985) }
+  80%    {transform:skewX(-.8deg)  scaleX(1.01) }
+}
+
+/* SP */
+@media(max-width:959px){
+  #l-katen-r img{height:72%;right:-160px;transform-origin:calc(100% - 160px) 0}
+}
+
+
+/* ─────────────────────────────────────────────
+   SP : 古画面エフェクト（ビネット + スキャンライン）
+   ヒーローシーンに "古い映写機" の質感を重ねる
+───────────────────────────────────────────── */
+@media(max-width:959px){
+  /* ビネット：四隅と上部を暗く（映写機フレーム風） */
+  #scene-wrap::before{
+    content:'';position:absolute;inset:0;
+    z-index:7;pointer-events:none;
+    background:
+      radial-gradient(ellipse 152% 110% at 50% 34%, transparent 41%, rgba(10,5,2,.82) 100%),
+      linear-gradient(to bottom, rgba(10,5,2,.48) 0%, transparent 16%);
+  }
+  /* スキャンライン：フィルム質感の横縞 */
+  #scene-wrap::after{
+    content:'';position:absolute;inset:0;
+    z-index:7;pointer-events:none;
+    background:repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 2px,
+      rgba(0,0,0,.022) 2px, rgba(0,0,0,.022) 3px
+    );
+  }
+  /* テキスト層・スクロールインジケーターをビネットの上に */
+  #l-text{ z-index:8 }
+  .scroll-ind{ z-index:9 }
+}
+
+/* SP ヘッダー（シーン上部に学校名・年を表示） */
+#sp-header{ display:none }
+@media(max-width:959px){
+  #sp-header{
+    display:flex;
+    position:fixed;top:0;left:0;right:0;
+    z-index:20;pointer-events:none;
+    padding:calc(env(safe-area-inset-top,0px) + .7rem) 0 .6rem;
+    justify-content:center;align-items:center;
+  }
+  .sp-nav-title{
+    font-size:clamp(12px, 4.2vw, 16px);letter-spacing:.06em;
+    color:rgba(255,242,215,.88);
+    text-shadow:0 1px 12px rgba(0,0,0,.75);
+    text-align:center;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    max-width:95vw;
+  }
+}
+
+
+/* ─────────────────────────────────────────────
+   教室内部セピアオーバーレイ
+   窓の外はカラーに変わるが、室内は常にセピア調を保つ
+───────────────────────────────────────────── */
+#l-shitsu{
+  position:absolute;bottom:0;left:0;right:0;
+  height:44%;z-index:2;pointer-events:none;
+  background:linear-gradient(to bottom,
+    transparent 0%,
+    rgba(155,105,45,.09) 45%,
+    rgba(135,85,28,.20) 100%
+  );
+}
+
+
+/* ─────────────────────────────────────────────
+   ★ LAYER 3.5 : 教室内の光アニメーション
+───────────────────────────────────────────── */
+#l-hikari{
+  position:absolute;inset:0;z-index:9;
+  pointer-events:none;overflow:hidden;
+}
+
+/* 光のすじ（窓から差し込む斜め光線） */
+#l-hikari::before,#l-hikari::after{
+  content:'';
+  position:absolute;top:-40%;
+  width:55px;height:180%;
+  background:linear-gradient(to bottom,
+    transparent 0%,
+    rgba(255,248,200,.055) 35%,
+    rgba(255,248,200,.10)  50%,
+    rgba(255,248,200,.055) 65%,
+    transparent 100%);
+  transform:rotate(-20deg);
+  filter:blur(9px);
+  animation:hikariSuji 14s ease-in-out infinite;
+}
+#l-hikari::before{ left:22%; animation-delay:0s; }
+#l-hikari::after { left:44%; width:38px; animation-delay:-6s; opacity:.7; }
+
+@keyframes hikariSuji{
+  0%,100%{ transform:rotate(-20deg) translateX(0);    opacity:.8; }
+  35%    { transform:rotate(-20deg) translateX(14px);  opacity:1;  }
+  65%    { transform:rotate(-20deg) translateX(-8px);  opacity:.75;}
+}
+
+/* 床の反射光（温かい揺らぎ） */
+.h-yuka{
+  position:absolute;bottom:4%;left:10%;
+  width:75%;height:16%;
+  background:radial-gradient(ellipse at 40% 50%,
+    rgba(255,244,160,.22) 0%,
+    rgba(255,244,160,.06) 50%,
+    transparent 70%);
+  animation:yukaHikari 11s ease-in-out infinite;
+}
+@keyframes yukaHikari{
+  0%,100%{ opacity:.65; transform:scaleX(1); }
+  50%    { opacity:1;   transform:scaleX(1.1) translateX(8px); }
+}
+
+/* 木漏れ日 — 白線枠・中央拡散（一時非表示） */
+.h-orb{ display:none; }
+.h-orb-show{
+  position:absolute;
+  left:var(--x,40%);top:var(--y,40%);
+  width:var(--s,150px);height:var(--s,150px);
+  background:transparent;
+  filter:blur(3px);
+  opacity:0;
+  mix-blend-mode:screen;
+  animation:orb-spread var(--dur,12s) ease-in-out infinite;
+  animation-delay:var(--d,0s);
+}
+.h-orb svg{ width:100%;height:100%;overflow:visible; }
+@keyframes orb-spread{
+  0%  {transform:translate(-50%,-50%) scale(.1) rotate(0deg);opacity:0}
+  18% {opacity:.5}
+  65% {opacity:.38}
+  100%{transform:translate(-50%,-50%) scale(1.6) rotate(var(--rot,150deg));opacity:0}
+}
+
+
+/* ─────────────────────────────────────────────
+   ★ LAYER 4 : テキストオーバーレイ
+───────────────────────────────────────────── */
+#l-text{
+  position:absolute;inset:0;z-index:10;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:0;
+}
+
+/* SP: 中央配置・背景の手前 */
+@media(max-width:959px){
+  #l-text{
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:0 1.8rem;
+    background:none;
+  }
+}
+
+/* コピー0: 1993年テキスト（スキャッターアニメーション） */
+.c-intro{
+  position:absolute;
+  top:50%;left:0;right:0;
+  transform:translateY(-50%);
+  text-align:center;
+  font-size:clamp(1.1rem,2.2vw,1.6rem);
+  font-weight:300;letter-spacing:.10em;
+  line-height:1.9;
+  color:var(--br);
+  text-shadow:0 2px 28px rgba(252,248,240,.92),0 0 55px rgba(252,248,240,.5);
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+/* スキャッター文字 共通（濃い文字→白/カラーへ。散る時は色変化なし） */
+.sc-char,.sc-spc{
+  display:inline-block;
+  color:var(--char-c, var(--br));           /* デフォルト: 濃い文字色 */
+  transform:translate(var(--tx,0px),var(--ty,0px)) scale(var(--sc,1.3));
+  filter:blur(var(--bl,16px)) brightness(var(--char-br, 1)); /* デフォルト: 暗い */
+  opacity:0;
+  transition:
+    transform 2.2s cubic-bezier(.16,.84,.44,1),
+    filter 1.8s ease-in-out,
+    opacity 2.2s cubic-bezier(.1,.9,.35,1),
+    color 1.8s ease-in-out;
+}
+/* 集合後: 濃いまま */
+.sc-char.sc-in,.sc-spc.sc-in{
+  transform:none;
+  filter:blur(0) brightness(var(--char-br, 1));
+  opacity:1;
+  color:var(--char-c, var(--br));
+}
+/* ランダムに白/カラーへ明るくなる */
+.sc-char.sc-in.sc-bright,.sc-spc.sc-in.sc-bright{
+  filter:blur(0) brightness(var(--char-br-b, 3.0));
+  color:var(--char-cb, rgba(255,248,230,0.95));
+}
+/* 年号を1.3倍 */
+.sc-year{ font-size:1.3em; }
+
+/* コピー1: おかえり同級生（文字ごとにscatter gather/leave） */
+.c-main{
+  font-weight:300;line-height:1.35;letter-spacing:.16em;
+  white-space:nowrap;
+  color:var(--br);
+  text-shadow:0 2px 28px rgba(252,248,240,.9),0 0 55px rgba(252,248,240,.5);
+  margin-bottom:1.1rem;
+  text-align:left;
+  opacity:0;
+}
+/* おかえり、= 5字, 同級生。= 4字（一回り小さめ） */
+.c-main-s{ display:block; font-size:clamp(2.0rem,5.15vw,3.5rem); }
+.c-main-l{ display:block; font-size:clamp(2.46rem,6.44vw,4.4rem); }
+
+/* コピー2+3: 年月とセリフ */
+.c-years{
+  font-size:clamp(.8rem,1.55vw,.98rem);
+  font-weight:300;line-height:2.0;letter-spacing:.06em;
+  color:rgba(55,38,20,.78);
+  text-shadow:0 1px 14px rgba(252,248,240,.85);
+  margin-bottom:1.3rem;
+  opacity:0;transform:translateY(10px);
+  transition:opacity 1s ease .85s,transform 1s ease .85s;
+}
+.c-years.on{opacity:1;transform:none}
+.c-years span{display:block}
+.c-years span+span{margin-top:.2rem}
+
+/* SP: テキストサイズ最適化 */
+@media(max-width:959px){
+  .c-main-s{ font-size:clamp(2.0rem,8.1vw,3.0rem); }
+  .c-main-l{ font-size:clamp(2.54rem,10.1vw,3.8rem); }
+  .c-years{
+    font-size:clamp(.88rem,3.8vw,1.02rem);
+    line-height:1.95;
+  }
+}
+
+/* コピー4: 開催決定 */
+.c-date{
+  display:inline-flex;flex-direction:column;gap:3px;
+  border-left:3px solid rgba(200,160,96,.75);
+  padding-left:.9rem;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .9s ease 1.4s,transform .9s ease 1.4s;
+}
+.c-date.on{opacity:1;transform:none}
+.c-date .d-lbl{font-size:.62rem;letter-spacing:.42em;color:rgba(100,72,40,.7)}
+.c-date .d-val{font-size:clamp(.86rem,1.4vw,1.02rem);font-weight:500;color:var(--br);letter-spacing:.04em}
+
+/* SP専用 RSVP ボタン */
+.sp-btn{
+  display:none;
+  margin-top:1.4rem;
+  padding:.76rem 2rem;
+  background:rgba(250,245,236,.88);
+  border:1px solid rgba(200,160,96,.65);
+  color:var(--bm);font-family:var(--font);
+  font-size:.8rem;letter-spacing:.3em;text-decoration:none;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .9s ease 1.9s,transform .9s ease 1.9s,background .3s;
+}
+.sp-btn.on{opacity:1;transform:none}
+.sp-btn:hover{background:var(--go);color:var(--c)}
+@media(max-width:959px){.sp-btn{display:inline-block}}
+
+/* スクロールインジケーター */
+.scroll-ind{
+  position:absolute;bottom:1.8rem;left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  z-index:6;
+  opacity:0;transition:opacity 1s ease 2.4s;
+  animation:bobV 2.4s ease-in-out infinite;
+}
+.scroll-ind.on{opacity:1}
+.scroll-ind span{font-size:.55rem;letter-spacing:.45em;color:rgba(70,50,28,.58)}
+.scroll-ind::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,rgba(200,160,96,.65),transparent)}
+@keyframes bobV{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  50%    {transform:translateX(-50%) translateY(7px)}
+}
+
+
+/* ─────────────────────────────────────────────
+   PC ナビ（シーンオーバーレイ）
+───────────────────────────────────────────── */
+#pc-nav{
+  display:none;
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  height:48px;align-items:center;padding:0 2rem;
+  background:rgba(250,245,236,.68);backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(200,160,96,.15);
+}
+@media(min-width:960px){#pc-nav{display:flex}}
+#pc-nav .nav-title{font-size:.65rem;letter-spacing:.3em;color:var(--bl);white-space:nowrap}
+
+
+/* ─────────────────────────────────────────────
+   コンテンツセクション（右パネル）
+───────────────────────────────────────────── */
+.sec{padding:2.6rem 2rem;border-bottom:1px solid rgba(200,160,96,.16)}
+.sec:last-of-type{border-bottom:none}
+@media(max-width:959px){.sec{padding:4rem 1.8rem}}
+
+.sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.3rem}
+.sh-text{flex:1}
+.sh-text .lbl,.sec-head>.lbl{margin-bottom:.35rem}
+.sh-text .rule,.sec-head>.rule{margin:.65rem 0}
+.sec-illust{flex-shrink:0;color:var(--bl);opacity:.52;padding-top:.3rem}
+.sec-illust svg{height:52px;width:auto;animation:niFloat 5.5s ease-in-out infinite}
+@media(max-width:959px){.sec-illust svg{height:44px}}
+
+
+/* セクション背景グラデーションアニメーション */
+@keyframes secBg{
+  0%  {background-position:0% 60%}
+  50% {background-position:100% 40%}
+  100%{background-position:0% 60%}
+}
+
+/* イントロブロック（フッターと同じ木目背景） ──────────────────── */
+#sec-intro{
+  position:relative;overflow:hidden;
+  background:#1e1108;
+  text-align:center;
+}
+#sec-intro::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:url('廊下板目.png') center/cover no-repeat;
+  filter:sepia(92%) brightness(.70) saturate(.85) contrast(1.18);
+}
+#sec-intro>*{position:relative;z-index:1}
+#sec-intro .intro-school{color:rgba(255,242,218,.5)}
+#sec-intro .intro-event{color:rgba(255,242,218,.88)}
+#sec-intro .intro-taglines p{color:rgba(255,242,218,.72)}
+#sec-intro .d-lbl{color:rgba(255,242,218,.5)!important}
+#sec-intro .d-val{color:rgba(255,242,218,.92)!important}
+#sec-intro .intro-date-block{border-left-color:rgba(200,160,96,.7)}
+.intro-school{
+  font-size:.7rem;letter-spacing:.4em;color:var(--bl);margin-bottom:.5rem;
+}
+.intro-event{
+  font-size:clamp(1.1rem,2.2vw,1.6rem);letter-spacing:.14em;
+  color:var(--bm);font-weight:300;margin-bottom:2rem;
+}
+.intro-taglines{
+  font-size:clamp(.88rem,1.4vw,.98rem);letter-spacing:.06em;
+  line-height:2.4;color:var(--bm);margin-bottom:1.8rem;
+}
+.intro-taglines p{margin:0}
+.intro-date-block{
+  display:inline-flex;flex-direction:column;gap:4px;
+  border-left:3px solid rgba(200,160,96,.75);
+  padding-left:.9rem;text-align:left;
+}
+.intro-date-block .d-lbl{font-size:.62rem;letter-spacing:.42em;color:rgba(100,72,40,.7)}
+.intro-date-block .d-val{font-size:clamp(.9rem,1.4vw,1.05rem);font-weight:500;color:var(--br);letter-spacing:.04em}
+
+/* タイムライン ──────────────────── */
+#sec-tl{
+  background:#ffffff;
+}
+
+.tl-counter{
+  display:flex;flex-direction:column;
+  align-items:center;padding:1.8rem 0 .5rem;
+}
+.tl-yr-display{
+  width:100%;
+  line-height:1;
+  font-size:clamp(4.5rem,9vw,7.5rem);
+  font-weight:300;letter-spacing:.12em;
+  color:var(--bm);text-align:center;
+}
+.yr-char{
+  display:inline-block;
+  animation:charFlicker var(--f,20s) ease-in-out infinite;
+  animation-delay:var(--d,0s);
+}
+@keyframes charFlicker{
+  0%   {opacity:1}
+  8%   {opacity:.72}
+  18%  {opacity:.04}
+  30%  {opacity:.85}
+  44%  {opacity:.10}
+  58%  {opacity:.90}
+  70%  {opacity:.06}
+  82%  {opacity:.78}
+  91%  {opacity:.30}
+  100% {opacity:1}
+}
+.tl-line{
+  width:80%;max-width:320px;height:1px;
+  overflow:hidden;margin:1.4rem auto 0;
+  background:rgba(200,160,96,.15);
+  position:relative;
+}
+.tl-line::after{
+  content:'';position:absolute;top:0;left:0;
+  width:55%;height:100%;
+  background:linear-gradient(to right,transparent,var(--go) 55%,transparent);
+  animation:lineFlow 4s cubic-bezier(.4,0,.6,1) infinite;
+}
+@keyframes lineFlow{
+  0%{transform:translateX(-130%)}
+  100%{transform:translateX(300%)}
+}
+.tl-note{display:block;width:110px;margin:0.6rem auto 0;opacity:.55;filter:sepia(22%) brightness(1.05)}
+.pool-divider{text-align:center;padding:1.8rem 0 .6rem}
+.pool-divider img{max-width:220px;opacity:.5;filter:sepia(28%) brightness(1.04)}
+.tl-msg{
+  margin-top:2rem;
+  font-size:clamp(.9rem,1.4vw,1rem);
+  font-family:'Klee One',serif;
+  font-weight:400;line-height:2.3;
+  color:var(--bm);
+  border-left:2px solid var(--go);
+  padding-left:1.2rem;
+}
+@media(max-width:959px){
+  .tl-yr-display{font-size:clamp(5rem,18vw,7rem)}
+  .tl-msg{font-size:.88rem}
+}
+
+
+@keyframes niFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  40%    {transform:translateY(-6px) rotate(-1.3deg)}
+  70%    {transform:translateY(-2px) rotate(.9deg)}
+}
+
+
+/* 開催情報 ──────────────────── */
+#sec-det{
+  background:linear-gradient(135deg,#faf5ec 0%,#ede0c8 42%,#f3e9d4 68%,#faf5ec 100%);
+  background-size:300% 300%;
+  animation:secBg 30s ease infinite;
+  animation-delay:-9s;
+}
+
+.det-tbl{width:100%;border-collapse:collapse}
+.det-tbl tr{border-bottom:1px solid rgba(200,160,96,.22)}
+.det-tbl tr:first-child{border-top:1px solid rgba(200,160,96,.22)}
+.det-tbl th{padding:.85rem .6rem .85rem 0;font-size:.62rem;letter-spacing:.22em;color:var(--bl);font-weight:400;width:74px;vertical-align:top;text-align:left}
+.det-tbl td{padding:.85rem 0;font-size:.87rem;font-weight:300;color:var(--br);line-height:1.82}
+.det-tbl td small{display:block;font-size:.72rem;color:var(--bl);margin-top:.18rem}
+
+.msg-box{
+  margin-top:1.5rem;padding:1rem 1.1rem 1rem 1.3rem;
+  background:var(--c2);border-left:3px solid var(--go);
+  position:relative;font-size:clamp(.8rem,1.35vw,.9rem);
+  font-weight:300;color:var(--bm);line-height:1.9
+}
+.msg-box::before{content:'幹事より';position:absolute;top:-.52rem;left:1.1rem;font-size:.56rem;letter-spacing:.3em;color:var(--bl);background:var(--c2);padding:0 .3rem}
+
+.kousha-sm{width:110px;height:auto;opacity:.68;filter:sepia(18%) brightness(1.06)}
+
+
+/* 出欠フォーム ──────────────────── */
+#sec-rsvp{
+  background:#ffffff;
+}
+
+.ff{display:flex;flex-direction:column;gap:.32rem;margin-bottom:.85rem}
+.ff label{font-size:.6rem;letter-spacing:.25em;color:var(--bl)}
+.ff input,.ff textarea{
+  font-family:var(--font);font-size:.85rem;font-weight:300;
+  background:var(--c);border:1px solid rgba(200,160,96,.38);
+  padding:.62rem .82rem;color:var(--br);outline:none;
+  border-radius:0;width:100%;transition:border-color .26s;-webkit-appearance:none
+}
+.ff input:focus,.ff textarea:focus{border-color:var(--go)}
+.ff textarea{resize:vertical;min-height:80px}
+.radios{display:flex;gap:.7rem;margin-top:.38rem;flex-wrap:wrap}
+.radios label{cursor:pointer}
+.radios input[type=radio]{display:none}
+.radios label span{
+  display:inline-block;padding:.42rem 1.6rem;
+  border:1px solid var(--bl);border-radius:50px;
+  font-size:.82rem;color:var(--bm);
+  transition:background .18s,color .18s,border-color .18s;
+}
+.radios input[type=radio]:checked + span{background:var(--br);color:#fff8ee;border-color:var(--br)}
+.sbtn{
+  display:block;width:100%;margin-top:.35rem;padding:.9rem;
+  background:transparent;border:1px solid var(--go);
+  color:var(--bm);font-family:var(--font);font-size:.78rem;
+  letter-spacing:.4em;cursor:pointer;transition:background .35s,color .35s
+}
+.sbtn:hover{background:var(--go);color:var(--c)}
+.dl-note{font-size:.66rem;letter-spacing:.12em;color:var(--bl);text-align:center;margin-top:.65rem}
+
+
+/* ギャラリー ──────────────────── */
+.gal-show{
+  position:relative;overflow:hidden;
+  margin-top:1.1rem;
+  margin-left:-2rem;margin-right:-2rem;
+  aspect-ratio:16/9;
+  background:#fff;
+}
+@media(max-width:959px){
+  .gal-show{margin-left:-1.8rem;margin-right:-1.8rem}
+}
+/* ギャラリー右下の年号オーバーレイ */
+.gal-yr-overlay{
+  position:absolute;right:5%;bottom:7%;z-index:7;
+  font-size:clamp(2.2rem,6vw,3.4rem);
+  font-weight:300;letter-spacing:.16em;
+  color:rgba(255,252,230,.96);
+  text-shadow:
+    0 0 18px rgba(255,220,100,.9),
+    0 0 40px rgba(255,180,60,.6),
+    0 2px 20px rgba(0,0,0,.55);
+  pointer-events:none;
+}
+
+/* クレヨン縁取り：背景色が手描き線で染み込むように */
+.gal-show::before{
+  content:'';
+  position:absolute;inset:-2px;z-index:6;
+  pointer-events:none;
+  background:
+    linear-gradient(to right,  #fff 0%, transparent 28%),
+    linear-gradient(to left,   #fff 0%, transparent 28%),
+    linear-gradient(to bottom, #fff 0%, transparent 22%),
+    linear-gradient(to top,    #fff 0%, transparent 22%);
+  filter:url(#f-crayon);
+}
+.gal-slide{
+  position:absolute;inset:0;z-index:1;
+  opacity:0;
+  transition:opacity 5s ease;
+}
+.gal-slide.active{opacity:1}
+.gal-slide img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  filter:sepia(72%) brightness(.92) contrast(1.05);
+}
+
+
+/* アクセス ──────────────────── */
+.map-link-sm{display:inline-block;margin-top:.4rem;font-size:.68rem;color:var(--bl);text-decoration:underline;letter-spacing:.08em;text-underline-offset:.2em}
+.map-link-sm:hover{color:var(--go)}
+
+.acc-venue{font-size:clamp(.95rem,1.45vw,1.08rem);font-weight:400;letter-spacing:.04em;margin-top:.45rem}
+.acc-addr{font-size:.83rem;font-weight:300;color:var(--bm);line-height:1.9;margin-top:.9rem}
+.map-link{
+  display:inline-block;margin-top:.9rem;
+  padding:.65rem 1.5rem;border:1px solid var(--go);
+  color:var(--bm);font-family:var(--font);font-size:.7rem;
+  letter-spacing:.28em;text-decoration:none;
+  transition:background .3s,color .3s
+}
+.map-link:hover{background:var(--go);color:var(--c)}
+
+
+/* フッター ──────────────────── */
+footer{
+  position:relative;overflow:hidden;
+  background:#2a1a10;color:rgba(255,245,228,.45);
+  text-align:center;padding:2.2rem 1.5rem;
+  font-size:.66rem;letter-spacing:.2em;font-weight:300;line-height:1.9
+}
+footer::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:url('廊下板目.png') center/cover no-repeat;
+  filter:sepia(95%) brightness(.72) saturate(.9) contrast(1.15);
+}
+footer>*{position:relative;z-index:1}
+footer img{display:block;margin:0 auto .8rem;width:88px;opacity:.2;filter:invert(1) sepia(1) saturate(.4)}
+footer strong{display:block;color:rgba(255,245,228,.85);font-size:.74rem;font-weight:400;margin-bottom:.22rem}
+
+
+/* ─────────────────────────────────────────────
+   PC / SP 表示切り替えトグル
+───────────────────────────────────────────── */
+#view-switcher{
+  position:fixed;top:14px;right:14px;z-index:20000;
+  display:flex;gap:2px;
+  background:rgba(36,22,12,.84);
+  border-radius:7px;padding:3px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 2px 12px rgba(0,0,0,.28);
+}
+.vsw-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:.32rem .72rem;border:none;border-radius:5px;
+  background:transparent;
+  color:rgba(255,245,228,.48);
+  font-family:var(--font);font-size:.6rem;letter-spacing:.14em;
+  cursor:pointer;transition:all .22s;
+}
+.vsw-btn.active{background:rgba(200,160,96,.9);color:#faf5ec}
+.vsw-btn:hover:not(.active){color:rgba(255,245,228,.88)}
+.vsw-btn svg{flex-shrink:0}
+/* 実機スマホでは非表示 */
+@media(max-width:959px){#view-switcher{display:none}}
+
+
+/* ─────────────────────────────────────────────
+   SP プレビューモード（デスクトップでスマホ表示をシミュレート）
+   html.sp-preview クラスが付いたときに適用
+───────────────────────────────────────────── */
+html.sp-preview body{
+  display:flex;justify-content:center;align-items:flex-start;
+  background:#b0a49a;padding:24px;min-height:100vh;
+}
+html.sp-preview #page{
+  width:390px!important;max-width:390px!important;
+  flex-direction:column!important;overflow:hidden;
+  box-shadow:0 16px 56px rgba(0,0,0,.38),0 2px 8px rgba(0,0,0,.18);
+  border-radius:10px;
+}
+html.sp-preview #scene-wrap{
+  width:100%!important;position:relative!important;height:844px!important;
+}
+html.sp-preview #content-wrap{width:100%!important;border-left:none!important}
+html.sp-preview #pc-nav{display:none!important}
+html.sp-preview #sp-header{
+  display:flex!important;justify-content:center!important;
+  padding:calc(env(safe-area-inset-top,0px) + .7rem) 0 .6rem!important;
+  position:fixed!important;top:0!important;left:0!important;right:0!important;
+  z-index:20!important;pointer-events:none!important;
+}
+html.sp-preview .sp-nav-title{
+  font-size:clamp(12px, 4vw, 16px)!important;letter-spacing:.06em!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  max-width:100%!important;
+}
+html.sp-preview .c-main-s{font-size:2rem!important}
+html.sp-preview .c-main-l{font-size:2.5rem!important}
+html.sp-preview .c-years{font-size:.9rem!important;line-height:1.9!important}
+html.sp-preview #l-text{
+  z-index:8!important;
+  justify-content:center!important;align-items:center!important;
+  text-align:center!important;padding:0 1.8rem!important;
+  background:none!important;
+}
+html.sp-preview .scroll-ind{z-index:9!important}
+html.sp-preview .sp-btn{display:inline-block!important}
+html.sp-preview #l-katen img{height:72%!important;left:-336px!important;transform-origin:336px 0!important}
+html.sp-preview #l-katen-r img{height:72%!important;right:-160px!important;transform-origin:calc(100% - 160px) 0!important}
+html.sp-preview .sec{padding:4rem 1.8rem!important}
+html.sp-preview .tl-yr-display{font-size:5rem!important}
+html.sp-preview .keshiki-slide img{object-position:45% 40%!important}
+html.sp-preview .gal-show{margin-left:-1.8rem!important;margin-right:-1.8rem!important}
+/* SP ビネット */
+html.sp-preview #scene-wrap::before{
+  content:''!important;position:absolute!important;inset:0!important;
+  z-index:7!important;pointer-events:none!important;
+  background:
+    radial-gradient(ellipse 152% 110% at 50% 34%, transparent 41%, rgba(10,5,2,.82) 100%),
+    linear-gradient(to bottom, rgba(10,5,2,.48) 0%, transparent 16%)!important;
+}
+html.sp-preview #scene-wrap::after{
+  content:''!important;position:absolute!important;inset:0!important;
+  z-index:7!important;pointer-events:none!important;
+  background:repeating-linear-gradient(
+    to bottom,transparent 0px,transparent 2px,rgba(0,0,0,.022) 2px,rgba(0,0,0,.022) 3px
+  )!important;
+}
+  </style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="f-crayon" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.055 0.038" numOctaves="4" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<div id="page">
+
+  <!-- ══════════════════════════════════
+       シーンパネル（3層合成）
+  ══════════════════════════════════ -->
+  <div id="scene-wrap">
+
+    <!-- SP ヘッダー（学校名・年 — モバイル専用） -->
+    <div id="sp-header">
+      <span class="sp-nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
+    </div>
+
+    <!-- PC ナビ -->
+    <nav id="pc-nav">
+      <span class="nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
+    </nav>
+
+    <!-- ★ Layer 1 : 景色スライドショー（セピア→カラー / ケン・バーンズ） -->
+    <div id="l-keshiki">
+      <div class="keshiki-slide kb-a active" data-idx="0">
+        <img src="景色セピア.png" alt="大山と田んぼの景色（セピア）">
+      </div>
+      <div class="keshiki-slide kb-b" data-idx="1">
+        <img src="景色.png" alt="大山と田んぼの景色">
+      </div>
+    </div>
+
+    <!-- ★ Layer 2 : 窓.png（透過PNG / 中速パラックス） -->
+    <div id="l-mado">
+      <img src="窓透過.png" alt="窓枠">
+    </div>
+
+    <!-- ★ Layer 3 : カーテン.png（スウェイアニメーション） -->
+    <div id="l-katen">
+      <img src="カーテン透過_tr.png" alt="レースカーテン">
+    </div>
+
+    <!-- ★ Layer 3b : 右カーテン -->
+    <div id="l-katen-r">
+      <img src="カーテン右透過_tr.png" alt="レースカーテン右">
+    </div>
+
+    <!-- 教室内部セピアオーバーレイ（下部 = 教室内が常にセピア調） -->
+    <div id="l-shitsu" aria-hidden="true"></div>
+
+    <!-- ★ Layer 3.5 : 教室内の光 -->
+    <div id="l-hikari" aria-hidden="true">
+      <div class="h-yuka"></div>
+      <div class="h-orb" style="--x:32%;--y:22%;--s:300px;--dur:14s;--d:0s;--rot:120deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 2,98 98,98" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:68%;--y:38%;--s:200px;--dur:12s;--d:-5.5s;--rot:-90deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 98,36 82,98 18,98 2,36" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:20%;--y:52%;--s:100px;--dur:10s;--d:-2.8s;--rot:180deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="20,2 98,15 10,98" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:55%;--y:18%;--s:200px;--dur:13s;--d:-8.2s;--rot:-144deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="40,2 98,20 95,82 8,96 2,42" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:80%;--y:55%;--s:300px;--dur:11s;--d:-4.0s;--rot:90deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 2,98 98,98" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:45%;--y:68%;--s:100px;--dur:14s;--d:-10s;--rot:-60deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 98,36 82,98 18,98 2,36" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <!-- 教室エリア -->
+      <div class="h-orb" style="--x:28%;--y:74%;--s:120px;--dur:11s;--d:-3.5s;--rot:135deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="15,2 98,28 5,96" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:62%;--y:82%;--s:150px;--dur:13s;--d:-7.2s;--rot:-108deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 98,36 82,98 18,98 2,36" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+      <div class="h-orb" style="--x:42%;--y:90%;--s:100px;--dur:10s;--d:-1.8s;--rot:72deg"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 2,98 98,98" fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- Layer 4 : テキスト -->
+    <div id="l-text">
+      <p class="c-intro c-intro-1"><span class="sc-line sc-year">1993年</span><br><span class="sc-line">あの頃 何を話したっけ？</span></p>
+      <p class="c-intro c-intro-2"><span class="sc-line sc-year">2027年</span><br><span class="sc-line">その続き、少し話そう。</span></p>
+      <h1 class="c-main"><span class="c-main-s">おかえり、</span><span class="c-main-l">同級生。</span></h1>
+    </div>
+
+    <div class="scroll-ind"><span>SCROLL</span></div>
+
+  </div><!-- /scene-wrap -->
+
+
+  <!-- ══════════════════════════════════
+       コンテンツパネル
+  ══════════════════════════════════ -->
+  <div id="content-wrap">
+
+    <!-- INTRO -->
+    <section id="sec-intro" class="sec">
+      <div class="fi">
+        <p class="intro-school">米子市立東山中学校　第●●期</p>
+        <p class="intro-event">2027年同窓会</p>
+      </div>
+      <div class="intro-taglines fi d1">
+        <p>1993年　あの頃　何を話したっけ？</p>
+        <p>2027年　その続き、少し話そう。</p>
+      </div>
+      <div class="intro-date-block fi d2">
+        <span class="d-lbl">開催決定日時</span>
+        <span class="d-val">2027年 1月 ●● 日（●）</span>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="sec-tl" class="sec">
+      <img src="ノート.png" alt="ノート" class="tl-note fi d1">
+      <div class="sec-head fi">
+        <div class="sh-text">
+          <p class="lbl">From the Organizer</p>
+          <h2 class="h2">幹事から</h2>
+          <div class="rule"></div>
+        </div>
+      </div>
+      <p class="tl-msg fi d1">
+        卒業から34年、<br>
+        ふと気づけば50歳の節目を迎えましたね。<br>
+        <br>
+        ずっと変わらない大山の姿に、<br>
+        あの日々を重ねて、<br>
+        懐かしい仲間と語り合いませんか？<br>
+        <br>
+        当時の仲間に、当時の自分に<br>
+        「おかえり」が言える、<br>
+        そんな再会を楽しみにしています。<br>
+        <br>
+        今回参加できない方も、<br>
+        一言メッセージをもらえると嬉しいです。
+      </p>
+      <div class="gal-show fi d2">
+        <div class="gal-slide active"><img src="教室.png" alt="教室"></div>
+        <div class="gal-slide"><img src="体育館.png" alt="体育館"></div>
+        <div class="gal-slide"><img src="MD.png" alt="MD"></div>
+        <div class="gal-slide"><img src="登校.png" alt="登校"></div>
+        <div class="gal-slide"><img src="外観.png" alt="外観"></div>
+        <div class="gal-slide"><img src="教室入口.png" alt="教室入口"></div>
+        <div class="gal-slide"><img src="スピーカー.png" alt="スピーカー"></div>
+        <div class="gal-slide"><img src="下駄箱.png" alt="下駄箱"></div>
+        <div class="gal-yr-overlay">
+          <span class="yr-char" style="--f:22s;--d:0s">1</span><span class="yr-char" style="--f:28s;--d:-8.4s">9</span><span class="yr-char" style="--f:19s;--d:-4.6s">9</span><span class="yr-char" style="--f:25s;--d:-14s">3</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- EVENT DETAILS -->
+    <section id="sec-det" class="sec">
+      <div class="sec-head fi">
+        <div class="sh-text">
+          <p class="lbl">Event Details</p>
+          <h2 class="h2">開催情報</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="sec-illust" style="animation-delay:-2s">
+          <svg viewBox="0 0 72 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="66" height="38" rx="2" stroke="currentColor" stroke-width="1.4"/>
+            <rect x="3" y="41" width="66" height="7" rx="1" stroke="currentColor" stroke-width="1.2"/>
+            <line x1="12" y1="15" x2="34" y2="15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="12" y1="23" x2="46" y2="23" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="12" y1="31" x2="36" y2="31" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            <circle cx="56" cy="19" r="7" stroke="currentColor" stroke-width="1.3"/>
+          </svg>
+        </div>
+      </div>
+      <table class="det-tbl fi d1">
+        <tr>
+          <th>日時</th>
+          <td>2027年 1月 ●● 日（●）<br>受付 ●●:●● ／ 開宴 ●●:●●</td>
+        </tr>
+        <tr>
+          <th>会場</th>
+          <td>ANAクラウンプラザホテル米子<small>〒683-0043 鳥取県米子市久米町53-2</small><small>JR米子駅より徒歩約10分 ／ お車：山陰道 米子ICより約15分</small><a href="https://maps.google.com/?q=ANAクラウンプラザホテル米子" target="_blank" class="map-link-sm">Google Maps で開く →</a></td>
+        </tr>
+        <tr>
+          <th>会費</th>
+          <td>8,000円（当日でええけん）<small>※恩師へのお心付けを含みます</small></td>
+        </tr>
+        <tr>
+          <th>〆切</th>
+          <td>2026年 ●月 ●日（●）<small>不参加の方もご一報いただけると嬉しいです</small></td>
+        </tr>
+        <tr>
+          <th>対象</th>
+          <td>米子市立 東山中学校 第●●期</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- RSVP -->
+    <section id="sec-rsvp" class="sec">
+      <div class="sec-head fi">
+        <div class="sh-text">
+          <h2 class="h2">出欠のご連絡</h2>
+          <div class="rule"></div>
+        </div>
+        <div class="sec-illust">
+          <img src="校舎.png" alt="東山中学校" class="kousha-sm">
+        </div>
+      </div>
+      <form class="fi d1" onsubmit="return false;">
+        <div class="ff">
+          <label>お名前（旧姓・現姓）</label>
+          <input type="text" placeholder="田中 花子（旧姓：山田）">
+        </div>
+        <div class="ff">
+          <label>出欠</label>
+          <div class="radios">
+            <label><input type="radio" name="att" value="y"><span>出席</span></label>
+            <label><input type="radio" name="att" value="n"><span>欠席</span></label>
+          </div>
+        </div>
+        <div class="ff">
+          <label>電話番号</label>
+          <input type="tel" placeholder="090-0000-0000">
+        </div>
+        <div class="ff">
+          <label>現在のお住まい（都道府県・任意）</label>
+          <input type="text" placeholder="例：鳥取県、東京都　など">
+        </div>
+        <div class="ff">
+          <label>先生・みんなへのメッセージ（任意）</label>
+          <textarea placeholder="一言メッセージをどうぞ。"></textarea>
+        </div>
+        <button class="sbtn" type="submit">送信する　→</button>
+        <p class="dl-note">〆切：2026年 ●月 ●日（●）</p>
+      </form>
+    </section>
+
+    <footer>
+      <img src="leaf2.png" alt="">
+      <strong>米子市立 東山中学校　第●●期<br>2027年同窓会 実行委員会</strong>
+      &copy; 2027 &ensp;All rights reserved.
+    </footer>
+
+  </div><!-- /content-wrap -->
+</div><!-- /page -->
+
+
+<!-- PC / SP 表示切り替えトグル -->
+<div id="view-switcher">
+  <button class="vsw-btn active" id="btn-pc" onclick="setView('pc')">
+    <svg viewBox="0 0 20 16" fill="none" width="15" height="12"><rect x="1" y="1" width="18" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="12" x2="13" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="12" x2="10" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
+    PC
+  </button>
+  <button class="vsw-btn" id="btn-sp" onclick="setView('sp')">
+    <svg viewBox="0 0 14 20" fill="none" width="11" height="15"><rect x="1" y="1" width="12" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="16.5" r="1" fill="currentColor"/></svg>
+    SP
+  </button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════
+   0. PC / SP 表示切り替え
+═══════════════════════════════════════════ */
+function setView(mode){
+  const html = document.documentElement;
+  const btnPC = document.getElementById('btn-pc');
+  const btnSP = document.getElementById('btn-sp');
+  if(mode === 'sp'){
+    html.classList.add('sp-preview');
+    btnSP.classList.add('active');
+    btnPC.classList.remove('active');
+  } else {
+    html.classList.remove('sp-preview');
+    btnPC.classList.add('active');
+    btnSP.classList.remove('active');
+    window.scrollTo(0,0);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   1. セピア → カラー トランジション
+   0.5s 後に開始、3.2s かけてカラーへ
+   テキストはカラーが出てきたタイミングで順番に現れる
+═══════════════════════════════════════════ */
+function startColorTransition(){
+  const spBtn     = document.querySelector('.sp-btn');
+  const scrollInd = document.querySelector('.scroll-ind');
+
+  // ③ が明るくなる頃（~31s）にUI表示
+  setTimeout(()=>{ spBtn     && spBtn.classList.add('on');     }, 31500);
+  setTimeout(()=>{ scrollInd && scrollInd.classList.add('on'); }, 32000);
+
+  function runLoop(){
+    // ① 集合(濃い) → ランダムに白く明るく → 白いまま散る
+    setTimeout(()=> scatterGather  ('.c-intro-1', 180),   500);
+    setTimeout(()=> scatterBrighten('.c-intro-1', 90),   2200); // 集合後に白化
+    setTimeout(()=> scatterLeave   ('.c-intro-1'),       11000); // 白いまま散る
+
+    // ② 集合 → 白化 → 散る
+    setTimeout(()=> scatterGather  ('.c-intro-2', 130), 14500);
+    setTimeout(()=> scatterBrighten('.c-intro-2', 90),  16200);
+    setTimeout(()=> scatterLeave   ('.c-intro-2'),      24500);
+
+    // ③ 集合 → カラー化 → カラーのまま散る
+    setTimeout(()=> scatterGather  ('.c-main', 200),    28000);
+    setTimeout(()=> scatterBrighten('.c-main', 90),     29500);
+    setTimeout(()=> scatterLeave   ('.c-main', 65, 240), 37000);
+
+    // ③消去完了~40s + 7s待ち = 47s でループ
+    setTimeout(()=>{
+      initScatterText();
+      initMainText();
+      runLoop();
+    }, 47000);
+  }
+
+  runLoop();
+}
+/* ─────────────────────────────────────────────
+   0. 画像前処理（canvas）
+   窓透過.png / カーテン透過.png : 白背景を透過に変換
+   景色.png : 彩度UP + 明るい空を半透過に
+             → 背景グラデーションが透けて色が豊かになる
+───────────────────────────────────────────── */
+function processImages(callback){
+  let done=0;
+  const onDone=()=>{ if(++done===2) callback(); };
+
+  /* 白〜近白ピクセルを透過に変換する汎用関数 */
+  function makeWhiteTransparent(src, selector, cb){
+    const tmp=new Image();
+    tmp.onload=function(){
+      try{
+        const c=document.createElement('canvas');
+        c.width=tmp.naturalWidth; c.height=tmp.naturalHeight;
+        const ctx=c.getContext('2d'); ctx.drawImage(tmp,0,0);
+        const d=ctx.getImageData(0,0,c.width,c.height); const px=d.data;
+        for(let i=0;i<px.length;i+=4){
+          const r=px[i],g=px[i+1],b=px[i+2];
+          if(r>238&&g>238&&b>238){
+            const br=(r+g+b)/3;
+            px[i+3]=Math.max(0,Math.round((255-br)/17*255));
+          }
+        }
+        ctx.putImageData(d,0,0);
+        document.querySelector(selector).src=c.toDataURL('image/png');
+      }catch(e){}
+      cb();
+    };
+    tmp.onerror=cb;
+    tmp.src=src;
+  }
+
+  /* 景色.png（スライド1・カラー）: 彩度UP + 明るい空を半透過 */
+  const tmpL=new Image();
+  tmpL.onload=function(){
+    try{
+      const c=document.createElement('canvas');
+      c.width=tmpL.naturalWidth; c.height=tmpL.naturalHeight;
+      const ctx=c.getContext('2d'); ctx.drawImage(tmpL,0,0);
+      const d=ctx.getImageData(0,0,c.width,c.height); const px=d.data;
+      for(let i=0;i<px.length;i+=4){
+        const r=px[i],g=px[i+1],b=px[i+2];
+        const origBr=(r+g+b)/3;
+        const sat=1.7;
+        px[i]  =Math.min(255,Math.round(origBr+(r-origBr)*sat));
+        px[i+1]=Math.min(255,Math.round(origBr+(g-origBr)*sat));
+        px[i+2]=Math.min(255,Math.round(origBr+(b-origBr)*sat));
+        if(origBr>200) px[i+3]=Math.max(0,Math.round((255-origBr)/55*255));
+      }
+      ctx.putImageData(d,0,0);
+      document.querySelector('.keshiki-slide[data-idx="1"] img').src=c.toDataURL('image/png');
+    }catch(e){}
+    onDone();
+  };
+  tmpL.onerror=onDone;
+  tmpL.src='景色.png';
+
+  makeWhiteTransparent('ノート.png','.tl-note',onDone);
+}
+
+/* ─────────────────────────────────────────────
+   スライドショー
+   最初のスライドは sepia→color + ケン・バーンズ
+   8秒後から 8秒ごとに次のスライドへクロスフェード
+───────────────────────────────────────────── */
+const KB_CLASSES = ['kb-a','kb-b','kb-c','kb-d'];
+
+function startSlideshow(){
+  const slides = document.querySelectorAll('.keshiki-slide');
+  if(slides.length < 2) return;
+  let cur = 0;
+
+  function goNext(){
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    const slide = slides[cur];
+    // ケン・バーンズアニメーションをリセット（再実行）
+    const img = slide.querySelector('img');
+    slide.classList.remove(...KB_CLASSES);
+    void slide.offsetWidth; // reflow
+    slide.classList.add(KB_CLASSES[cur % KB_CLASSES.length]);
+    img.style.animation = 'none';
+    void img.offsetWidth;
+    img.style.animation = '';
+    slide.classList.add('active');
+  }
+
+  // 最初のスライドが表示されている時間（sepia+color+zoom = 約8s）
+  setTimeout(()=>{
+    goNext();
+    setInterval(goNext, 8500);
+  }, 8500);
+}
+
+/* ═══════════════════════════════════════════
+   SCATTER TEXT — 文字ごとにランダム位置から集まる / 散る
+═══════════════════════════════════════════ */
+function initScatterText(){
+  document.querySelectorAll('.sc-line').forEach(line=>{
+    const raw = line.textContent;
+    line.innerHTML = [...raw].map(ch=>{
+      const tx = ((Math.random()-.5)*160).toFixed(1);
+      const ty = ((Math.random()-.5)*160).toFixed(1);
+      const bl = (16 + Math.random()*14).toFixed(1);
+      const sc = (1.08 + Math.random()*.28).toFixed(2);
+      if(ch===' ') return `<span class="sc-spc" style="--tx:${tx}px;--ty:${ty}px;--bl:${bl}px;--sc:${sc}"> </span>`;
+      return `<span class="sc-char" style="--tx:${tx}px;--ty:${ty}px;--bl:${bl}px;--sc:${sc}">${ch}</span>`;
+    }).join('');
+  });
+}
+
+/* 同=深赤 / 級=深青 / 生=深黄（明度低め濃い目） */
+/* ③ 全文字: 赤/青/黄のいずれかでランダム着色 → 白へフェードイン */
+const MAIN_PALETTE = ['#8b1a1a', '#7a5c00', '#6b4c3b'];
+
+function initMainText(){
+  ['.c-main-s', '.c-main-l'].forEach(cls=>{
+    const el = document.querySelector(cls);
+    if(!el) return;
+    const raw = el.textContent;
+    el.innerHTML = [...raw].map(ch=>{
+      const tx = ((Math.random()-.5)*160).toFixed(1);
+      const ty = ((Math.random()-.5)*160).toFixed(1);
+      const bl = (18 + Math.random()*14).toFixed(1);
+      const sc = (1.15 + Math.random()*.35).toFixed(2);
+      const c  = MAIN_PALETTE[Math.floor(Math.random()*3)];
+      return `<span class="sc-char" style="--tx:${tx}px;--ty:${ty}px;--bl:${bl}px;--sc:${sc};--char-c:${c}">${ch}</span>`;
+    }).join('');
+  });
+  const main = document.querySelector('.c-main');
+  if(main) main.style.opacity = '1';
+}
+
+function scatterGather(sel, stagger=58){
+  const el = document.querySelector(sel);
+  if(!el) return;
+  const chars = [...el.querySelectorAll('.sc-char,.sc-spc')].sort(()=>Math.random()-.5);
+  chars.forEach((ch,i)=> setTimeout(()=>ch.classList.add('sc-in'), i*stagger));
+}
+
+/* フェードアウト: 現在の白/カラーのまま、ぼかして拡散（色変化なし） */
+function scatterLeave(sel, stagger=65, spread=160){
+  const el = document.querySelector(sel);
+  if(!el) return;
+  const chars = [...el.querySelectorAll('.sc-char,.sc-spc')];
+
+  // 明るい色を base vars に固定し、散らばり中も色が変わらないようにする
+  chars.forEach(ch=>{
+    const cb  = ch.style.getPropertyValue('--char-cb').trim()   || 'rgba(255,248,230,0.95)';
+    const brb = ch.style.getPropertyValue('--char-br-b').trim() || '3.0';
+    ch.style.setProperty('--char-c',  cb);
+    ch.style.setProperty('--char-br', brb);
+    ch.style.setProperty('--tx', ((Math.random()-.5)*spread).toFixed(1)+'px');
+    ch.style.setProperty('--ty', ((Math.random()-.5)*spread).toFixed(1)+'px');
+    const blMin = Math.max(16, spread * 0.1);
+    ch.style.setProperty('--bl', (blMin + Math.random()*(spread*0.12)).toFixed(1)+'px');
+    ch.style.setProperty('--sc', (1.08+Math.random()*.28).toFixed(2));
+  });
+  chars.forEach(ch=> ch.classList.remove('sc-bright'));
+  // scatter 時だけ長い transition を設定（gather には影響しない）
+  [...chars].sort(()=>Math.random()-.5)
+    .forEach((ch,i)=> setTimeout(()=>{
+      ch.style.transition =
+        'transform 3.4s cubic-bezier(.2,.6,.4,1),' +
+        'filter 3.2s ease-in,' +
+        'opacity 3.4s ease-in,' +
+        'color 1.6s ease-in';
+      ch.classList.remove('sc-in');
+    }, i*stagger));
+}
+
+/* 集合後にランダムで白/カラーへ明るくなる */
+function scatterBrighten(sel, stagger=150){
+  const el = document.querySelector(sel);
+  if(!el) return;
+  [...el.querySelectorAll('.sc-char,.sc-spc')]
+    .sort(()=>Math.random()-.5)
+    .forEach((ch,i)=> setTimeout(()=>ch.classList.add('sc-bright'), i*stagger));
+}
+
+window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
+  initScatterText();
+  initMainText();
+  startColorTransition();
+  startSlideshow();
+}));
+
+
+/* 1b. 年号アニメーション: CSS keyframes (charFlicker) に移行 */
+
+/* ギャラリー スライドショー */
+(()=>{
+  const slides = document.querySelectorAll('.gal-slide');
+  if(slides.length < 2) return;
+  let cur = 0;
+  setInterval(()=>{
+    slides[cur].classList.remove('active');
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add('active');
+  }, 5000);
+})();
+
+
+
+/* ═══════════════════════════════════════════
+   2. パラックス（3層を異なる速度で動かす）
+
+   景色.png  : 最も遅い → 遠くにある奥行き感
+   窓透過.png : やや速い → 近くにある手前感
+   カーテン  : CSS アニメーションのみ（部屋の中）
+═══════════════════════════════════════════ */
+const lKeshiki = document.getElementById('l-keshiki');
+const lMado    = document.getElementById('l-mado');
+const IS_PC    = ()=> window.innerWidth >= 960;
+
+let raf = false;
+window.addEventListener('scroll', ()=>{
+  if(raf) return;
+  raf = true;
+  requestAnimationFrame(()=>{
+    const sy = window.scrollY;
+    const vh = window.innerHeight;
+    if(IS_PC()){
+      // PC: sticky シーン内でスクロール量を使ってパラックス
+      lKeshiki.style.transform = `translateY(${Math.min(sy * .22, 95)}px)`;
+      lMado.style.transform    = `translateY(${Math.min(sy * .07, 30)}px)`;
+    } else {
+      // SP: ヒーローが画面内にある間だけ
+      if(sy < vh){
+        lKeshiki.style.transform = `translateY(${sy * .26}px)`;
+        lMado.style.transform    = `translateY(${sy * .10}px)`;
+      }
+    }
+    raf = false;
+  });
+}, { passive:true });
+
+
+/* ═══════════════════════════════════════════
+   3. スクロールでフェードイン
+═══════════════════════════════════════════ */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('v'); io.unobserve(e.target); }});
+}, { threshold:.09 });
+document.querySelectorAll('.fi').forEach(el=> io.observe(el));
+
+
+/* ═══════════════════════════════════════════
+   4. PC ナビ: スクロールで影を追加
+═══════════════════════════════════════════ */
+const nav = document.getElementById('pc-nav');
+if(nav){
+  window.addEventListener('scroll', ()=>{
+    nav.style.boxShadow = window.scrollY > 8 ? '0 2px 14px rgba(0,0,0,.07)' : 'none';
+  }, { passive:true });
+}
+</script>
+</body>
+</html>
