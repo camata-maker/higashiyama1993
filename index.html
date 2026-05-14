@@ -433,7 +433,7 @@ img{display:block;max-width:100%}
   transform:skewX(-8deg);
 }
 /* おかえり、= c-main-s（小）, 同級生。= c-main-l（大）— 両端揃え */
-.c-main-s{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(1.9rem,5.0vw,3.4rem); margin-left:calc(-1 * tan(8deg) * 1.75 * clamp(1.9rem,5.0vw,3.4rem)); }
+.c-main-s{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(1.9rem,5.0vw,3.4rem); margin-right:calc(tan(8deg) * 1.75 * clamp(1.9rem,5.0vw,3.4rem)); }
 .c-main-l{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(2.46rem,6.44vw,4.4rem); }
 
 /* コピー2+3: 年月とセリフ */
@@ -452,10 +452,10 @@ img{display:block;max-width:100%}
 
 /* SP: テキストサイズ最適化 */
 @media(max-width:959px){
-  /* キャッチコピー: 最長13字が横幅90%に収まるサイズ */
-  .c-intro{ font-size:clamp(0.75rem,4.8vw,1.2rem); }
+  /* キャッチコピー: 画面に収まる範囲でなるべく大きく */
+  .c-intro{ font-size:clamp(0.9rem,4.5vw,1.3rem); }
   /* おかえり、同級生。: PCと同様に前コピーより目立つ大きさに */
-  .c-main-s{ font-size:clamp(1.9rem,8.0vw,2.8rem); margin-left:calc(-1 * tan(8deg) * 1.75 * clamp(1.9rem,8.0vw,2.8rem)); }
+  .c-main-s{ font-size:clamp(1.9rem,8.0vw,2.8rem); margin-right:calc(tan(8deg) * 1.75 * clamp(1.9rem,8.0vw,2.8rem)); }
   .c-main-l{ font-size:clamp(2.4rem,11.0vw,3.8rem); }
   .c-years{
     font-size:clamp(.88rem,3.8vw,1.02rem);
@@ -859,9 +859,9 @@ html.sp-preview .sp-nav-title{
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
   max-width:100%!important;
 }
-html.sp-preview .c-main-s{font-size:2.2rem!important}
+html.sp-preview .c-main-s{font-size:2.2rem!important;margin-right:calc(tan(8deg) * 1.75 * 2.2rem)!important}
 html.sp-preview .c-main-l{font-size:3.0rem!important}
-html.sp-preview .c-intro{font-size:1.0rem!important}
+html.sp-preview .c-intro{font-size:1.1rem!important}
 html.sp-preview .c-years{font-size:.9rem!important;line-height:1.9!important}
 html.sp-preview #l-text{
   z-index:8!important;
