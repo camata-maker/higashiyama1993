@@ -433,7 +433,7 @@ img{display:block;max-width:100%}
   transform:skewX(-8deg);
 }
 /* おかえり、= c-main-s（小）, 同級生。= c-main-l（大）— 両端揃え */
-.c-main-s{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(1.9rem,5.0vw,3.4rem); }
+.c-main-s{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(1.9rem,5.0vw,3.4rem); margin-left:calc(-1 * tan(8deg) * 1.75 * clamp(1.9rem,5.0vw,3.4rem)); }
 .c-main-l{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(2.46rem,6.44vw,4.4rem); }
 
 /* コピー2+3: 年月とセリフ */
@@ -452,7 +452,7 @@ img{display:block;max-width:100%}
 
 /* SP: テキストサイズ最適化 */
 @media(max-width:959px){
-  .c-main-s{ font-size:clamp(1.6rem,6.5vw,2.5rem); }
+  .c-main-s{ font-size:clamp(1.6rem,6.5vw,2.5rem); margin-left:calc(-1 * tan(8deg) * 1.75 * clamp(1.6rem,6.5vw,2.5rem)); }
   .c-main-l{ font-size:clamp(2.2rem,9.0vw,3.2rem); }
   .c-years{
     font-size:clamp(.88rem,3.8vw,1.02rem);
@@ -1301,13 +1301,17 @@ function startSlideshow(){
 function initScatterText(){
   document.querySelectorAll('.sc-line').forEach(line=>{
     const raw = line.textContent;
+    const isKanaLine = line.classList.contains('sc-kana');
     line.innerHTML = [...raw].map(ch=>{
       const tx = ((Math.random()-.5)*160).toFixed(1);
       const ty = ((Math.random()-.5)*160).toFixed(1);
       const bl = (16 + Math.random()*14).toFixed(1);
       const sc = (1.08 + Math.random()*.28).toFixed(2);
+      const cp = ch.codePointAt(0);
+      const isKana = (cp >= 0x3041 && cp <= 0x3096) || (cp >= 0x30A1 && cp <= 0x30F6);
+      const szStyle = (isKanaLine && isKana) ? ';font-size:.82em' : '';
       if(ch===' ') return `<span class="sc-spc" style="--tx:${tx}px;--ty:${ty}px;--bl:${bl}px;--sc:${sc}"> </span>`;
-      return `<span class="sc-char" style="--tx:${tx}px;--ty:${ty}px;--bl:${bl}px;--sc:${sc}">${ch}</span>`;
+      return `<span class="sc-char" style="--tx:${tx}px;--ty:${ty}px;--bl:${bl}px;--sc:${sc}${szStyle}">${ch}</span>`;
     }).join('');
   });
 }
