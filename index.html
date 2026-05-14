@@ -6,10 +6,14 @@
   <title>米子市立東山中学校 第●●期 2027年同窓会</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Klee+One&display=swap" rel="stylesheet">
   <style>
+/* ── 数字・ラテン・漢字・記号 → AngleFont（TOK Angle FREE） ── */
 @font-face{
-  font-family:'AlpenFont';
-  src:url('AlpenFontFree.otf') format('opentype');
-  font-weight:normal;font-style:normal;font-display:swap;
+  font-family:'DisplayFont';
+  src:url('AngleFont.ttf') format('truetype supports variations'),
+      url('AngleFont.ttf') format('truetype');
+  font-weight:100 900;font-style:normal;font-display:swap;
+  unicode-range:U+0020-U+007E,U+00A0-U+02FF,U+2000-U+206F,U+2100-U+214F,
+    U+3000-U+303F,U+4E00-U+9FFF,U+F900-U+FAFF,U+FF01-U+FF60;
 }
 /* ─────────────────────────────────────────────
    RESET & TOKENS
@@ -374,11 +378,11 @@ img{display:block;max-width:100%}
 .c-intro{
   position:absolute;
   top:50%;left:0;right:0;
-  transform:translateY(-50%);
+  transform:translateY(-50%) skewX(-8deg);
   text-align:center;
-  font-family:'AlpenFont',var(--font);
-  font-size:clamp(1.1rem,2.2vw,1.6rem);
-  font-weight:300;letter-spacing:.10em;
+  font-family:'Klee One',var(--font);
+  font-size:clamp(1.25rem,2.5vw,1.8rem);
+  font-weight:400;letter-spacing:.20em;
   line-height:1.9;
   color:var(--br);
   text-shadow:0 2px 28px rgba(252,248,240,.92),0 0 55px rgba(252,248,240,.5);
@@ -411,22 +415,25 @@ img{display:block;max-width:100%}
   filter:blur(0) brightness(var(--char-br-b, 3.0));
   color:var(--char-cb, rgba(255,248,230,0.95));
 }
-/* 年号を1.3倍 */
-.sc-year{ font-size:1.3em; font-family:'AlpenFont',var(--font); }
+/* 年号数字（1993/2027）はAngle FREE、年・かなはKlee One */
+.sc-num{ font-size:2.0em; font-family:'DisplayFont','Klee One',var(--font); }
+.sc-year{ font-size:1.15em; font-family:'Klee One',var(--font); }
+.sc-kana{ font-size:1.1em; font-family:'Klee One',var(--font); }
 
 /* コピー1: おかえり同級生（文字ごとにscatter gather/leave） */
 .c-main{
-  font-family:'AlpenFont',var(--font);
-  font-weight:300;line-height:1.35;letter-spacing:.16em;
+  font-family:'Klee One',var(--font);
+  font-weight:400;line-height:1.35;letter-spacing:.24em;
   white-space:nowrap;
   color:var(--br);
   text-shadow:0 2px 28px rgba(252,248,240,.9),0 0 55px rgba(252,248,240,.5);
   margin-bottom:1.1rem;
   text-align:left;
   opacity:0;
+  transform:skewX(-8deg);
 }
-/* おかえり、= 5字, 同級生。= 4字（一回り小さめ） */
-.c-main-s{ display:block; font-size:clamp(2.0rem,5.15vw,3.5rem); }
+/* おかえり、= c-main-s（小・幅揃え）, 同級生。= c-main-l（大） */
+.c-main-s{ display:block; font-size:clamp(1.9rem,5.0vw,3.4rem); letter-spacing:.26em; }
 .c-main-l{ display:block; font-size:clamp(2.46rem,6.44vw,4.4rem); }
 
 /* コピー2+3: 年月とセリフ */
@@ -445,8 +452,8 @@ img{display:block;max-width:100%}
 
 /* SP: テキストサイズ最適化 */
 @media(max-width:959px){
-  .c-main-s{ font-size:clamp(2.0rem,8.1vw,3.0rem); }
-  .c-main-l{ font-size:clamp(2.54rem,10.1vw,3.8rem); }
+  .c-main-s{ font-size:clamp(1.6rem,6.5vw,2.5rem); }
+  .c-main-l{ font-size:clamp(2.2rem,9.0vw,3.2rem); }
   .c-years{
     font-size:clamp(.88rem,3.8vw,1.02rem);
     line-height:1.95;
@@ -562,7 +569,7 @@ img{display:block;max-width:100%}
   color:var(--bm);font-weight:300;margin-bottom:2rem;
 }
 .intro-taglines{
-  font-family:'AlpenFont',var(--font);
+  font-family:var(--font);
   font-size:clamp(.88rem,1.4vw,.98rem);letter-spacing:.06em;
   line-height:2.4;color:var(--bm);margin-bottom:1.8rem;
 }
@@ -849,8 +856,8 @@ html.sp-preview .sp-nav-title{
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
   max-width:100%!important;
 }
-html.sp-preview .c-main-s{font-size:2rem!important}
-html.sp-preview .c-main-l{font-size:2.5rem!important}
+html.sp-preview .c-main-s{font-size:1.9rem!important}
+html.sp-preview .c-main-l{font-size:2.2rem!important}
 html.sp-preview .c-years{font-size:.9rem!important;line-height:1.9!important}
 html.sp-preview #l-text{
   z-index:8!important;
@@ -955,8 +962,8 @@ html.sp-preview #scene-wrap::after{
 
     <!-- Layer 4 : テキスト -->
     <div id="l-text">
-      <p class="c-intro c-intro-1"><span class="sc-line sc-year">1993年</span><br><span class="sc-line">あの頃 何を話したっけ？</span></p>
-      <p class="c-intro c-intro-2"><span class="sc-line sc-year">2027年</span><br><span class="sc-line">その続き、少し話そう。</span></p>
+      <p class="c-intro c-intro-1"><span class="sc-line sc-num">1993</span><span class="sc-line sc-year">年</span><br><span class="sc-line sc-kana">あの頃、何を話したっけ？</span></p>
+      <p class="c-intro c-intro-2"><span class="sc-line sc-num">2027</span><span class="sc-line sc-year">年</span><br><span class="sc-line sc-kana">その続き、少し話そう。</span></p>
       <h1 class="c-main"><span class="c-main-s">おかえり、</span><span class="c-main-l">同級生。</span></h1>
     </div>
 
