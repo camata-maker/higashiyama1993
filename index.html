@@ -452,8 +452,11 @@ img{display:block;max-width:100%}
 
 /* SP: テキストサイズ最適化 */
 @media(max-width:959px){
-  .c-main-s{ font-size:clamp(1.6rem,6.5vw,2.5rem); margin-left:calc(-1 * tan(8deg) * 1.75 * clamp(1.6rem,6.5vw,2.5rem)); }
-  .c-main-l{ font-size:clamp(2.2rem,9.0vw,3.2rem); }
+  /* キャッチコピー: 最長13字が横幅90%に収まるサイズ */
+  .c-intro{ font-size:clamp(0.75rem,4.8vw,1.2rem); }
+  /* おかえり、同級生。: PCと同様に前コピーより目立つ大きさに */
+  .c-main-s{ font-size:clamp(1.9rem,8.0vw,2.8rem); margin-left:calc(-1 * tan(8deg) * 1.75 * clamp(1.9rem,8.0vw,2.8rem)); }
+  .c-main-l{ font-size:clamp(2.4rem,11.0vw,3.8rem); }
   .c-years{
     font-size:clamp(.88rem,3.8vw,1.02rem);
     line-height:1.95;
@@ -856,8 +859,9 @@ html.sp-preview .sp-nav-title{
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
   max-width:100%!important;
 }
-html.sp-preview .c-main-s{font-size:1.9rem!important}
-html.sp-preview .c-main-l{font-size:2.2rem!important}
+html.sp-preview .c-main-s{font-size:2.2rem!important}
+html.sp-preview .c-main-l{font-size:3.0rem!important}
+html.sp-preview .c-intro{font-size:1.0rem!important}
 html.sp-preview .c-years{font-size:.9rem!important;line-height:1.9!important}
 html.sp-preview #l-text{
   z-index:8!important;
