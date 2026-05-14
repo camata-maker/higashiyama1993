@@ -432,9 +432,9 @@ img{display:block;max-width:100%}
   opacity:0;
   transform:skewX(-8deg);
 }
-/* おかえり、= c-main-s（小・幅揃え）, 同級生。= c-main-l（大） */
-.c-main-s{ display:block; font-size:clamp(1.9rem,5.0vw,3.4rem); letter-spacing:.26em; }
-.c-main-l{ display:block; font-size:clamp(2.46rem,6.44vw,4.4rem); }
+/* おかえり、= c-main-s（小）, 同級生。= c-main-l（大）— 両端揃え */
+.c-main-s{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(1.9rem,5.0vw,3.4rem); }
+.c-main-l{ display:flex; justify-content:space-between; letter-spacing:0; font-size:clamp(2.46rem,6.44vw,4.4rem); }
 
 /* コピー2+3: 年月とセリフ */
 .c-years{
