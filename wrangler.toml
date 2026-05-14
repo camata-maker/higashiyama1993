@@ -5,3 +5,4 @@ account_id = "16926b58d7236778da0f284220152e36"
 
 [assets]
 directory = "./"
+binding = "ASSETS"
