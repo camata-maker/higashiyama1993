@@ -6,6 +6,11 @@
   <title>米子市立東山中学校 第●●期 2027年同窓会</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Klee+One&display=swap" rel="stylesheet">
   <style>
+@font-face{
+  font-family:'AlpenFont';
+  src:url('AlpenFontFree.otf') format('opentype');
+  font-weight:normal;font-style:normal;font-display:swap;
+}
 /* ─────────────────────────────────────────────
    RESET & TOKENS
 ───────────────────────────────────────────── */
@@ -371,6 +376,7 @@ img{display:block;max-width:100%}
   top:50%;left:0;right:0;
   transform:translateY(-50%);
   text-align:center;
+  font-family:'AlpenFont',var(--font);
   font-size:clamp(1.1rem,2.2vw,1.6rem);
   font-weight:300;letter-spacing:.10em;
   line-height:1.9;
@@ -406,10 +412,11 @@ img{display:block;max-width:100%}
   color:var(--char-cb, rgba(255,248,230,0.95));
 }
 /* 年号を1.3倍 */
-.sc-year{ font-size:1.3em; }
+.sc-year{ font-size:1.3em; font-family:'AlpenFont',var(--font); }
 
 /* コピー1: おかえり同級生（文字ごとにscatter gather/leave） */
 .c-main{
+  font-family:'AlpenFont',var(--font);
   font-weight:300;line-height:1.35;letter-spacing:.16em;
   white-space:nowrap;
   color:var(--br);
@@ -555,6 +562,7 @@ img{display:block;max-width:100%}
   color:var(--bm);font-weight:300;margin-bottom:2rem;
 }
 .intro-taglines{
+  font-family:'AlpenFont',var(--font);
   font-size:clamp(.88rem,1.4vw,.98rem);letter-spacing:.06em;
   line-height:2.4;color:var(--bm);margin-bottom:1.8rem;
 }
