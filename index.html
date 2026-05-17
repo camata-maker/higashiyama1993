@@ -541,11 +541,17 @@ img{display:block;max-width:100%}
   display:none;
   position:fixed;top:0;left:0;right:0;z-index:20000;
   height:48px;align-items:center;padding:0 2rem;
-  background:rgba(250,245,236,.72);backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(200,160,96,.15);
+  background:#2a1a10;
+  border-bottom:1px solid rgba(200,160,96,.18);
+  overflow:hidden;
+}
+#pc-nav::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:url('廊下板目.png') center/cover no-repeat;
+  filter:sepia(95%) brightness(.72) saturate(.9) contrast(1.15);
 }
 @media(min-width:960px){#pc-nav{display:flex}}
-#pc-nav .nav-title{font-size:clamp(13px,1.4vw,20px);letter-spacing:.08em;color:var(--bl);white-space:nowrap}
+#pc-nav .nav-title{position:relative;z-index:1;font-size:clamp(13px,1.4vw,20px);letter-spacing:.08em;color:rgba(255,245,228,.82);white-space:nowrap}
 
 
 /* ─────────────────────────────────────────────
@@ -1072,7 +1078,7 @@ html.sp-preview #scene-wrap::after{
         </tr>
         <tr>
           <th>会費</th>
-          <td>8,000円（当日でええけん）<small>※恩師へのお心付けを含みます</small></td>
+          <td>8,000円　当日でええけん</td>
         </tr>
         <tr>
           <th>〆切</th>
@@ -1080,7 +1086,7 @@ html.sp-preview #scene-wrap::after{
         </tr>
         <tr>
           <th>対象</th>
-          <td>米子市立 東山中学校 第●●期</td>
+          <td>●●期の生徒、恩師</td>
         </tr>
       </table>
     </section>
