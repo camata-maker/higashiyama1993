@@ -29,6 +29,17 @@
 html{scroll-behavior:smooth}
 body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidden}
 
+/* ページイントロ：白フェード */
+#page-intro{
+  position:fixed;inset:0;z-index:999999;
+  background:#fff;
+  opacity:1;
+  transition:opacity 2.2s ease;
+  pointer-events:none;
+}
+#page-intro.fade-out{opacity:0}
+#page-intro.done{display:none}
+
 /* film grain */
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.028;
@@ -949,6 +960,8 @@ html.sp-preview #scene-wrap::after{
   </style>
 </head>
 <body>
+<!-- ページイントロ：白からふわっと現れる -->
+<div id="page-intro"></div>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
     <filter id="f-crayon" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
@@ -1418,8 +1431,22 @@ function scatterBrighten(sel, stagger=150){
 window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   initScatterText();
   initMainText();
-  startColorTransition();
-  startSlideshow();
+
+  const intro = document.getElementById('page-intro');
+
+  // 少し間を置いてからふわっとフェードアウト
+  setTimeout(()=>{
+    requestAnimationFrame(()=> requestAnimationFrame(()=>{
+      intro.classList.add('fade-out');
+    }));
+  }, 300);
+
+  // フェード完了後にアニメーション開始
+  setTimeout(()=>{
+    intro.classList.add('done');
+    startColorTransition();
+    startSlideshow();
+  }, 2700); // 300ms待機 + 2200ms fade + 200ms余裕
 }));
 
 
