@@ -34,11 +34,14 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
   position:fixed;inset:0;z-index:999999;
   background:#fff;
   opacity:1;
-  transition:opacity 2.2s ease;
+  transition:opacity 3.5s ease;
   pointer-events:none;
 }
 #page-intro.fade-out{opacity:0}
 #page-intro.done{display:none}
+
+/* テキスト要素：JS初期化前は確実に非表示 */
+.c-intro,.c-main{visibility:hidden}
 
 /* film grain */
 body::after{
@@ -960,8 +963,8 @@ html.sp-preview #scene-wrap::after{
   </style>
 </head>
 <body>
-<!-- ページイントロ：白からふわっと現れる -->
-<div id="page-intro"></div>
+<!-- ページイントロ：白からふわっと現れる（inline styleでCSS読込前も確実に白） -->
+<div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;"></div>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
     <filter id="f-crayon" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
@@ -1429,8 +1432,14 @@ function scatterBrighten(sel, stagger=150){
 }
 
 window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
+  // テキストをJS初期化（この時点ではまだ白い画面で覆われている）
   initScatterText();
   initMainText();
+
+  // 初期化完了後、visibility を戻す（sc-charがopacity:0で隠れているので見えない）
+  document.querySelectorAll('.c-intro,.c-main').forEach(el=>{
+    el.style.visibility = 'visible';
+  });
 
   const intro = document.getElementById('page-intro');
 
@@ -1446,7 +1455,7 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
     intro.classList.add('done');
     startColorTransition();
     startSlideshow();
-  }, 2700); // 300ms待機 + 2200ms fade + 200ms余裕
+  }, 4000); // 300ms待機 + 3500ms fade + 200ms余裕
 }));
 
 
