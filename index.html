@@ -51,11 +51,10 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
 #intro-logo img{
   width:clamp(120px,28vw,200px);
   display:block;
-  /* 黒線を茶系の暖色に着色し白背景から浮き立たせる */
-  filter:
-    sepia(1) saturate(1.2) hue-rotate(340deg)
-    brightness(.62) contrast(1.1)
-    drop-shadow(0 2px 18px rgba(80,45,10,.18));
+  /* JPGの白背景を透過させ、線を暖色系に */
+  mix-blend-mode:multiply;
+  filter:sepia(.45) saturate(1.3) brightness(.78) contrast(1.1)
+         drop-shadow(0 2px 20px rgba(80,45,10,.15));
 }
 
 /* テキスト要素：JS初期化前は確実に非表示 */
