@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>米子市立東山中学校 第●●期 2027年同窓会</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Klee+One&display=swap" rel="stylesheet">
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lfnju4sAAAAAOe7FxN-MDa6qSf12dAPrb9fpBj4" async defer></script>
   <style>
 /* ── 数字・ラテン・漢字・記号 → AngleFont（TOK Angle FREE） ── */
 @font-face{
@@ -716,10 +717,23 @@ img{display:block;max-width:100%}
   display:block;width:100%;margin-top:.35rem;padding:.9rem;
   background:transparent;border:1px solid var(--go);
   color:var(--bm);font-family:var(--font);font-size:.78rem;
-  letter-spacing:.4em;cursor:pointer;transition:background .35s,color .35s
+  letter-spacing:.4em;cursor:pointer;transition:background .35s,color .35s,opacity .25s;
+  position:relative;
 }
-.sbtn:hover{background:var(--go);color:var(--c)}
+.sbtn:hover:not(:disabled){background:var(--go);color:var(--c)}
+.sbtn:disabled{cursor:not-allowed;opacity:.75}
+.sbtn.loading{background:var(--go);color:var(--c);letter-spacing:.2em}
+.sbtn.loading::after{
+  content:'';display:inline-block;vertical-align:middle;
+  width:13px;height:13px;margin-left:.7rem;
+  border:2px solid rgba(255,255,255,.4);border-top-color:#fff;
+  border-radius:50%;animation:btnSpin .7s linear infinite;
+}
+@keyframes btnSpin{to{transform:rotate(360deg)}}
 .dl-note{font-size:.66rem;letter-spacing:.12em;color:var(--bl);text-align:center;margin-top:.65rem}
+.recaptcha-note{font-size:.58rem;color:var(--bl);opacity:.7;text-align:center;margin-top:.5rem;line-height:1.6}
+.recaptcha-note a{color:var(--bl);text-underline-offset:.15em}
+.grecaptcha-badge{visibility:hidden!important}
 
 
 /* ギャラリー ──────────────────── */
@@ -1086,6 +1100,7 @@ html.sp-preview #scene-wrap::after{
         </div>
         <button class="sbtn" type="submit">送信する　→</button>
         <p class="dl-note">〆切：2026年 ●月 ●日（●）</p>
+        <p class="recaptcha-note">このフォームはreCAPTCHAで保護されています。<br>Googleの<a href="https://policies.google.com/privacy" target="_blank">プライバシーポリシー</a>と<a href="https://policies.google.com/terms" target="_blank">利用規約</a>が適用されます。</p>
         <div id="rsvp-result"></div>
       </form>
     </section>
@@ -1405,7 +1420,13 @@ document.querySelectorAll('.fi').forEach(el=> io.observe(el));
    4. RSVP フォーム → Google スプレッドシート
    ★ GAS_URL を Google Apps Script のデプロイURLに差し替えてください
 ═══════════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzlJtVsGeFQ3VAe5-cxJi-sISYbU2b5gEu5P4-bGUSG85zQ3YequhFp-NMsrjOmNMg/exec';
+const GAS_URL         = 'https://script.google.com/macros/s/AKfycbzlJtVsGeFQ3VAe5-cxJi-sISYbU2b5gEu5P4-bGUSG85zQ3YequhFp-NMsrjOmNMg/exec';
+const RECAPTCHA_KEY   = '6Lfnju4sAAAAAOe7FxN-MDa6qSf12dAPrb9fpBj4';
+
+/* Enterキーでの誤送信を防ぐ（textarea内はOK） */
+document.getElementById('rsvp-form')?.addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
+});
 
 document.getElementById('rsvp-form')?.addEventListener('submit', async function(e){
   e.preventDefault();
@@ -1418,8 +1439,15 @@ document.getElementById('rsvp-form')?.addEventListener('submit', async function(
   if(!name){ alert('お名前を入力してください。'); return; }
   if(!att) { alert('出欠を選択してください。');   return; }
 
-  btn.textContent = '送信中…';
+  btn.textContent = '送信中';
+  btn.classList.add('loading');
   btn.disabled = true;
+
+  // reCAPTCHA v3 トークン取得
+  let recaptchaToken = '';
+  try {
+    recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action:'rsvp_submit'});
+  } catch(_){}
 
   const payload = {
     timestamp:  new Date().toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}),
@@ -1427,7 +1455,8 @@ document.getElementById('rsvp-form')?.addEventListener('submit', async function(
     attendance: att === 'y' ? '出席' : '欠席',
     phone:      form.querySelector('#f-phone').value.trim(),
     address:    form.querySelector('#f-address').value.trim(),
-    message:    form.querySelector('#f-message').value.trim()
+    message:    form.querySelector('#f-message').value.trim(),
+    recaptcha:  recaptchaToken
   };
 
   try {
@@ -1444,6 +1473,7 @@ document.getElementById('rsvp-form')?.addEventListener('submit', async function(
       ご回答を受け付けました。</p>`;
   } catch(err){
     btn.textContent = '送信する　→';
+    btn.classList.remove('loading');
     btn.disabled = false;
     res.innerHTML = `<p style="color:#b00;font-size:.78rem;margin-top:.6rem;letter-spacing:.05em">
       送信に失敗しました。時間をおいて再度お試しください。</p>`;
