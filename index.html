@@ -48,14 +48,12 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
   transition:opacity 5s ease;
 }
 #intro-logo.show{opacity:1}
-/* imgにfilterだけ適用（ラッパーでmix-blend-modeと分離） */
-#intro-logo-wrap{
-  mix-blend-mode:multiply; /* JPGの白背景を透過 */
-}
 #intro-logo img{
   width:clamp(120px,28vw,200px);
   display:block;
-  filter:sepia(.5) saturate(1.4) brightness(.72) contrast(1.08);
+  /* filterは使わない：白背景を灰色化させないため */
+  /* multiplyでJPGの白→透過、黒線→そのまま表示 */
+  mix-blend-mode:multiply;
 }
 
 /* テキスト要素：JS初期化前は確実に非表示 */
@@ -984,9 +982,7 @@ html.sp-preview #scene-wrap::after{
 <!-- ページイントロ：白からふわっと現れる（inline styleでCSS読込前も確実に白） -->
 <div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;">
   <div id="intro-logo">
-    <div id="intro-logo-wrap">
-      <img src="ロゴ.jpg" alt="米子市立東山中学校">
-    </div>
+    <img src="ロゴ.jpg" alt="米子市立東山中学校">
   </div>
 </div>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
