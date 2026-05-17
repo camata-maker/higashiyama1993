@@ -804,30 +804,6 @@ footer img{display:block;margin:0 auto .8rem;width:88px;opacity:.2;filter:invert
 footer strong{display:block;color:rgba(255,245,228,.85);font-size:.74rem;font-weight:400;margin-bottom:.22rem}
 
 
-/* ─────────────────────────────────────────────
-   PC / SP 表示切り替えトグル
-───────────────────────────────────────────── */
-#view-switcher{
-  position:fixed;top:14px;right:14px;z-index:20000;
-  display:flex;gap:2px;
-  background:rgba(36,22,12,.84);
-  border-radius:7px;padding:3px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 2px 12px rgba(0,0,0,.28);
-}
-.vsw-btn{
-  display:flex;align-items:center;gap:5px;
-  padding:.32rem .72rem;border:none;border-radius:5px;
-  background:transparent;
-  color:rgba(255,245,228,.48);
-  font-family:var(--font);font-size:.6rem;letter-spacing:.14em;
-  cursor:pointer;transition:all .22s;
-}
-.vsw-btn.active{background:rgba(200,160,96,.9);color:#faf5ec}
-.vsw-btn:hover:not(.active){color:rgba(255,245,228,.88)}
-.vsw-btn svg{flex-shrink:0}
-/* 実機スマホでは非表示 */
-@media(max-width:959px){#view-switcher{display:none}}
 
 
 /* ─────────────────────────────────────────────
@@ -1129,37 +1105,7 @@ html.sp-preview #scene-wrap::after{
 </div><!-- /page -->
 
 
-<!-- PC / SP 表示切り替えトグル -->
-<div id="view-switcher">
-  <button class="vsw-btn active" id="btn-pc" onclick="setView('pc')">
-    <svg viewBox="0 0 20 16" fill="none" width="15" height="12"><rect x="1" y="1" width="18" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><line x1="7" y1="12" x2="13" y2="12" stroke="currentColor" stroke-width="1.5"/><line x1="10" y1="12" x2="10" y2="15" stroke="currentColor" stroke-width="1.5"/></svg>
-    PC
-  </button>
-  <button class="vsw-btn" id="btn-sp" onclick="setView('sp')">
-    <svg viewBox="0 0 14 20" fill="none" width="11" height="15"><rect x="1" y="1" width="12" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="7" cy="16.5" r="1" fill="currentColor"/></svg>
-    SP
-  </button>
-</div>
-
 <script>
-/* ═══════════════════════════════════════════
-   0. PC / SP 表示切り替え
-═══════════════════════════════════════════ */
-function setView(mode){
-  const html = document.documentElement;
-  const btnPC = document.getElementById('btn-pc');
-  const btnSP = document.getElementById('btn-sp');
-  if(mode === 'sp'){
-    html.classList.add('sp-preview');
-    btnSP.classList.add('active');
-    btnPC.classList.remove('active');
-  } else {
-    html.classList.remove('sp-preview');
-    btnPC.classList.add('active');
-    btnSP.classList.remove('active');
-    window.scrollTo(0,0);
-  }
-}
 
 /* ═══════════════════════════════════════════
    1. セピア → カラー トランジション
