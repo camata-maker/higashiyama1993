@@ -430,14 +430,13 @@ img{display:block;max-width:100%}
   margin-bottom:1.1rem;
   display:flex;flex-direction:column;align-items:center;
   opacity:0;
-  transform:skewX(-8deg);
 }
 /* c-main-school（小）/ c-main-title（大）/ c-main-catch（中） */
-/* 上2行: 親の skewX(-8deg) をキャンセル → 斜体なし・文字間詰め */
-.c-main-school{ display:block; font-size:clamp(1.28rem,2.7vw,1.95rem); letter-spacing:.12em; margin-bottom:.25em; transform:skewX(8deg); }
-.c-main-title{ display:block; font-size:clamp(3.0rem,7.5vw,5.5rem); letter-spacing:.18em; transform:skewX(8deg); }
-/* おかえり: 斜体あり・同窓会との行間を広げる */
-.c-main-catch{ font-size:clamp(1.4rem,3.2vw,2.4rem); letter-spacing:.28em; margin-top:.9em; }
+/* 上2行: 斜体なし・文字間詰め */
+.c-main-school{ display:block; font-size:clamp(1.28rem,2.7vw,1.95rem); letter-spacing:.12em; margin-bottom:.25em; }
+.c-main-title{ display:block; font-size:clamp(3.0rem,7.5vw,5.5rem); letter-spacing:.18em; }
+/* おかえり: 斜体を直接適用（中心点は変わらず → 上2行と視覚的中央揃え） */
+.c-main-catch{ font-size:clamp(1.4rem,3.2vw,2.4rem); letter-spacing:.28em; margin-top:.9em; transform:skewX(-8deg); }
 
 /* コピー2+3: 年月とセリフ */
 .c-years{
