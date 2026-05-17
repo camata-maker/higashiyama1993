@@ -436,8 +436,8 @@ img{display:block;max-width:100%}
 /* 上2行: 親の skewX(-8deg) をキャンセル → 斜体なし・文字間詰め */
 .c-main-school{ display:block; font-size:clamp(1.28rem,2.7vw,1.95rem); letter-spacing:.12em; margin-bottom:.25em; transform:skewX(8deg); }
 .c-main-title{ display:block; font-size:clamp(3.0rem,7.5vw,5.5rem); letter-spacing:.18em; transform:skewX(8deg); }
-/* おかえり: 斜体あり・同窓会との行間を広げる */
-.c-main-catch{ display:block; font-size:clamp(1.4rem,3.2vw,2.4rem); letter-spacing:.28em; margin-top:.9em; }
+/* おかえり: 斜体あり・上2行と中央揃え・同窓会との行間を広げる */
+.c-main-catch{ display:block; width:max-content; margin:.9em auto 0; font-size:clamp(1.4rem,3.2vw,2.4rem); letter-spacing:.28em; }
 
 /* コピー2+3: 年月とセリフ */
 .c-years{
@@ -1111,38 +1111,38 @@ function startColorTransition(){
   const spBtn     = document.querySelector('.sp-btn');
   const scrollInd = document.querySelector('.scroll-ind');
 
-  // ③ が明るくなる頃（~31s）にUI表示
-  setTimeout(()=>{ spBtn     && spBtn.classList.add('on');     }, 31500);
-  setTimeout(()=>{ scrollInd && scrollInd.classList.add('on'); }, 32000);
+  // ③ が明るくなる頃（~8s）にUI表示
+  setTimeout(()=>{ spBtn     && spBtn.classList.add('on');     }, 8000);
+  setTimeout(()=>{ scrollInd && scrollInd.classList.add('on'); }, 8500);
 
   function runLoop(){
-    // ① 集合(濃い) → ランダムに白く明るく → 白いまま散る
-    setTimeout(()=> scatterGather  ('.c-intro-1', 180),   500);
-    setTimeout(()=> scatterBrighten('.c-intro-1', 90),   2200); // 集合後に白化
-    setTimeout(()=> scatterLeave   ('.c-intro-1'),       11000); // 白いまま散る
+    // ① 集合(濃い) → 白化 → 散る
+    setTimeout(()=> scatterGather  ('.c-intro-1', 50),   300);
+    setTimeout(()=> scatterBrighten('.c-intro-1', 40),  1000);
+    setTimeout(()=> scatterLeave   ('.c-intro-1'),      3000);
 
     // ② 集合 → 白化 → 散る
-    setTimeout(()=> scatterGather  ('.c-intro-2', 130), 14500);
-    setTimeout(()=> scatterBrighten('.c-intro-2', 90),  16200);
-    setTimeout(()=> scatterLeave   ('.c-intro-2'),      24500);
+    setTimeout(()=> scatterGather  ('.c-intro-2', 50),  3500);
+    setTimeout(()=> scatterBrighten('.c-intro-2', 40),  4300);
+    setTimeout(()=> scatterLeave   ('.c-intro-2'),      6000);
 
-    // ③ 学校名・同窓会 → 集合 → カラー化（school はstagger短め）
-    setTimeout(()=> scatterGather  ('.c-main-school', 40),  28000);
-    setTimeout(()=> scatterGather  ('.c-main-title',  120), 28000);
-    setTimeout(()=> scatterBrighten('.c-main-school', 40),  29200);
-    setTimeout(()=> scatterBrighten('.c-main-title',  60),  29200);
-    // おかえり、同級生。 → 2.5秒遅れて集合
-    setTimeout(()=> scatterGather  ('.c-main-catch',  100), 30500);
-    setTimeout(()=> scatterBrighten('.c-main-catch',  60),  32000);
-    // 全体散る（+6秒長く読ませる）
-    setTimeout(()=> scatterLeave   ('.c-main', 65, 240), 43000);
+    // ③ 学校名・同窓会 → 集合 → カラー化
+    setTimeout(()=> scatterGather  ('.c-main-school', 20), 6500);
+    setTimeout(()=> scatterGather  ('.c-main-title',  60), 6500);
+    setTimeout(()=> scatterBrighten('.c-main-school', 30), 7000);
+    setTimeout(()=> scatterBrighten('.c-main-title',  30), 7000);
+    // おかえり、同級生。 → 少し遅れて集合
+    setTimeout(()=> scatterGather  ('.c-main-catch',  60), 7800);
+    setTimeout(()=> scatterBrighten('.c-main-catch',  40), 8600);
+    // 全体散る
+    setTimeout(()=> scatterLeave   ('.c-main', 65, 240), 13000);
 
-    // ③消去完了~46s + 7s待ち = 53s でループ
+    // 15秒でループ
     setTimeout(()=>{
       initScatterText();
       initMainText();
       runLoop();
-    }, 53000);
+    }, 15000);
   }
 
   runLoop();
