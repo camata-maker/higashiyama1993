@@ -1060,10 +1060,10 @@ html.sp-preview #scene-wrap::after{
           <img src="校舎.png" alt="東山中学校" class="kousha-sm">
         </div>
       </div>
-      <form class="fi d1" onsubmit="return false;">
+      <form id="rsvp-form" class="fi d1">
         <div class="ff">
-          <label>お名前（旧姓・現姓）</label>
-          <input type="text" placeholder="田中 花子（旧姓：山田）">
+          <label for="f-name">お名前（旧姓・現姓）</label>
+          <input id="f-name" type="text" placeholder="田中 花子（旧姓：山田）" required>
         </div>
         <div class="ff">
           <label>出欠</label>
@@ -1073,19 +1073,20 @@ html.sp-preview #scene-wrap::after{
           </div>
         </div>
         <div class="ff">
-          <label>電話番号</label>
-          <input type="tel" placeholder="090-0000-0000">
+          <label for="f-phone">電話番号</label>
+          <input id="f-phone" type="tel" placeholder="090-0000-0000">
         </div>
         <div class="ff">
-          <label>現在のお住まい（都道府県・任意）</label>
-          <input type="text" placeholder="例：鳥取県、東京都　など">
+          <label for="f-address">現在のお住まい（都道府県・任意）</label>
+          <input id="f-address" type="text" placeholder="例：鳥取県、東京都　など">
         </div>
         <div class="ff">
-          <label>先生・みんなへのメッセージ（任意）</label>
-          <textarea placeholder="一言メッセージをどうぞ。"></textarea>
+          <label for="f-message">先生・みんなへのメッセージ（任意）</label>
+          <textarea id="f-message" placeholder="一言メッセージをどうぞ。"></textarea>
         </div>
         <button class="sbtn" type="submit">送信する　→</button>
         <p class="dl-note">〆切：2026年 ●月 ●日（●）</p>
+        <div id="rsvp-result"></div>
       </form>
     </section>
 
@@ -1401,7 +1402,57 @@ document.querySelectorAll('.fi').forEach(el=> io.observe(el));
 
 
 /* ═══════════════════════════════════════════
-   4. PC ナビ: スクロールで影を追加
+   4. RSVP フォーム → Google スプレッドシート
+   ★ GAS_URL を Google Apps Script のデプロイURLに差し替えてください
+═══════════════════════════════════════════ */
+const GAS_URL = 'YOUR_GAS_URL';
+
+document.getElementById('rsvp-form')?.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const form = this;
+  const btn  = form.querySelector('.sbtn');
+  const res  = document.getElementById('rsvp-result');
+
+  const name = form.querySelector('#f-name').value.trim();
+  const att  = form.querySelector('input[name="att"]:checked')?.value;
+  if(!name){ alert('お名前を入力してください。'); return; }
+  if(!att) { alert('出欠を選択してください。');   return; }
+
+  btn.textContent = '送信中…';
+  btn.disabled = true;
+
+  const payload = {
+    timestamp:  new Date().toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}),
+    name,
+    attendance: att === 'y' ? '出席' : '欠席',
+    phone:      form.querySelector('#f-phone').value.trim(),
+    address:    form.querySelector('#f-address').value.trim(),
+    message:    form.querySelector('#f-message').value.trim()
+  };
+
+  try {
+    await fetch(GAS_URL, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload),
+      redirect:'follow'
+    });
+    // 成功：フォームを隠してメッセージ表示
+    form.querySelectorAll('.ff,.sbtn,.dl-note').forEach(el=>el.style.display='none');
+    res.innerHTML = `<p style="text-align:center;padding:2.5rem 0;line-height:2.2;
+      letter-spacing:.08em;color:var(--bm)">ありがとうございます。<br>
+      ご回答を受け付けました。</p>`;
+  } catch(err){
+    btn.textContent = '送信する　→';
+    btn.disabled = false;
+    res.innerHTML = `<p style="color:#b00;font-size:.78rem;margin-top:.6rem;letter-spacing:.05em">
+      送信に失敗しました。時間をおいて再度お試しください。</p>`;
+  }
+});
+
+
+/* ═══════════════════════════════════════════
+   5. PC ナビ: スクロールで影を追加
 ═══════════════════════════════════════════ */
 const nav = document.getElementById('pc-nav');
 if(nav){
