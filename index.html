@@ -528,14 +528,23 @@ img{display:block;max-width:100%}
 .scroll-ind{
   position:absolute;bottom:1.8rem;left:50%;
   transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
   z-index:6;
   opacity:0;transition:opacity 1s ease 2.4s;
   animation:bobV 2.4s ease-in-out infinite;
 }
 .scroll-ind.on{opacity:1}
-.scroll-ind span{font-size:.55rem;letter-spacing:.45em;color:rgba(70,50,28,.58)}
-.scroll-ind::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,rgba(200,160,96,.65),transparent)}
+.scroll-ind span{
+  font-size:.72rem;letter-spacing:.5em;
+  color:rgba(255,245,220,.92);
+  text-shadow:0 1px 10px rgba(0,0,0,.6),0 0 20px rgba(0,0,0,.4);
+  padding-right:.5em;/* letter-spacing補正 */
+}
+.scroll-ind::after{
+  content:'';width:2px;height:44px;
+  background:linear-gradient(to bottom,rgba(220,180,100,.9),transparent);
+  box-shadow:0 0 8px rgba(200,160,80,.4);
+}
 @keyframes bobV{
   0%,100%{transform:translateX(-50%) translateY(0)}
   50%    {transform:translateX(-50%) translateY(7px)}
