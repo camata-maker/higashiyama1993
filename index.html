@@ -44,24 +44,14 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
 #intro-logo{
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;gap:.9rem;
   opacity:0;
-  transition:opacity 1.2s ease;
+  transition:opacity 5s ease;
 }
 #intro-logo.show{opacity:1}
 #intro-logo img{
-  width:clamp(90px,22vw,140px);
+  width:clamp(100px,24vw,160px);
   filter:sepia(18%) brightness(.88) contrast(1.05);
-}
-.intro-logo-school{
-  font-family:var(--font);font-size:clamp(.82rem,2.2vw,1rem);
-  font-weight:300;letter-spacing:.22em;
-  color:var(--br);text-align:center;
-}
-.intro-logo-event{
-  font-family:var(--font);font-size:clamp(.72rem,1.8vw,.88rem);
-  font-weight:300;letter-spacing:.18em;
-  color:var(--bl);text-align:center;margin-top:-.4rem;
+  display:block;
 }
 
 /* テキスト要素：JS初期化前は確実に非表示 */
@@ -991,8 +981,6 @@ html.sp-preview #scene-wrap::after{
 <div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;">
   <div id="intro-logo">
     <img src="ロゴ.png" alt="米子市立東山中学校">
-    <p class="intro-logo-school">米子市立　東山中学校</p>
-    <p class="intro-logo-event">第●●期　2027年同窓会</p>
   </div>
 </div>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -1474,25 +1462,24 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   const intro = document.getElementById('page-intro');
   const logo  = document.getElementById('intro-logo');
 
-  // ① ロゴをふわっと表示
-  setTimeout(()=>{
-    requestAnimationFrame(()=> requestAnimationFrame(()=> logo.classList.add('show')));
-  }, 400);
+  // ① ロゴ フェードイン（5秒）
+  requestAnimationFrame(()=> requestAnimationFrame(()=> logo.classList.add('show')));
 
-  // ② ロゴをふわっと消す
-  setTimeout(()=> logo.classList.remove('show'), 2400);
+  // ② 静止3秒後にフェードアウト開始（5秒）
+  //    フェードイン5s + 静止3s = 8s後にfadeout開始
+  setTimeout(()=> logo.classList.remove('show'), 8000);
 
-  // ③ ロゴが消えてから白をフェードアウト
+  // ③ ロゴ消滅後（8s+5s=13s）に白フェードアウト開始（3.5s）
   setTimeout(()=>{
     requestAnimationFrame(()=> requestAnimationFrame(()=> intro.classList.add('fade-out')));
-  }, 3600);
+  }, 13200);
 
   // ④ 白が消えたらアニメーション開始
   setTimeout(()=>{
     intro.classList.add('done');
     startColorTransition();
     startSlideshow();
-  }, 7300); // 3600 + 3500 + 200ms余裕
+  }, 17000); // 13200 + 3500 + 300ms余裕
 }));
 
 
