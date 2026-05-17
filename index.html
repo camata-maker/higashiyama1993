@@ -49,9 +49,13 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
 }
 #intro-logo.show{opacity:1}
 #intro-logo img{
-  width:clamp(100px,24vw,160px);
-  filter:sepia(18%) brightness(.88) contrast(1.05);
+  width:clamp(120px,28vw,200px);
   display:block;
+  /* 黒線を茶系の暖色に着色し白背景から浮き立たせる */
+  filter:
+    sepia(1) saturate(1.2) hue-rotate(340deg)
+    brightness(.62) contrast(1.1)
+    drop-shadow(0 2px 18px rgba(80,45,10,.18));
 }
 
 /* テキスト要素：JS初期化前は確実に非表示 */
@@ -980,7 +984,7 @@ html.sp-preview #scene-wrap::after{
 <!-- ページイントロ：白からふわっと現れる（inline styleでCSS読込前も確実に白） -->
 <div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;">
   <div id="intro-logo">
-    <img src="ロゴ.png" alt="米子市立東山中学校">
+    <img src="ロゴ.jpg" alt="米子市立東山中学校">
   </div>
 </div>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
@@ -1463,23 +1467,26 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   const logo  = document.getElementById('intro-logo');
 
   // ① ロゴ フェードイン（5秒）
+  logo.style.transition = 'opacity 5s ease';
   requestAnimationFrame(()=> requestAnimationFrame(()=> logo.classList.add('show')));
 
-  // ② 静止3秒後にフェードアウト開始（5秒）
-  //    フェードイン5s + 静止3s = 8s後にfadeout開始
-  setTimeout(()=> logo.classList.remove('show'), 8000);
+  // ② フェードイン5s + 静止3s = 8s後にフェードアウト開始（3秒）
+  setTimeout(()=>{
+    logo.style.transition = 'opacity 3s ease';
+    logo.classList.remove('show');
+  }, 8000);
 
-  // ③ ロゴ消滅後（8s+5s=13s）に白フェードアウト開始（3.5s）
+  // ③ ロゴ消滅後（8s+3s=11s）に白フェードアウト開始（3.5s）
   setTimeout(()=>{
     requestAnimationFrame(()=> requestAnimationFrame(()=> intro.classList.add('fade-out')));
-  }, 13200);
+  }, 11200);
 
   // ④ 白が消えたらアニメーション開始
   setTimeout(()=>{
     intro.classList.add('done');
     startColorTransition();
     startSlideshow();
-  }, 17000); // 13200 + 3500 + 300ms余裕
+  }, 15000); // 11200 + 3500 + 300ms余裕
 }));
 
 
