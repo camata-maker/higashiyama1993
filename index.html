@@ -515,9 +515,9 @@ img{display:block;max-width:100%}
 ───────────────────────────────────────────── */
 #pc-nav{
   display:none;
-  position:absolute;top:0;left:0;right:0;z-index:20;
+  position:fixed;top:0;left:0;right:0;z-index:20000;
   height:48px;align-items:center;padding:0 2rem;
-  background:rgba(250,245,236,.68);backdrop-filter:blur(8px);
+  background:rgba(250,245,236,.72);backdrop-filter:blur(10px);
   border-bottom:1px solid rgba(200,160,96,.15);
 }
 @media(min-width:960px){#pc-nav{display:flex}}
@@ -882,6 +882,11 @@ html.sp-preview #scene-wrap::after{
   </defs>
 </svg>
 
+<!-- PC ナビ（固定ヘッダー） -->
+<nav id="pc-nav">
+  <span class="nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
+</nav>
+
 <div id="page">
 
   <!-- ══════════════════════════════════
@@ -893,11 +898,6 @@ html.sp-preview #scene-wrap::after{
     <div id="sp-header">
       <span class="sp-nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
     </div>
-
-    <!-- PC ナビ -->
-    <nav id="pc-nav">
-      <span class="nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
-    </nav>
 
     <!-- ★ Layer 1 : 景色スライドショー（セピア→カラー / ケン・バーンズ） -->
     <div id="l-keshiki">
@@ -963,13 +963,6 @@ html.sp-preview #scene-wrap::after{
   ══════════════════════════════════ -->
   <div id="content-wrap">
 
-    <!-- INTRO -->
-    <section id="sec-intro" class="sec">
-      <div class="intro-date-block fi">
-        <span class="d-lbl">開催決定日時</span>
-        <span class="d-val">2027年 1月 ●● 日（●）</span>
-      </div>
-    </section>
 
     <!-- TIMELINE -->
     <section id="sec-tl" class="sec">
