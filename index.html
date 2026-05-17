@@ -40,6 +40,30 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
 #page-intro.fade-out{opacity:0}
 #page-intro.done{display:none}
 
+/* イントロロゴ */
+#intro-logo{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.9rem;
+  opacity:0;
+  transition:opacity 1.2s ease;
+}
+#intro-logo.show{opacity:1}
+#intro-logo img{
+  width:clamp(90px,22vw,140px);
+  filter:sepia(18%) brightness(.88) contrast(1.05);
+}
+.intro-logo-school{
+  font-family:var(--font);font-size:clamp(.82rem,2.2vw,1rem);
+  font-weight:300;letter-spacing:.22em;
+  color:var(--br);text-align:center;
+}
+.intro-logo-event{
+  font-family:var(--font);font-size:clamp(.72rem,1.8vw,.88rem);
+  font-weight:300;letter-spacing:.18em;
+  color:var(--bl);text-align:center;margin-top:-.4rem;
+}
+
 /* テキスト要素：JS初期化前は確実に非表示 */
 .c-intro,.c-main{visibility:hidden}
 
@@ -964,7 +988,13 @@ html.sp-preview #scene-wrap::after{
 </head>
 <body>
 <!-- ページイントロ：白からふわっと現れる（inline styleでCSS読込前も確実に白） -->
-<div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;"></div>
+<div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;">
+  <div id="intro-logo">
+    <img src="ロゴ.png" alt="米子市立東山中学校">
+    <p class="intro-logo-school">米子市立　東山中学校</p>
+    <p class="intro-logo-event">第●●期　2027年同窓会</p>
+  </div>
+</div>
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
     <filter id="f-crayon" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
@@ -1442,20 +1472,27 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   });
 
   const intro = document.getElementById('page-intro');
+  const logo  = document.getElementById('intro-logo');
 
-  // 少し間を置いてからふわっとフェードアウト
+  // ① ロゴをふわっと表示
   setTimeout(()=>{
-    requestAnimationFrame(()=> requestAnimationFrame(()=>{
-      intro.classList.add('fade-out');
-    }));
-  }, 300);
+    requestAnimationFrame(()=> requestAnimationFrame(()=> logo.classList.add('show')));
+  }, 400);
 
-  // フェード完了後にアニメーション開始
+  // ② ロゴをふわっと消す
+  setTimeout(()=> logo.classList.remove('show'), 2400);
+
+  // ③ ロゴが消えてから白をフェードアウト
+  setTimeout(()=>{
+    requestAnimationFrame(()=> requestAnimationFrame(()=> intro.classList.add('fade-out')));
+  }, 3600);
+
+  // ④ 白が消えたらアニメーション開始
   setTimeout(()=>{
     intro.classList.add('done');
     startColorTransition();
     startSlideshow();
-  }, 4000); // 300ms待機 + 3500ms fade + 200ms余裕
+  }, 7300); // 3600 + 3500 + 200ms余裕
 }));
 
 
