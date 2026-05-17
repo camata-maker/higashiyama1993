@@ -433,9 +433,11 @@ img{display:block;max-width:100%}
   transform:skewX(-8deg);
 }
 /* c-main-school（小）/ c-main-title（大）/ c-main-catch（中） */
-.c-main-school{ display:block; font-size:clamp(1.28rem,2.7vw,1.95rem); letter-spacing:.42em; margin-bottom:.3em; }
-.c-main-title{ display:block; font-size:clamp(3.0rem,7.5vw,5.5rem); letter-spacing:.5em; }
-.c-main-catch{ display:block; font-size:clamp(1.4rem,3.2vw,2.4rem); letter-spacing:.28em; margin-top:.35em; }
+/* 上2行: 親の skewX(-8deg) をキャンセル → 斜体なし・文字間詰め */
+.c-main-school{ display:block; font-size:clamp(1.28rem,2.7vw,1.95rem); letter-spacing:.12em; margin-bottom:.25em; transform:skewX(8deg); }
+.c-main-title{ display:block; font-size:clamp(3.0rem,7.5vw,5.5rem); letter-spacing:.18em; transform:skewX(8deg); }
+/* おかえり: 斜体あり・同窓会との行間を広げる */
+.c-main-catch{ display:block; font-size:clamp(1.4rem,3.2vw,2.4rem); letter-spacing:.28em; margin-top:.9em; }
 
 /* コピー2+3: 年月とセリフ */
 .c-years{
@@ -1124,23 +1126,23 @@ function startColorTransition(){
     setTimeout(()=> scatterBrighten('.c-intro-2', 90),  16200);
     setTimeout(()=> scatterLeave   ('.c-intro-2'),      24500);
 
-    // ③ 学校名・同窓会 → 集合 → カラー化
-    setTimeout(()=> scatterGather  ('.c-main-school', 80),  28000);
+    // ③ 学校名・同窓会 → 集合 → カラー化（school はstagger短め）
+    setTimeout(()=> scatterGather  ('.c-main-school', 40),  28000);
     setTimeout(()=> scatterGather  ('.c-main-title',  120), 28000);
-    setTimeout(()=> scatterBrighten('.c-main-school', 60),  29800);
-    setTimeout(()=> scatterBrighten('.c-main-title',  60),  29800);
+    setTimeout(()=> scatterBrighten('.c-main-school', 40),  29200);
+    setTimeout(()=> scatterBrighten('.c-main-title',  60),  29200);
     // おかえり、同級生。 → 2.5秒遅れて集合
     setTimeout(()=> scatterGather  ('.c-main-catch',  100), 30500);
     setTimeout(()=> scatterBrighten('.c-main-catch',  60),  32000);
-    // 全体散る
-    setTimeout(()=> scatterLeave   ('.c-main', 65, 240), 37000);
+    // 全体散る（+6秒長く読ませる）
+    setTimeout(()=> scatterLeave   ('.c-main', 65, 240), 43000);
 
-    // ③消去完了~40s + 7s待ち = 47s でループ
+    // ③消去完了~46s + 7s待ち = 53s でループ
     setTimeout(()=>{
       initScatterText();
       initMainText();
       runLoop();
-    }, 47000);
+    }, 53000);
   }
 
   runLoop();
