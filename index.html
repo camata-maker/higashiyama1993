@@ -964,6 +964,7 @@ img{display:block;max-width:100%}
 
 /* 開催情報下部：ランダムスライドショー（幹事からセクションの年号演出とは別系統） */
 .gal-show-det{ margin-top:1.8rem; }
+.gal-show-det::before{ content:none; }
 .gal2-slide{
   position:absolute;inset:0;z-index:1;
   opacity:0;
@@ -1724,9 +1725,6 @@ function beginIntroAnimation(){
       intro.style.opacity = '0';
       setTimeout(()=>{ intro.classList.add('done'); }, 420);
     }
-    // ボタン非表示
-    btn.classList.remove('show');
-
     // アニメーション開始（早送り。自動開始が既に走っていれば何もしない）
     beginIntroAnimation();
 
@@ -1994,11 +1992,10 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
 
   // ④ 白フェードアウト完了後、page-introを非表示にし、
   //    まだSKIPされていなければここで自動的に演出を開始する
+  //    （SKIPボタンは文字アニメーション中も表示したままにする）
   setTimeout(()=>{
     intro.classList.add('done');
     beginIntroAnimation();
-    const skipBtn = document.getElementById('skip-btn');
-    skipBtn && skipBtn.classList.remove('show');
   }, 9500); // 5700 + 3500 + 300ms余裕
 }));
 
@@ -2023,38 +2020,55 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   const container = document.getElementById('gal-det');
   if(!container) return;
 
-  fetch(GAS_URL + '?action=list')
-    .then(r => r.json())
-    .then(res => {
-      if(!res.ok || !res.files || res.files.length === 0) return;
-      const files = res.files.slice();
-      // シャッフル（Fisher-Yates）
-      for(let i = files.length - 1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i + 1));
-        [files[i], files[j]] = [files[j], files[i]];
-      }
-      files.forEach((f, i)=>{
-        const slide = document.createElement('div');
-        slide.className = 'gal2-slide' + (i === 0 ? ' active' : '');
-        const img = document.createElement('img');
-        img.src = f.url;
-        img.alt = f.name || '';
-        img.loading = 'lazy';
-        slide.appendChild(img);
-        container.appendChild(slide);
-      });
-      container.style.display = '';
+  function loadGallery(retriesLeft){
+    fetch(GAS_URL + '?action=list')
+      .then(r => r.json())
+      .then(res => {
+        if(!res.ok || !res.files || res.files.length === 0) return;
+        const files = res.files.slice();
+        // シャッフル（Fisher-Yates）
+        for(let i = files.length - 1; i > 0; i--){
+          const j = Math.floor(Math.random() * (i + 1));
+          [files[i], files[j]] = [files[j], files[i]];
+        }
+        // 形式非対応などで読み込みに失敗する画像は、alt文字列が表示されてしまうため
+        // 事前読み込みして成功したものだけをスライドに使う
+        Promise.all(files.map(f => new Promise(resolve=>{
+          const probe = new Image();
+          probe.onload  = ()=> resolve(f);
+          probe.onerror = ()=> resolve(null);
+          probe.src = f.url;
+        }))).then(results=>{
+          const ok = results.filter(Boolean);
+          if(ok.length === 0) return;
 
-      if(files.length < 2) return;
-      let cur = 0;
-      const slideEls = container.querySelectorAll('.gal2-slide');
-      setInterval(()=>{
-        slideEls[cur].classList.remove('active');
-        cur = (cur + 1) % slideEls.length;
-        slideEls[cur].classList.add('active');
-      }, 5000);
-    })
-    .catch(()=>{});
+          ok.forEach((f, i)=>{
+            const slide = document.createElement('div');
+            slide.className = 'gal2-slide' + (i === 0 ? ' active' : '');
+            const img = document.createElement('img');
+            img.src = f.url;
+            img.alt = '';
+            slide.appendChild(img);
+            container.appendChild(slide);
+          });
+          container.style.display = '';
+
+          if(ok.length < 2) return;
+          let cur = 0;
+          const slideEls = container.querySelectorAll('.gal2-slide');
+          setInterval(()=>{
+            slideEls[cur].classList.remove('active');
+            cur = (cur + 1) % slideEls.length;
+            slideEls[cur].classList.add('active');
+          }, 5000);
+        });
+      })
+      .catch(()=>{
+        // GAS側のコールドスタート等で一時的に失敗することがあるため1回だけ再試行
+        if(retriesLeft > 0) setTimeout(()=> loadGallery(retriesLeft - 1), 1500);
+      });
+  }
+  loadGallery(1);
 })();
 
 /* ═══════════════════════════════════════════
