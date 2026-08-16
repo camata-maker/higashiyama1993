@@ -712,7 +712,7 @@ img{display:block;max-width:100%}
 }
 #sec-intro::before{
   content:'';position:absolute;inset:0;z-index:0;
-  background:url('assets/img/site/廊下板目.png') center/cover no-repeat;
+  background:url('assets/img/site/corridor-floor.png') center/cover no-repeat;
   filter:sepia(92%) brightness(.70) saturate(.85) contrast(1.18);
 }
 #sec-intro>*{position:relative;z-index:1}
@@ -831,6 +831,27 @@ img{display:block;max-width:100%}
 .det-tbl th{padding:.85rem .6rem .85rem 0;font-size:.78rem;letter-spacing:.14em;color:var(--br);font-weight:500;width:74px;vertical-align:top;text-align:left}
 .det-tbl td{padding:.85rem 0;font-size:.87rem;font-weight:400;color:var(--br);line-height:1.82}
 .det-tbl td small{display:block;font-size:.78rem;color:var(--br);margin-top:.18rem}
+
+#sec-sensei .h2{white-space:nowrap}
+.sensei-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+  gap:.6rem 1rem;
+  margin-top:1.1rem;
+}
+.sensei-item{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  font-size:.87rem;color:var(--br);font-weight:400;
+  padding:.4rem 0;
+  border-bottom:1px solid rgba(200,160,96,.2);
+}
+.sensei-class{
+  display:inline-block;min-width:2.6em;
+  font-size:.72rem;letter-spacing:.05em;color:var(--bm);
+  margin-right:.5rem;
+}
+@media(max-width:959px){
+  .sensei-item{ font-size:.9rem!important; }
+}
 
 .msg-box{
   margin-top:1.5rem;padding:1rem 1.1rem 1rem 1.3rem;
@@ -966,7 +987,7 @@ footer{
 }
 footer::before{
   content:'';position:absolute;inset:0;z-index:0;
-  background:url('assets/img/site/廊下板目.png') center/cover no-repeat;
+  background:url('assets/img/site/corridor-floor.png') center/cover no-repeat;
   filter:sepia(95%) brightness(.72) saturate(.9) contrast(1.15);
 }
 footer>*{position:relative;z-index:1}
@@ -1056,30 +1077,27 @@ html.sp-preview #scene-wrap::after{
   margin:.9rem 0 -.2rem;
 }
 .kanji-list{
-  display:flex;gap:1rem;
+  display:flex;flex-direction:column;gap:1.2rem;
   margin-top:1.2rem;
-  padding:.2rem .2rem 1rem;
-  overflow-x:auto;
 }
 .kanji-card{
-  display:flex;flex-direction:column;align-items:flex-start;gap:.7rem;
-  flex:0 0 auto;
-  width:240px;
-  padding:1.1rem 1.1rem 1.3rem;
+  display:flex;flex-direction:row;align-items:center;gap:1.1rem;
+  width:100%;
+  padding:1rem 1.1rem;
   background:#fff;
   border:1px solid rgba(200,160,96,.25);
 }
 .kanji-card-head{
-  display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;
-  min-height:140px;
-  width:100%;
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem;
+  flex-shrink:0;
+  width:132px;
 }
 .kanji-avatar{
   flex-shrink:0;
-  width:76px;height:76px;border-radius:50%;
+  width:88px;height:88px;border-radius:50%;
   background:var(--bm);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;font-weight:500;
+  font-size:1.7rem;font-weight:500;
   color:rgba(255,245,228,.9);
   letter-spacing:.04em;
   overflow:hidden;
@@ -1094,27 +1112,31 @@ html.sp-preview #scene-wrap::after{
   font-size:.78rem;font-weight:700;
   letter-spacing:.1em;color:var(--br);
   margin-bottom:.18rem;
+  white-space:nowrap;
 }
 .kanji-meta{
   font-size:.82rem;letter-spacing:.06em;
   color:var(--br);
 }
 .kanji-role{
-  display:inline-block;
-  font-size:.78rem;letter-spacing:.05em;
+  display:block;
+  width:fit-content;
+  font-size:.72rem;letter-spacing:.05em;
   color:var(--c);background:var(--br);
   padding:2px 8px;border-radius:2px;
-  margin-left:.4rem;vertical-align:middle;
+  margin:.3rem auto 0;
 }
 .kanji-comment{
+  flex:1;min-width:0;
   font-size:.86rem;
-  font-weight:400;line-height:1.9;
+  font-weight:400;line-height:1.7;
   color:var(--br);
   font-family:'Klee One',var(--font);
 }
 @media(max-width:959px){
-  .kanji-card{ width:220px; }
-  .kanji-card-head{ min-height:150px; }
+  .kanji-card{ gap:.8rem; }
+  .kanji-card-head{ width:112px; }
+  .kanji-avatar{ width:68px!important;height:68px!important;font-size:1.3rem!important; }
   .kanji-comment{ font-size:.9rem!important; }
   .kanji-name{ font-size:.9rem!important; }
   .kanji-meta{ font-size:.82rem!important; }
@@ -1183,7 +1205,7 @@ html.sp-preview #scene-wrap::after{
 <!-- ページイントロ：白からふわっと現れる（inline styleでCSS読込前も確実に白） -->
 <div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;">
   <div id="intro-logo">
-    <img src="assets/img/site/ロゴ.jpg" alt="米子市立東山中学校">
+    <img src="assets/img/site/logo.jpg" alt="米子市立東山中学校">
   </div>
 </div>
 
@@ -1210,7 +1232,7 @@ html.sp-preview #scene-wrap::after{
   <button id="nav-menu-close" aria-label="閉じる">×</button>
   <a href="#sec-tl" class="nav-menu-link">幹事から</a>
   <a href="#sec-kanji" class="nav-menu-link">幹事紹介</a>
-  <a href="#sec-sensei" class="nav-menu-link">恩師紹介</a>
+  <a href="#sec-sensei" class="nav-menu-link">当時の恩師</a>
   <a href="#sec-det" class="nav-menu-link">開催情報</a>
   <a href="#sec-rsvp" class="nav-menu-link">出欠のご連絡</a>
   <a href="./koka.html" class="nav-menu-link">校歌</a>
@@ -1236,26 +1258,26 @@ html.sp-preview #scene-wrap::after{
     <!-- ★ Layer 1 : 景色スライドショー（セピア→カラー / ケン・バーンズ） -->
     <div id="l-keshiki">
       <div class="keshiki-slide kb-a active" data-idx="0">
-        <img src="assets/img/site/景色セピア.png" alt="大山と田んぼの景色（セピア）">
+        <img src="assets/img/site/scenery-sepia.png" alt="大山と田んぼの景色（セピア）">
       </div>
       <div class="keshiki-slide kb-b" data-idx="1">
-        <img src="assets/img/site/景色.png" alt="大山と田んぼの景色">
+        <img src="assets/img/site/scenery.png" alt="大山と田んぼの景色">
       </div>
     </div>
 
     <!-- ★ Layer 2 : 窓.png（透過PNG / 中速パラックス） -->
     <div id="l-mado">
-      <img src="assets/img/site/窓透過.png" alt="窓枠">
+      <img src="assets/img/site/window-transparent.png" alt="窓枠">
     </div>
 
     <!-- ★ Layer 3 : カーテン.png（スウェイアニメーション） -->
     <div id="l-katen">
-      <img src="assets/img/site/カーテン透過_tr.png" alt="レースカーテン">
+      <img src="assets/img/site/curtain-transparent.png" alt="レースカーテン">
     </div>
 
     <!-- ★ Layer 3b : 右カーテン -->
     <div id="l-katen-r">
-      <img src="assets/img/site/カーテン右透過_tr.png" alt="レースカーテン右">
+      <img src="assets/img/site/curtain-right-transparent.png" alt="レースカーテン右">
     </div>
 
     <!-- 教室内部セピアオーバーレイ（下部 = 教室内が常にセピア調） -->
@@ -1300,7 +1322,7 @@ html.sp-preview #scene-wrap::after{
 
     <!-- TIMELINE -->
     <section id="sec-tl" class="sec">
-      <img src="assets/img/site/ノート.png" alt="ノート" class="tl-note fi d1">
+      <img src="assets/img/site/notebook.png" alt="ノート" class="tl-note fi d1">
       <div class="sec-head fi">
         <div class="sh-text">
           <h2 class="h2">幹事から</h2>
@@ -1315,14 +1337,14 @@ html.sp-preview #scene-wrap::after{
         <strong>スーツや堅苦しい格好は一切なし！</strong>あの頃のノリのまま懐かしい仲間とまた語り合いませんか？この日をきっかけに、新しい繋がりや次の機会が続いていく、そんな温かい場所が作れることを、幹事一同、心より楽しみにしています。
       </div>
       <div class="gal-show fi d2">
-        <div class="gal-slide active"><img src="assets/img/site/教室.png" alt="教室"></div>
-        <div class="gal-slide"><img src="assets/img/site/体育館.png" alt="体育館"></div>
+        <div class="gal-slide active"><img src="assets/img/site/classroom.png" alt="教室"></div>
+        <div class="gal-slide"><img src="assets/img/site/gymnasium.png" alt="体育館"></div>
         <div class="gal-slide"><img src="assets/img/site/MD.png" alt="MD"></div>
-        <div class="gal-slide"><img src="assets/img/site/登校.png" alt="登校"></div>
-        <div class="gal-slide"><img src="assets/img/site/外観.png" alt="外観"></div>
-        <div class="gal-slide"><img src="assets/img/site/教室入口.png" alt="教室入口"></div>
-        <div class="gal-slide"><img src="assets/img/site/スピーカー.png" alt="スピーカー"></div>
-        <div class="gal-slide"><img src="assets/img/site/下駄箱.png" alt="下駄箱"></div>
+        <div class="gal-slide"><img src="assets/img/site/school-commute.png" alt="登校"></div>
+        <div class="gal-slide"><img src="assets/img/site/exterior.png" alt="外観"></div>
+        <div class="gal-slide"><img src="assets/img/site/classroom-entrance.png" alt="教室入口"></div>
+        <div class="gal-slide"><img src="assets/img/site/speaker.png" alt="スピーカー"></div>
+        <div class="gal-slide"><img src="assets/img/site/shoe-locker.png" alt="下駄箱"></div>
         <div class="gal-yr-overlay">
           <span class="yr-char" style="--f:22s;--d:0s">1</span><span class="yr-char" style="--f:28s;--d:-8.4s">9</span><span class="yr-char" style="--f:19s;--d:-4.6s">9</span><span class="yr-char" style="--f:25s;--d:-14s">3</span>
         </div>
@@ -1435,40 +1457,19 @@ html.sp-preview #scene-wrap::after{
     <section id="sec-sensei" class="sec">
       <div class="sec-head fi">
         <div class="sh-text">
-          <h2 class="h2">恩師紹介</h2>
+          <h2 class="h2">当時の恩師</h2>
           <div class="rule"></div>
         </div>
       </div>
-      <table class="det-tbl fi d1">
-        <tr>
-          <th>1組</th>
-          <td>栗原 先生</td>
-        </tr>
-        <tr>
-          <th>2組</th>
-          <td>岡田 先生</td>
-        </tr>
-        <tr>
-          <th>3組</th>
-          <td>加藤 先生</td>
-        </tr>
-        <tr>
-          <th>4組</th>
-          <td>松上 先生</td>
-        </tr>
-        <tr>
-          <th>5組</th>
-          <td>松本 先生</td>
-        </tr>
-        <tr>
-          <th></th>
-          <td>北尾 先生</td>
-        </tr>
-        <tr>
-          <th></th>
-          <td>勝部 先生</td>
-        </tr>
-      </table>
+      <div class="sensei-grid fi d1">
+        <div class="sensei-item"><span class="sensei-class">1組</span>栗原 先生</div>
+        <div class="sensei-item"><span class="sensei-class">2組</span>岡田 先生</div>
+        <div class="sensei-item"><span class="sensei-class">3組</span>加藤 先生</div>
+        <div class="sensei-item"><span class="sensei-class">4組</span>松上 先生</div>
+        <div class="sensei-item"><span class="sensei-class">5組</span>松本 先生</div>
+        <div class="sensei-item">北尾 先生</div>
+        <div class="sensei-item">勝部 先生</div>
+      </div>
     </section>
 
     <!-- EVENT DETAILS -->
@@ -1552,7 +1553,7 @@ html.sp-preview #scene-wrap::after{
           <div class="rule"></div>
         </div>
         <div class="sec-illust">
-          <img src="assets/img/site/校舎.png" alt="東山中学校" class="kousha-sm">
+          <img src="assets/img/site/school-building.png" alt="東山中学校" class="kousha-sm">
         </div>
       </div>
       <form id="rsvp-form" class="fi d1">
@@ -1682,6 +1683,14 @@ html.sp-preview #scene-wrap::after{
 ═══════════════════════════════════════════ */
 
 /* ── スキップボタン処理 ── */
+window.__introAnimationStarted = false;
+function beginIntroAnimation(){
+  if(window.__introAnimationStarted) return;
+  window.__introAnimationStarted = true;
+  startColorTransition();
+  startSlideshow();
+}
+
 (()=>{
   const btn   = document.getElementById('skip-btn');
   const intro = document.getElementById('page-intro');
@@ -1700,9 +1709,8 @@ html.sp-preview #scene-wrap::after{
     // ボタン非表示
     btn.classList.remove('show');
 
-    // アニメーション開始
-    startColorTransition();
-    startSlideshow();
+    // アニメーション開始（早送り。自動開始が既に走っていれば何もしない）
+    beginIntroAnimation();
 
     // 幹事からセクションへスムーズスクロール
     setTimeout(()=>{
@@ -1809,9 +1817,9 @@ function processImages(callback){
     onDone();
   };
   tmpL.onerror=onDone;
-  tmpL.src='assets/img/site/景色.png';
+  tmpL.src='assets/img/site/scenery.png';
 
-  makeWhiteTransparent('assets/img/site/ノート.png','.tl-note',onDone);
+  makeWhiteTransparent('assets/img/site/notebook.png','.tl-note',onDone);
 }
 
 /* ─────────────────────────────────────────────
@@ -1966,10 +1974,13 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
     requestAnimationFrame(()=> requestAnimationFrame(()=> intro.classList.add('fade-out')));
   }, 11200);
 
-  // ④ 白フェードアウト完了後、page-introをDOM上非表示にするのみ
-  //    （カラー演出・スライドショーの開始はSKIPボタンのみがトリガー）
+  // ④ 白フェードアウト完了後、page-introを非表示にし、
+  //    まだSKIPされていなければここで自動的に演出を開始する
   setTimeout(()=>{
     intro.classList.add('done');
+    beginIntroAnimation();
+    const skipBtn = document.getElementById('skip-btn');
+    skipBtn && skipBtn.classList.remove('show');
   }, 15000); // 11200 + 3500 + 300ms余裕
 }));
 
@@ -1987,49 +1998,6 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
     slides[cur].classList.add('active');
   }, 5000);
 })();
-
-/* 幹事コメント：ゆっくり自動横スクロール（右方向のみ・操作時は一時停止・最後まで行ったら停止） */
-(()=>{
-  const list = document.querySelector('.kanji-list');
-  if(!list) return;
-  let paused = false;
-  let resumeTimer = null;
-  let intervalId = null;
-  const STEP_PX = 1;
-  const TICK_MS = 45; /* 1px / 45ms ≈ 22px/秒 のゆっくりした速度 */
-
-  function pause(){
-    paused = true;
-    clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(()=>{ paused = false; }, 2800);
-  }
-  ['touchstart','mousedown','wheel'].forEach(evt=>
-    list.addEventListener(evt, pause, { passive:true })
-  );
-
-  function tick(){
-    if(paused) return;
-    const max = list.scrollWidth - list.clientWidth;
-    if(max <= 0) return;
-    if(list.scrollLeft >= max){
-      list.scrollLeft = max;
-      clearInterval(intervalId);
-      return;
-    }
-    list.scrollLeft += STEP_PX;
-  }
-
-  /* 画面に入ってきたタイミングでスタート */
-  const startObserver = new IntersectionObserver(entries=>{
-    if(entries[0].isIntersecting){
-      intervalId = setInterval(tick, TICK_MS);
-      startObserver.disconnect();
-    }
-  }, { threshold:.3 });
-  startObserver.observe(list);
-})();
-
-
 
 /* ═══════════════════════════════════════════
    2. パラックス（3層を異なる速度で動かす）
