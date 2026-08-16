@@ -102,6 +102,13 @@ function collectFiles(folderId, isPublic) {
   const out = [];
   while (it.hasNext()) {
     const f = it.next();
+    // Driveへ直接アップロードされた写真もサムネイルが表示できるよう、
+    // 未設定であれば「リンクを知っている全員が閲覧可」に統一する
+    try {
+      f.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    } catch (e) {
+      // 共有設定を変更できない場合はスキップして続行
+    }
     out.push({
       id: f.getId(),
       name: f.getName(),
