@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>米子市立東山中学校 第●●期 2027年同窓会</title>
+  <title>東山中14期生同窓会</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Klee+One&display=swap" rel="stylesheet">
   <script src="https://www.google.com/recaptcha/api.js?render=6Lfnju4sAAAAAOe7FxN-MDa6qSf12dAPrb9fpBj4" async defer></script>
   <style>
 /* ── 数字・ラテン・漢字・記号 → AngleFont（TOK Angle FREE） ── */
 @font-face{
   font-family:'DisplayFont';
-  src:url('AngleFont.ttf') format('truetype supports variations'),
-      url('AngleFont.ttf') format('truetype');
+  src:url('assets/fonts/AngleFont.ttf') format('truetype supports variations'),
+      url('assets/fonts/AngleFont.ttf') format('truetype');
   font-weight:100 900;font-style:normal;font-display:swap;
   unicode-range:U+0020-U+007E,U+00A0-U+02FF,U+2000-U+206F,U+2100-U+214F,
     U+3000-U+303F,U+4E00-U+9FFF,U+F900-U+FAFF,U+FF01-U+FF60;
@@ -22,7 +22,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --c:#faf5ec; --c2:#f3e9d4; --c3:#e8dbc4;
-  --br:#3d2b1f; --bm:#6b4a28; --bl:#9a7a5a;
+  --br:#3d2b1f; --bm:#6b4a28; --bl:#7c5a36;
   --go:#c8a060;
   --font:'Noto Serif JP','Yu Mincho','游明朝',serif;
 }
@@ -74,10 +74,11 @@ img{display:block;max-width:100%}
 .fi.d1{transition-delay:.12s} .fi.d2{transition-delay:.25s} .fi.d3{transition-delay:.4s}
 
 /* shared section parts */
-.lbl{font-size:.68rem;letter-spacing:.5em;color:var(--bl);text-transform:uppercase}
+.lbl{font-size:.78rem;letter-spacing:.5em;color:var(--br);text-transform:uppercase}
 .h2 {font-size:clamp(1.2rem,2.1vw,1.75rem);font-weight:400;line-height:1.65;letter-spacing:.06em}
 .rule{width:30px;height:1px;background:var(--go)}
-.txt{font-size:clamp(.86rem,1.4vw,.94rem);font-weight:300;line-height:2.1;color:var(--bm)}
+.txt{font-size:clamp(.86rem,1.4vw,.94rem);font-weight:400;line-height:2.1;color:var(--br)}
+.txt strong,.msg-box strong,.kanji-comment strong{font-weight:700;color:var(--br)}
 
 
 /* ─────────────────────────────────────────────
@@ -282,27 +283,25 @@ img{display:block;max-width:100%}
 #sp-header{ display:none }
 @media(max-width:959px){
   #sp-header{
-    display:flex;
+    display:grid;
+    grid-template-columns:34px 1fr 34px;
+    column-gap:.5rem;
     position:fixed;top:0;left:0;right:0;
     z-index:20;pointer-events:none;
-    padding:calc(env(safe-area-inset-top,0px) + .7rem) 0 .6rem;
-    justify-content:center;align-items:center;
+    padding:calc(env(safe-area-inset-top,0px) + .7rem) .8rem .6rem;
+    align-items:center;
     background:#2a1a10;
     border-bottom:1px solid rgba(200,160,96,.18);
     overflow:hidden;
   }
-  #sp-header::before{
-    content:'';position:absolute;inset:0;z-index:0;
-    background:url('廊下板目.png') center/cover no-repeat;
-    filter:sepia(95%) brightness(.72) saturate(.9) contrast(1.15);
-  }
   .sp-nav-title{
+    grid-column:2;
     position:relative;z-index:1;
     font-size:clamp(12px, 4.2vw, 16px);letter-spacing:.06em;
     color:rgba(255,245,228,.82);
     text-align:center;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    max-width:95vw;
+    max-width:100%;
   }
 }
 
@@ -503,8 +502,7 @@ img{display:block;max-width:100%}
     line-height:1.95;
   }
 
-  /* ── SP 最小文字サイズ統一（幹事コメント .88rem 基準） ── */
-  .lbl{ font-size:.88rem!important; letter-spacing:.3em!important; }
+  /* ── SP 最小文字サイズ統一（本文 .88rem／補足・注釈は .78rem に統一） ── */
   .txt{ font-size:.88rem!important; }
   .det-tbl th{ font-size:.88rem!important; }
   .det-tbl td{ font-size:.88rem!important; }
@@ -512,16 +510,22 @@ img{display:block;max-width:100%}
   .msg-box{ font-size:.88rem!important; }
   .ff label{ font-size:.88rem!important; letter-spacing:.12em!important; }
   .ff input,.ff textarea{ font-size:.88rem!important; }
+  .ff-hint{ font-size:.78rem!important; }
+  .ff-section-label{ font-size:.88rem!important; }
   .radios label span{ font-size:.88rem!important; }
+  .check-group label{ font-size:.88rem!important; }
   .sbtn{ font-size:.88rem!important; }
-  .dl-note{ font-size:.88rem!important; }
-  .recaptcha-note{ font-size:.72rem!important; }
+  .dl-note{ font-size:.78rem!important; }
+  .recaptcha-note{ font-size:.78rem!important; }
   .acc-venue{ font-size:.88rem!important; }
   .acc-addr{ font-size:.88rem!important; }
   .map-link{ font-size:.88rem!important; }
-  .map-link-sm{ font-size:.88rem!important; }
+  .map-link-sm{ font-size:.78rem!important; }
   .d-lbl{ font-size:.88rem!important; letter-spacing:.2em!important; }
   .d-val{ font-size:.88rem!important; }
+  .kanji-hint{ font-size:.88rem!important; }
+  .kanji-meta{ font-size:.82rem!important; }
+  .kanji-role{ font-size:.78rem!important; }
   footer{ font-size:.88rem!important; }
   footer strong{ font-size:.88rem!important; }
 }
@@ -556,18 +560,9 @@ img{display:block;max-width:100%}
 
 /* スクロールインジケーター */
 .scroll-ind{
-  position:absolute;bottom:1.6rem;left:50%;
-  transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  z-index:6;
-  opacity:0;transition:opacity 1s ease 2.4s;
-  padding:.7rem 1.4rem .9rem;
-  background:rgba(20,10,4,.38);
-  backdrop-filter:blur(6px);
-  border:1px solid rgba(220,180,90,.28);
-  border-radius:2rem;
+  display:none!important;
 }
-.scroll-ind.on{opacity:1}
+.scroll-ind.on{opacity:0}
 .scroll-txt{
   font-size:.82rem;letter-spacing:.55em;padding-right:.55em;
   color:rgba(255,245,215,.95);
@@ -603,26 +598,95 @@ img{display:block;max-width:100%}
 #pc-nav{
   display:none;
   position:fixed;top:0;left:0;right:0;z-index:20000;
-  height:48px;align-items:center;padding:0 2rem;
+  height:48px;align-items:center;gap:1.2rem;padding:0 2rem;
   background:#2a1a10;
   border-bottom:1px solid rgba(200,160,96,.18);
   overflow:hidden;
 }
-#pc-nav::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:url('廊下板目.png') center/cover no-repeat;
-  filter:sepia(95%) brightness(.72) saturate(.9) contrast(1.15);
-}
 @media(min-width:960px){#pc-nav{display:flex}}
-#pc-nav .nav-title{position:relative;z-index:1;font-size:clamp(13px,1.4vw,20px);letter-spacing:.08em;color:rgba(255,245,228,.82);white-space:nowrap}
+#pc-nav .nav-title{
+  position:relative;z-index:1;flex:1;min-width:0;
+  font-size:clamp(13px,1.4vw,20px);letter-spacing:.08em;color:rgba(255,245,228,.82);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* ナビメニューボタン（ハンバーガー） */
+.nav-menu-btn{
+  position:relative;z-index:2;
+  width:34px;height:34px;flex-shrink:0;
+  background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;
+  pointer-events:auto;
+}
+.nav-menu-btn span{
+  display:block;width:21px;height:2px;
+  background:rgba(255,245,228,.95);
+  box-shadow:0 0 4px rgba(0,0,0,.6);
+  border-radius:1px;
+  transition:transform .3s ease,opacity .3s ease;
+}
+.nav-menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+#sp-header .nav-menu-btn{
+  grid-column:3;justify-self:end;
+  position:relative;z-index:1;
+}
+
+/* ナビメニュー：オーバーレイ + パネル */
+#nav-menu-overlay{
+  position:fixed;inset:0;z-index:20001;
+  background:rgba(10,5,2,.35);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
+}
+#nav-menu-overlay.show{opacity:1;pointer-events:auto}
+
+#nav-menu-panel{
+  position:fixed;inset:0;z-index:20002;
+  background:#2a1a10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.6rem;
+  opacity:0;pointer-events:none;
+  transform:scale(1.03);
+  transition:opacity .32s ease,transform .32s ease;
+  overflow-y:auto;
+  padding:6rem 1.5rem 3rem;
+}
+#nav-menu-panel.show{
+  opacity:1;transform:scale(1);pointer-events:auto;
+}
+.nav-menu-link{
+  display:block;
+  font-family:var(--font);
+  font-size:1.15rem;letter-spacing:.16em;
+  color:rgba(255,245,228,.9);
+  text-decoration:none;
+  text-align:center;
+  transition:color .2s;
+}
+.nav-menu-link:hover{color:var(--go)}
+.nav-menu-link-sub{
+  margin-top:auto;
+  font-size:.72rem;letter-spacing:.1em;
+  color:rgba(255,245,228,.5);
+}
+#nav-menu-close{
+  position:absolute;top:1.2rem;right:1.3rem;
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,245,228,.9);
+  font-size:2rem;line-height:1;padding:.3rem;
+}
+#nav-menu-close:hover{color:var(--go)}
 
 
 /* ─────────────────────────────────────────────
    コンテンツセクション（右パネル）
 ───────────────────────────────────────────── */
-.sec{padding:2.6rem 2rem;border-bottom:1px solid rgba(200,160,96,.16)}
+.sec{padding:2.6rem 2rem;border-bottom:1px solid rgba(200,160,96,.16);scroll-margin-top:48px}
 .sec:last-of-type{border-bottom:none}
-@media(max-width:959px){.sec{padding:4rem 1.8rem}}
+@media(max-width:959px){.sec{padding:4rem 1.8rem;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 56px)}}
 
 .sec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.3rem}
 .sh-text{flex:1}
@@ -648,7 +712,7 @@ img{display:block;max-width:100%}
 }
 #sec-intro::before{
   content:'';position:absolute;inset:0;z-index:0;
-  background:url('廊下板目.png') center/cover no-repeat;
+  background:url('assets/img/site/廊下板目.png') center/cover no-repeat;
   filter:sepia(92%) brightness(.70) saturate(.85) contrast(1.18);
 }
 #sec-intro>*{position:relative;z-index:1}
@@ -755,7 +819,7 @@ img{display:block;max-width:100%}
 
 /* 開催情報 ──────────────────── */
 #sec-det{
-  background:linear-gradient(135deg,#faf5ec 0%,#ede0c8 42%,#f3e9d4 68%,#faf5ec 100%);
+  background:linear-gradient(135deg,#faf5ec 0%,#f6efe0 42%,#f9f3e6 68%,#faf5ec 100%);
   background-size:300% 300%;
   animation:secBg 30s ease infinite;
   animation-delay:-9s;
@@ -764,17 +828,17 @@ img{display:block;max-width:100%}
 .det-tbl{width:100%;border-collapse:collapse}
 .det-tbl tr{border-bottom:1px solid rgba(200,160,96,.22)}
 .det-tbl tr:first-child{border-top:1px solid rgba(200,160,96,.22)}
-.det-tbl th{padding:.85rem .6rem .85rem 0;font-size:.62rem;letter-spacing:.22em;color:var(--bl);font-weight:400;width:74px;vertical-align:top;text-align:left}
-.det-tbl td{padding:.85rem 0;font-size:.87rem;font-weight:300;color:var(--br);line-height:1.82}
-.det-tbl td small{display:block;font-size:.72rem;color:var(--bl);margin-top:.18rem}
+.det-tbl th{padding:.85rem .6rem .85rem 0;font-size:.78rem;letter-spacing:.14em;color:var(--br);font-weight:500;width:74px;vertical-align:top;text-align:left}
+.det-tbl td{padding:.85rem 0;font-size:.87rem;font-weight:400;color:var(--br);line-height:1.82}
+.det-tbl td small{display:block;font-size:.78rem;color:var(--br);margin-top:.18rem}
 
 .msg-box{
   margin-top:1.5rem;padding:1rem 1.1rem 1rem 1.3rem;
-  background:var(--c2);border-left:3px solid var(--go);
+  background:#fff;border-left:3px solid var(--go);
   position:relative;font-size:clamp(.8rem,1.35vw,.9rem);
-  font-weight:300;color:var(--bm);line-height:1.9
+  font-weight:400;color:var(--br);line-height:1.9
 }
-.msg-box::before{content:'幹事より';position:absolute;top:-.52rem;left:1.1rem;font-size:.56rem;letter-spacing:.3em;color:var(--bl);background:var(--c2);padding:0 .3rem}
+.msg-box::before{display:none}
 
 .kousha-sm{width:110px;height:auto;opacity:.68;filter:sepia(18%) brightness(1.06)}
 
@@ -785,7 +849,7 @@ img{display:block;max-width:100%}
 }
 
 .ff{display:flex;flex-direction:column;gap:.32rem;margin-bottom:.85rem}
-.ff label{font-size:.6rem;letter-spacing:.25em;color:var(--bl)}
+.ff label{font-size:.78rem;letter-spacing:.15em;color:var(--br)}
 .ff input,.ff textarea{
   font-family:var(--font);font-size:.85rem;font-weight:300;
   background:var(--c);border:1px solid rgba(200,160,96,.38);
@@ -799,21 +863,21 @@ img{display:block;max-width:100%}
 .radios input[type=radio]{display:none}
 .radios label span{
   display:inline-block;padding:.42rem 1.6rem;
-  border:1px solid var(--bl);border-radius:50px;
-  font-size:.82rem;color:var(--bm);
+  border:1px solid var(--br);border-radius:50px;
+  font-size:.82rem;color:var(--br);
   transition:background .18s,color .18s,border-color .18s;
 }
 .radios input[type=radio]:checked + span{background:var(--br);color:#fff8ee;border-color:var(--br)}
 .sbtn{
-  display:block;width:100%;margin-top:.35rem;padding:.9rem;
-  background:transparent;border:1px solid var(--go);
-  color:var(--bm);font-family:var(--font);font-size:.78rem;
-  letter-spacing:.4em;cursor:pointer;transition:background .35s,color .35s,opacity .25s;
+  display:block;width:100%;margin-top:.35rem;padding:.95rem;
+  background:var(--br);border:1px solid var(--br);border-radius:2rem;
+  color:#fff8ee;font-family:var(--font);font-size:.82rem;
+  letter-spacing:.1em;cursor:pointer;transition:opacity .25s;
   position:relative;
 }
-.sbtn:hover:not(:disabled){background:var(--go);color:var(--c)}
-.sbtn:disabled{cursor:not-allowed;opacity:.75}
-.sbtn.loading{background:var(--go);color:var(--c);letter-spacing:.2em}
+.sbtn:hover:not(:disabled){opacity:.85}
+.sbtn:disabled{cursor:not-allowed;opacity:.6}
+.sbtn.loading{opacity:.85;letter-spacing:.08em}
 .sbtn.loading::after{
   content:'';display:inline-block;vertical-align:middle;
   width:13px;height:13px;margin-left:.7rem;
@@ -821,9 +885,9 @@ img{display:block;max-width:100%}
   border-radius:50%;animation:btnSpin .7s linear infinite;
 }
 @keyframes btnSpin{to{transform:rotate(360deg)}}
-.dl-note{font-size:.66rem;letter-spacing:.12em;color:var(--bl);text-align:center;margin-top:.65rem}
-.recaptcha-note{font-size:.58rem;color:var(--bl);opacity:.7;text-align:center;margin-top:.5rem;line-height:1.6}
-.recaptcha-note a{color:var(--bl);text-underline-offset:.15em}
+.dl-note{font-size:.78rem;letter-spacing:.08em;color:var(--br);text-align:center;margin-top:.65rem}
+.recaptcha-note{font-size:.78rem;color:var(--br);text-align:center;margin-top:.5rem;line-height:1.6}
+.recaptcha-note a{color:var(--br);text-underline-offset:.15em}
 .grecaptcha-badge{visibility:hidden!important}
 
 
@@ -878,36 +942,36 @@ img{display:block;max-width:100%}
 
 
 /* アクセス ──────────────────── */
-.map-link-sm{display:inline-block;margin-top:.4rem;font-size:.68rem;color:var(--bl);text-decoration:underline;letter-spacing:.08em;text-underline-offset:.2em}
+.map-link-sm{display:inline-block;margin-top:.4rem;font-size:.78rem;color:var(--br);text-decoration:underline;letter-spacing:.05em;text-underline-offset:.2em}
 .map-link-sm:hover{color:var(--go)}
 
 .acc-venue{font-size:clamp(.95rem,1.45vw,1.08rem);font-weight:400;letter-spacing:.04em;margin-top:.45rem}
-.acc-addr{font-size:.83rem;font-weight:300;color:var(--bm);line-height:1.9;margin-top:.9rem}
+.acc-addr{font-size:.83rem;font-weight:400;color:var(--br);line-height:1.9;margin-top:.9rem}
 .map-link{
-  display:inline-block;margin-top:.9rem;
-  padding:.65rem 1.5rem;border:1px solid var(--go);
-  color:var(--bm);font-family:var(--font);font-size:.7rem;
-  letter-spacing:.28em;text-decoration:none;
-  transition:background .3s,color .3s
+  display:inline-block;margin-top:.6rem;
+  padding:.32rem .7rem;background:var(--br);border:1px solid var(--br);border-radius:4px;
+  color:#fff8ee;font-family:var(--font);font-size:.78rem;
+  letter-spacing:.06em;text-decoration:none;
+  transition:opacity .3s
 }
-.map-link:hover{background:var(--go);color:var(--c)}
+.map-link:hover{opacity:.85}
 
 
 /* フッター ──────────────────── */
 footer{
   position:relative;overflow:hidden;
-  background:#2a1a10;color:rgba(255,245,228,.45);
+  background:#2a1a10;color:rgba(255,245,228,.78);
   text-align:center;padding:2.2rem 1.5rem;
-  font-size:.66rem;letter-spacing:.2em;font-weight:300;line-height:1.9
+  font-size:.78rem;letter-spacing:.12em;font-weight:300;line-height:1.9
 }
 footer::before{
   content:'';position:absolute;inset:0;z-index:0;
-  background:url('廊下板目.png') center/cover no-repeat;
+  background:url('assets/img/site/廊下板目.png') center/cover no-repeat;
   filter:sepia(95%) brightness(.72) saturate(.9) contrast(1.15);
 }
 footer>*{position:relative;z-index:1}
 footer img{display:block;margin:0 auto .8rem;width:88px;opacity:.2;filter:invert(1) sepia(1) saturate(.4)}
-footer strong{display:block;color:rgba(255,245,228,.85);font-size:.74rem;font-weight:400;margin-bottom:.22rem}
+footer strong{display:block;color:rgba(255,245,228,.95);font-size:.82rem;font-weight:400;margin-bottom:.22rem}
 
 
 
@@ -932,12 +996,13 @@ html.sp-preview #scene-wrap{
 html.sp-preview #content-wrap{width:100%!important;border-left:none!important}
 html.sp-preview #pc-nav{display:none!important}
 html.sp-preview #sp-header{
-  display:flex!important;justify-content:center!important;
-  padding:calc(env(safe-area-inset-top,0px) + .7rem) 0 .6rem!important;
+  display:grid!important;grid-template-columns:34px 1fr 34px!important;column-gap:.5rem!important;
+  padding:calc(env(safe-area-inset-top,0px) + .7rem) .8rem .6rem!important;
   position:fixed!important;top:0!important;left:0!important;right:0!important;
   z-index:20!important;pointer-events:none!important;
 }
 html.sp-preview .sp-nav-title{
+  grid-column:2!important;
   font-size:clamp(12px, 4vw, 16px)!important;letter-spacing:.06em!important;
   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
   max-width:100%!important;
@@ -976,15 +1041,152 @@ html.sp-preview #scene-wrap::after{
     to bottom,transparent 0px,transparent 2px,rgba(0,0,0,.022) 2px,rgba(0,0,0,.022) 3px
   )!important;
 }
+
+/* ─────────────────────────────────────────────
+   幹事コメントセクション
+───────────────────────────────────────────── */
+#sec-kanji{
+  background:linear-gradient(135deg,#faf5ec 0%,#f8f2e5 50%,#faf5ec 100%);
+  background-size:300% 300%;
+  animation:secBg 30s ease infinite;
+  animation-delay:-5s;
+}
+.kanji-hint{
+  font-size:.78rem;letter-spacing:.1em;color:var(--br);
+  margin:.9rem 0 -.2rem;
+}
+.kanji-list{
+  display:flex;gap:1rem;
+  margin-top:1.2rem;
+  padding:.2rem .2rem 1rem;
+  overflow-x:auto;
+}
+.kanji-card{
+  display:flex;flex-direction:column;align-items:flex-start;gap:.7rem;
+  flex:0 0 auto;
+  width:240px;
+  padding:1.1rem 1.1rem 1.3rem;
+  background:#fff;
+  border:1px solid rgba(200,160,96,.25);
+}
+.kanji-card-head{
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:.6rem;
+  min-height:140px;
+  width:100%;
+}
+.kanji-avatar{
+  flex-shrink:0;
+  width:76px;height:76px;border-radius:50%;
+  background:var(--bm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;font-weight:500;
+  color:rgba(255,245,228,.9);
+  letter-spacing:.04em;
+  overflow:hidden;
+  border:2px solid rgba(200,160,96,.35);
+}
+.kanji-avatar img{
+  width:100%;height:100%;object-fit:cover;
+  border-radius:50%;
+}
+.kanji-body{ width:100%;text-align:center; }
+.kanji-name{
+  font-size:.78rem;font-weight:700;
+  letter-spacing:.1em;color:var(--br);
+  margin-bottom:.18rem;
+}
+.kanji-meta{
+  font-size:.82rem;letter-spacing:.06em;
+  color:var(--br);
+}
+.kanji-role{
+  display:inline-block;
+  font-size:.78rem;letter-spacing:.05em;
+  color:var(--c);background:var(--br);
+  padding:2px 8px;border-radius:2px;
+  margin-left:.4rem;vertical-align:middle;
+}
+.kanji-comment{
+  font-size:.86rem;
+  font-weight:400;line-height:1.9;
+  color:var(--br);
+  font-family:'Klee One',var(--font);
+}
+@media(max-width:959px){
+  .kanji-card{ width:220px; }
+  .kanji-card-head{ min-height:150px; }
+  .kanji-comment{ font-size:.9rem!important; }
+  .kanji-name{ font-size:.9rem!important; }
+  .kanji-meta{ font-size:.82rem!important; }
+}
+
+/* フォーム セクション区切り */
+.ff-section-label{
+  font-size:.78rem;letter-spacing:.2em;color:var(--br);
+  text-transform:uppercase;
+  margin:1.4rem 0 .7rem;
+  padding-bottom:.4rem;
+  border-bottom:1px solid rgba(200,160,96,.25);
+  display:block;
+}
+.ff-row{display:flex;gap:.7rem;flex-wrap:wrap}
+.ff-row .ff{flex:1;min-width:120px}
+.ff-hint{
+  font-size:.78rem;color:var(--br);
+  margin-top:.28rem;letter-spacing:.06em;line-height:1.6;
+}
+/* アレルギーチェックボックス */
+.check-group{display:flex;gap:.5rem .9rem;flex-wrap:wrap;margin-top:.38rem}
+.check-group label{
+  display:flex;align-items:center;gap:.4rem;
+  font-size:.82rem;color:var(--br);cursor:pointer;
+}
+.check-group input[type=checkbox]{
+  width:15px;height:15px;accent-color:var(--go);cursor:pointer;flex-shrink:0;
+}
+
+
+/* ── スキップボタン（scroll-indと統合・中央下） ── */
+#skip-btn{
+  display:flex;align-items:center;justify-content:center;
+  position:absolute;bottom:1.6rem;left:50%;
+  transform:translateX(-50%);
+  z-index:9999999;
+  font-family:var(--font);
+  font-size:.72rem;
+  letter-spacing:.4em;
+  color:rgba(255,245,215,.95);
+  background:rgba(20,10,4,.38);
+  border:1px solid rgba(220,180,90,.28);
+  padding:.7rem 1.8rem .9rem;
+  cursor:pointer;
+  backdrop-filter:blur(6px);
+  border-radius:2rem;
+  transition:opacity .3s,background .3s;
+  opacity:0;
+  pointer-events:none;
+  white-space:nowrap;
+  text-shadow:0 0 14px rgba(0,0,0,.8);
+}
+#skip-btn.show{
+  opacity:1;
+  pointer-events:auto;
+}
+#skip-btn:hover{
+  background:rgba(200,160,96,.55);
+  border-color:rgba(220,180,90,.6);
+}
+
   </style>
 </head>
 <body>
 <!-- ページイントロ：白からふわっと現れる（inline styleでCSS読込前も確実に白） -->
 <div id="page-intro" style="position:fixed;inset:0;z-index:999999;background:#fff;pointer-events:none;">
   <div id="intro-logo">
-    <img src="ロゴ.jpg" alt="米子市立東山中学校">
+    <img src="assets/img/site/ロゴ.jpg" alt="米子市立東山中学校">
   </div>
 </div>
+
 <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
   <defs>
     <filter id="f-crayon" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
@@ -996,8 +1198,25 @@ html.sp-preview #scene-wrap::after{
 
 <!-- PC ナビ（固定ヘッダー） -->
 <nav id="pc-nav">
-  <span class="nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
+  <span class="nav-title">東山中14期生同窓会</span>
+  <button class="nav-menu-btn" aria-label="メニュー" aria-expanded="false" aria-controls="nav-menu-panel">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- ナビゲーションメニュー -->
+<div id="nav-menu-overlay"></div>
+<div id="nav-menu-panel" aria-hidden="true">
+  <button id="nav-menu-close" aria-label="閉じる">×</button>
+  <a href="#sec-tl" class="nav-menu-link">幹事から</a>
+  <a href="#sec-kanji" class="nav-menu-link">幹事紹介</a>
+  <a href="#sec-sensei" class="nav-menu-link">恩師紹介</a>
+  <a href="#sec-det" class="nav-menu-link">開催情報</a>
+  <a href="#sec-rsvp" class="nav-menu-link">出欠のご連絡</a>
+  <a href="./koka.html" class="nav-menu-link">校歌</a>
+  <a href="./gallery/" class="nav-menu-link">ギャラリー</a>
+  <a href="./gallery-upload.html" class="nav-menu-link nav-menu-link-sub">幹事画像アップ</a>
+</div>
 
 <div id="page">
 
@@ -1008,32 +1227,35 @@ html.sp-preview #scene-wrap::after{
 
     <!-- SP ヘッダー（学校名・年 — モバイル専用） -->
     <div id="sp-header">
-      <span class="sp-nav-title">米子市立東山中学校　第●●期　2027年同窓会</span>
+      <span class="sp-nav-title">東山中14期生同窓会</span>
+      <button class="nav-menu-btn" aria-label="メニュー" aria-expanded="false" aria-controls="nav-menu-panel">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
     <!-- ★ Layer 1 : 景色スライドショー（セピア→カラー / ケン・バーンズ） -->
     <div id="l-keshiki">
       <div class="keshiki-slide kb-a active" data-idx="0">
-        <img src="景色セピア.png" alt="大山と田んぼの景色（セピア）">
+        <img src="assets/img/site/景色セピア.png" alt="大山と田んぼの景色（セピア）">
       </div>
       <div class="keshiki-slide kb-b" data-idx="1">
-        <img src="景色.png" alt="大山と田んぼの景色">
+        <img src="assets/img/site/景色.png" alt="大山と田んぼの景色">
       </div>
     </div>
 
     <!-- ★ Layer 2 : 窓.png（透過PNG / 中速パラックス） -->
     <div id="l-mado">
-      <img src="窓透過.png" alt="窓枠">
+      <img src="assets/img/site/窓透過.png" alt="窓枠">
     </div>
 
     <!-- ★ Layer 3 : カーテン.png（スウェイアニメーション） -->
     <div id="l-katen">
-      <img src="カーテン透過_tr.png" alt="レースカーテン">
+      <img src="assets/img/site/カーテン透過_tr.png" alt="レースカーテン">
     </div>
 
     <!-- ★ Layer 3b : 右カーテン -->
     <div id="l-katen-r">
-      <img src="カーテン右透過_tr.png" alt="レースカーテン右">
+      <img src="assets/img/site/カーテン右透過_tr.png" alt="レースカーテン右">
     </div>
 
     <!-- 教室内部セピアオーバーレイ（下部 = 教室内が常にセピア調） -->
@@ -1059,18 +1281,13 @@ html.sp-preview #scene-wrap::after{
       <p class="c-intro c-intro-1"><span class="sc-line sc-num">1993</span><span class="sc-line sc-year">年</span><br><span class="sc-line sc-kana">あの頃、何を話したっけ？</span></p>
       <p class="c-intro c-intro-2"><span class="sc-line sc-num">2027</span><span class="sc-line sc-year">年</span><br><span class="sc-line sc-kana">その続き、少し話そう。</span></p>
       <h1 class="c-main">
-        <span class="c-main-school">東山中学校　第●●期</span>
+        <span class="c-main-school">東山中　第14期</span>
         <span class="c-main-title">同窓会</span>
         <span class="c-main-catch">おかえり、同級生。</span>
       </h1>
     </div>
 
-    <div class="scroll-ind">
-      <span class="scroll-txt">SCROLL</span>
-      <div class="scroll-chevrons">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
+    <button id="skip-btn" aria-label="スキップ">SKIP　↓</button>
 
   </div><!-- /scene-wrap -->
 
@@ -1083,38 +1300,29 @@ html.sp-preview #scene-wrap::after{
 
     <!-- TIMELINE -->
     <section id="sec-tl" class="sec">
-      <img src="ノート.png" alt="ノート" class="tl-note fi d1">
+      <img src="assets/img/site/ノート.png" alt="ノート" class="tl-note fi d1">
       <div class="sec-head fi">
         <div class="sh-text">
-          <p class="lbl">From the Organizer</p>
           <h2 class="h2">幹事から</h2>
           <div class="rule"></div>
         </div>
       </div>
-      <p class="tl-msg fi d1">
-        卒業から34年、<br>
-        ふと気づけば50歳の節目を迎えましたね。<br>
-        <br>
-        ずっと変わらない大山の姿に、<br>
-        あの日々を重ねて、<br>
-        懐かしい仲間と語り合いませんか？<br>
-        <br>
-        当時の仲間に、当時の自分に<br>
-        「おかえり」が言える、<br>
-        そんな再会を楽しみにしています。<br>
-        <br>
-        今回参加できない方も、<br>
-        一言メッセージをもらえると嬉しいです。
-      </p>
+
+      <div class="msg-box fi d1">
+        私たちが東山中学校を卒業して<span id="grad-years">〇</span>年、気づけばあっという間に時が流れ、こうして<strong>50歳という大きな節目</strong>を迎えました。<br><br>
+        前回の同窓会は36歳の時。久しぶりに会った瞬間、中学時代へ一気にタイムスリップするような、あの温かくてワクワクする感覚を覚えていますか？<br><br>
+        今回の同窓会も<strong>参加できる・できないに関わらず、同級生全員が次に繋がり続ける会</strong>にします。遠方などで参加が難しい方も、このサイトやメッセージを通じて同じ時間を分かち合えたら嬉しいです。ぜひ近況やメッセージをお寄せください。<br><br>
+        <strong>スーツや堅苦しい格好は一切なし！</strong>あの頃のノリのまま懐かしい仲間とまた語り合いませんか？この日をきっかけに、新しい繋がりや次の機会が続いていく、そんな温かい場所が作れることを、幹事一同、心より楽しみにしています。
+      </div>
       <div class="gal-show fi d2">
-        <div class="gal-slide active"><img src="教室.png" alt="教室"></div>
-        <div class="gal-slide"><img src="体育館.png" alt="体育館"></div>
-        <div class="gal-slide"><img src="MD.png" alt="MD"></div>
-        <div class="gal-slide"><img src="登校.png" alt="登校"></div>
-        <div class="gal-slide"><img src="外観.png" alt="外観"></div>
-        <div class="gal-slide"><img src="教室入口.png" alt="教室入口"></div>
-        <div class="gal-slide"><img src="スピーカー.png" alt="スピーカー"></div>
-        <div class="gal-slide"><img src="下駄箱.png" alt="下駄箱"></div>
+        <div class="gal-slide active"><img src="assets/img/site/教室.png" alt="教室"></div>
+        <div class="gal-slide"><img src="assets/img/site/体育館.png" alt="体育館"></div>
+        <div class="gal-slide"><img src="assets/img/site/MD.png" alt="MD"></div>
+        <div class="gal-slide"><img src="assets/img/site/登校.png" alt="登校"></div>
+        <div class="gal-slide"><img src="assets/img/site/外観.png" alt="外観"></div>
+        <div class="gal-slide"><img src="assets/img/site/教室入口.png" alt="教室入口"></div>
+        <div class="gal-slide"><img src="assets/img/site/スピーカー.png" alt="スピーカー"></div>
+        <div class="gal-slide"><img src="assets/img/site/下駄箱.png" alt="下駄箱"></div>
         <div class="gal-yr-overlay">
           <span class="yr-char" style="--f:22s;--d:0s">1</span><span class="yr-char" style="--f:28s;--d:-8.4s">9</span><span class="yr-char" style="--f:19s;--d:-4.6s">9</span><span class="yr-char" style="--f:25s;--d:-14s">3</span>
         </div>
@@ -1122,11 +1330,151 @@ html.sp-preview #scene-wrap::after{
 
     </section>
 
+    <!-- KANJI COMMENTS -->
+    <section id="sec-kanji" class="sec">
+      <div class="sec-head fi">
+        <div class="sh-text">
+          <h2 class="h2">幹事紹介</h2>
+          <div class="rule"></div>
+        </div>
+      </div>
+      <div class="kanji-list fi d1">
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#3a4a6a">小</div>
+            <div class="kanji-body">
+              <div class="kanji-name">小村 秀樹<span class="kanji-role">司会</span></div>
+              <div class="kanji-meta">4組 ／ 広島</div>
+            </div>
+          </div>
+          <p class="kanji-comment">当時の中学に戻って、思いっきり楽しみたい</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#7a5c3a">田</div>
+            <div class="kanji-body">
+              <div class="kanji-name">田中 久美子<span class="kanji-role">司会</span></div>
+              <div class="kanji-meta">1組 ／ 米子</div>
+            </div>
+          </div>
+          <p class="kanji-comment">県外の人も、これを機会に集まって楽しい時間を過ごせたら嬉しいです</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#5a3a2a">鎌</div>
+            <div class="kanji-body">
+              <div class="kanji-name">鎌田 芳弘</div>
+              <div class="kanji-meta">1組 ／ 岡山</div>
+            </div>
+          </div>
+          <p class="kanji-comment">顔や名前を覚えていなくても前回の同窓会では当時の気持ちに戻れたので、そんなのりでまたみんなに会いたい</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#3a5a4a">来</div>
+            <div class="kanji-body">
+              <div class="kanji-name">来海 紀彦</div>
+              <div class="kanji-meta">2組 ／ 米子</div>
+            </div>
+          </div>
+          <p class="kanji-comment">前回の同窓会で、久しぶりに会ったのに一瞬で当時の中学時代に戻れるあの感覚がすごく楽しかったので、今回もみんなであの頃に戻って楽しみましょう</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#6a3a5a">三</div>
+            <div class="kanji-body">
+              <div class="kanji-name">三角 友希子</div>
+              <div class="kanji-meta">2組 ／ 米子</div>
+            </div>
+          </div>
+          <p class="kanji-comment">前回参加してくれた仲間にその後会えなくなってしまったこと…実感がなくて、またみんなで集まれたらいいねと話していたから、今でも会いたいなという想いを胸に集まりたい</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#4a5a3a">三</div>
+            <div class="kanji-body">
+              <div class="kanji-name">三宅 節士</div>
+              <div class="kanji-meta">3組 ／ 米子</div>
+            </div>
+          </div>
+          <p class="kanji-comment">50歳という大きな節目に、またみんなとワイワイ楽しく集まれるのが本当に楽しみです。最高の時間にしましょう</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#5a4a2a">山</div>
+            <div class="kanji-body">
+              <div class="kanji-name">山口 寿治</div>
+              <div class="kanji-meta">3組 ／ 米子</div>
+            </div>
+          </div>
+          <p class="kanji-comment">米子でみんなで集まって、あほしたい</p>
+        </div>
+
+        <div class="kanji-card">
+          <div class="kanji-card-head">
+            <div class="kanji-avatar" style="background:#6a3a3a">廣</div>
+            <div class="kanji-body">
+              <div class="kanji-name">廣中 和喜</div>
+              <div class="kanji-meta">5組 ／ 米子</div>
+            </div>
+          </div>
+          <p class="kanji-comment">みんなで最高の50歳の記念をつくろう！</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SENSEI -->
+    <section id="sec-sensei" class="sec">
+      <div class="sec-head fi">
+        <div class="sh-text">
+          <h2 class="h2">恩師紹介</h2>
+          <div class="rule"></div>
+        </div>
+      </div>
+      <table class="det-tbl fi d1">
+        <tr>
+          <th>1組</th>
+          <td>栗原 先生</td>
+        </tr>
+        <tr>
+          <th>2組</th>
+          <td>岡田 先生</td>
+        </tr>
+        <tr>
+          <th>3組</th>
+          <td>加藤 先生</td>
+        </tr>
+        <tr>
+          <th>4組</th>
+          <td>松上 先生</td>
+        </tr>
+        <tr>
+          <th>5組</th>
+          <td>松本 先生</td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>北尾 先生</td>
+        </tr>
+        <tr>
+          <th></th>
+          <td>勝部 先生</td>
+        </tr>
+      </table>
+    </section>
+
     <!-- EVENT DETAILS -->
     <section id="sec-det" class="sec">
       <div class="sec-head fi">
         <div class="sh-text">
-          <p class="lbl">Event Details</p>
           <h2 class="h2">開催情報</h2>
           <div class="rule"></div>
         </div>
@@ -1144,25 +1492,56 @@ html.sp-preview #scene-wrap::after{
       <table class="det-tbl fi d1">
         <tr>
           <th>日時</th>
-          <td>2027年 1月 ●● 日（●）<br>受付 ●●:●● ／ 開宴 ●●:●●</td>
+          <td><strong style="font-size:1rem">2027年 5月 5日（月・祝）</strong><small>18:00 〜 21:00　※仮日程</small></td>
         </tr>
         <tr>
           <th>会場</th>
-          <td>ANAクラウンプラザホテル米子<small>〒683-0043 鳥取県米子市久米町53-2</small><small>JR米子駅より徒歩約10分 ／ お車：山陰道 米子ICより約15分</small><a href="https://maps.google.com/?q=ANAクラウンプラザホテル米子" target="_blank" class="map-link-sm">Google Maps で開く →</a></td>
+          <td>ドドド（Cafe＊Rest＊Bar）<small>鳥取県米子市四日市町80</small><small>駐車場：店舗近隣の提携駐車場をご利用ください</small><small>米子駅から徒歩約15分</small><a href="https://maps.app.goo.gl/Sxt1wC8ipndLtgFx7" target="_blank" class="map-link">Google Map</a></td>
         </tr>
         <tr>
           <th>会費</th>
-          <td>8,000円</td>
+          <td>8,000円（予定）<small>当日、会場にて現金でお集めします</small></td>
         </tr>
         <tr>
           <th>〆切</th>
-          <td>2026年 ●月 ●日（●）</td>
+          <td>2027年 1月 31日（日）</td>
         </tr>
         <tr>
-          <th>対象</th>
-          <td>●●期の生徒、恩師</td>
+          <th>服装</th>
+          <td>
+            <strong style="color:var(--br)">スーツ着用禁止</strong>
+            <small>ラフでリラックスした普段着でお越しください（シャツ・パンツ・ワンピースなど自由な服装でOKです）。</small>
+            <small style="color:var(--br)">※先生方はのぞく</small>
+          </td>
+        </tr>
+        <tr>
+          <th>席順</th>
+          <td>組（クラス）単位に分かれて着席<small>懐かしいクラスメートとご一緒にどうぞ。</small></td>
         </tr>
       </table>
+
+    </section>
+
+    <!-- PHOTO GALLERY CTA -->
+    <!-- 後日公開予定のため非表示（メニューからのリンクは維持） -->
+    <section id="sec-gallery-cta" class="sec" style="display:none;background:linear-gradient(135deg,#efe0bd 0%,#f6ecd4 60%,#efe0bd 100%);text-align:center">
+      <p class="h2" style="margin-bottom:.6rem">写真ギャラリー</p>
+      <div class="rule" style="margin:0 auto 1.1rem"></div>
+      <p style="font-size:.95rem;color:var(--br);line-height:2;margin-bottom:1.3rem">
+        幹事が撮影・アップロードした写真を随時掲載しています<br>
+        <span style="font-size:.78rem;color:var(--br)">※写真が追加され次第、随時ご覧いただけます</span>
+      </p>
+      <a href="./gallery/" style="
+        display:inline-block;padding:.85rem 2.6rem;
+        background:var(--br);border:1px solid var(--br);
+        border-radius:2rem;color:#fff8ee;
+        font-family:var(--font);font-size:.9rem;
+        letter-spacing:.1em;text-decoration:none;
+        transition:opacity .3s;
+      " onmouseover="this.style.opacity='.85'"
+         onmouseout="this.style.opacity='1'">
+        ギャラリーを見る
+      </a>
     </section>
 
     <!-- RSVP -->
@@ -1173,43 +1552,112 @@ html.sp-preview #scene-wrap::after{
           <div class="rule"></div>
         </div>
         <div class="sec-illust">
-          <img src="校舎.png" alt="東山中学校" class="kousha-sm">
+          <img src="assets/img/site/校舎.png" alt="東山中学校" class="kousha-sm">
         </div>
       </div>
       <form id="rsvp-form" class="fi d1">
+
+        <p class="dl-note" style="margin-top:0;margin-bottom:1.4rem">一次締切：2027年 1月 31日（日）まで（人数確認のため）</p>
+
+        <!-- 1. 基本情報 -->
+        <span class="ff-section-label">1　基本情報</span>
+
         <div class="ff">
-          <label for="f-name">お名前（旧姓・現姓）</label>
-          <input id="f-name" type="text" placeholder="田中 花子（旧姓：山田）" required>
+          <label for="f-name">氏名（現姓）<span style="color:var(--br);font-weight:700;margin-left:.3rem">※必須</span></label>
+          <input id="f-name" type="text" placeholder="田中 花子" required>
         </div>
         <div class="ff">
-          <label>出欠</label>
+          <label for="f-oldname">旧姓（変わった方のみ）</label>
+          <input id="f-oldname" type="text" placeholder="山田（旧姓）">
+        </div>
+        <div class="ff">
+          <label for="f-class">卒業時のクラス<span style="color:var(--br);font-weight:700;margin-left:.3rem">※必須</span></label>
+          <select id="f-class" required style="font-family:var(--font);font-size:.85rem;font-weight:300;background:var(--c);border:1px solid rgba(200,160,96,.38);padding:.62rem .82rem;color:var(--br);outline:none;width:100%;-webkit-appearance:none;border-radius:0">
+            <option value="">― 選択してください ―</option>
+            <option value="1組">1組</option>
+            <option value="2組">2組</option>
+            <option value="3組">3組</option>
+            <option value="4組">4組</option>
+            <option value="5組">5組</option>
+            <option value="覚えていない">覚えていない</option>
+          </select>
+        </div>
+        <div class="ff">
+          <label for="f-email">メールアドレス<span style="color:var(--br);font-weight:700;margin-left:.3rem">※必須</span></label>
+          <input id="f-email" type="email" placeholder="example@mail.com" required>
+          <p class="ff-hint">※ご確認のご連絡に使用します</p>
+        </div>
+        <div class="ff">
+          <label for="f-phone">電話番号<span style="color:var(--br);font-weight:700;margin-left:.3rem">※必須</span></label>
+          <input id="f-phone" type="tel" placeholder="090-0000-0000" required>
+        </div>
+
+        <!-- 2. 出欠確認 -->
+        <span class="ff-section-label">2　出欠確認</span>
+
+        <div class="ff">
+          <label>出欠<span style="color:var(--br);font-weight:700;margin-left:.3rem">※必須</span></label>
           <div class="radios">
             <label><input type="radio" name="att" value="y"><span>出席</span></label>
             <label><input type="radio" name="att" value="n"><span>欠席</span></label>
           </div>
         </div>
+
+        <!-- 3. メッセージ・近況報告 -->
+        <span class="ff-section-label">3　メッセージ・近況報告（参加有無に関わらず全員対象）</span>
+
         <div class="ff">
-          <label for="f-phone">電話番号</label>
-          <input id="f-phone" type="tel" placeholder="090-0000-0000">
+          <label for="f-pref">現在の居住地（都道府県）</label>
+          <select id="f-pref" style="font-family:var(--font);font-size:.85rem;font-weight:300;background:var(--c);border:1px solid rgba(200,160,96,.38);padding:.62rem .82rem;color:var(--br);outline:none;width:100%;-webkit-appearance:none;border-radius:0">
+            <option value="">― 選択してください ―</option>
+            <option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option>
+            <option>茨城県</option><option>栃木県</option><option>群馬県</option><option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option>
+            <option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option><option>山梨県</option><option>長野県</option><option>岐阜県</option>
+            <option>静岡県</option><option>愛知県</option><option>三重県</option><option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option>
+            <option>奈良県</option><option>和歌山県</option><option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option>
+            <option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option><option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+            <option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option><option>海外</option>
+          </select>
         </div>
         <div class="ff">
-          <label for="f-address">現在のお住まい（都道府県・任意）</label>
-          <input id="f-address" type="text" placeholder="例：鳥取県、東京都　など">
+          <label for="f-message">同窓会へのメッセージ・近況報告（任意）</label>
+          <textarea id="f-message" placeholder="会場で紹介・発表させていただく場合があります。近況や一言メッセージをどうぞ。"></textarea>
+          <p class="ff-hint">※当日会場で紹介・発表させていただく場合があります</p>
         </div>
+
+        <!-- 4. その他 -->
+        <span class="ff-section-label">4　その他</span>
+
         <div class="ff">
-          <label for="f-message">先生・みんなへのメッセージ（任意）</label>
-          <textarea id="f-message" placeholder="一言メッセージをどうぞ。"></textarea>
+          <label>食物アレルギーの有無<span style="color:var(--br);font-weight:700;margin-left:.3rem">※必須</span></label>
+          <div class="radios" style="margin-bottom:.5rem">
+            <label><input type="radio" name="allergy" value="none" required><span>なし</span></label>
+            <label><input type="radio" name="allergy" value="yes" required><span>あり</span></label>
+          </div>
+          <div id="allergy-detail" style="display:none">
+            <div class="ff" style="margin-bottom:0">
+              <label for="f-allergy">アレルギーの内容</label>
+              <input id="f-allergy" type="text" placeholder="例：甲殻類、そば、卵　など">
+              <p class="ff-hint">※飲食店への事前共有に使用します</p>
+            </div>
+          </div>
         </div>
-        <button class="sbtn" type="submit">送信する　→</button>
-        <p class="dl-note">〆切：2026年 ●月 ●日（●）</p>
-        <p class="recaptcha-note">このフォームはreCAPTCHAで保護されています。<br>Googleの<a href="https://policies.google.com/privacy" target="_blank">プライバシーポリシー</a>と<a href="https://policies.google.com/terms" target="_blank">利用規約</a>が適用されます。</p>
+
+        <div class="ff">
+          <label for="f-other">その他、お問い合わせやご要望（任意）</label>
+          <textarea id="f-other" placeholder="幹事へのお問い合わせやご要望があればご記入ください。"></textarea>
+        </div>
+
+        <p class="recaptcha-note">ご入力いただいた個人情報は、本同窓会の運営・ご連絡の目的にのみ使用し、適切に管理いたします。<br>このフォームはreCAPTCHAで保護されており、Googleの<a href="https://policies.google.com/privacy" target="_blank">プライバシーポリシー</a>と<a href="https://policies.google.com/terms" target="_blank">利用規約</a>が適用されます。</p>
+        <button class="sbtn" type="submit">送信する</button>
         <div id="rsvp-result"></div>
       </form>
     </section>
+    
 
     <footer>
-      <img src="leaf2.png" alt="">
-      <strong>米子市立 東山中学校　第●●期<br>2027年同窓会 実行委員会</strong>
+      <img src="assets/img/site/leaf2.png" alt="">
+      <strong>米子市立 東山中学校　第14期<br>2027年同窓会 実行委員会</strong>
       &copy; 2027 &ensp;All rights reserved.
     </footer>
 
@@ -1219,18 +1667,57 @@ html.sp-preview #scene-wrap::after{
 
 <script>
 
+/* 卒業年（1993年）からの経過年数を自動計算して表示 */
+(()=>{
+  const el = document.getElementById('grad-years');
+  if(!el) return;
+  const GRAD_YEAR = 1993;
+  el.textContent = new Date().getFullYear() - GRAD_YEAR;
+})();
+
 /* ═══════════════════════════════════════════
    1. セピア → カラー トランジション
    0.5s 後に開始、3.2s かけてカラーへ
    テキストはカラーが出てきたタイミングで順番に現れる
 ═══════════════════════════════════════════ */
+
+/* ── スキップボタン処理 ── */
+(()=>{
+  const btn   = document.getElementById('skip-btn');
+  const intro = document.getElementById('page-intro');
+  const target = document.getElementById('sec-tl'); // 幹事からセクション
+
+  // イントロ開始1.5秒後にボタン表示
+  setTimeout(()=> btn && btn.classList.add('show'), 1500);
+
+  btn && btn.addEventListener('click', ()=>{
+    // イントロを即非表示
+    if(intro){
+      intro.style.transition = 'opacity .4s ease';
+      intro.style.opacity = '0';
+      setTimeout(()=>{ intro.classList.add('done'); }, 420);
+    }
+    // ボタン非表示
+    btn.classList.remove('show');
+
+    // アニメーション開始
+    startColorTransition();
+    startSlideshow();
+
+    // 幹事からセクションへスムーズスクロール
+    setTimeout(()=>{
+      target && target.scrollIntoView({ behavior:'smooth', block:'start' });
+    }, 500);
+  });
+})();
+
 function startColorTransition(){
   const spBtn     = document.querySelector('.sp-btn');
   const scrollInd = document.querySelector('.scroll-ind');
 
   // おかえり が明るくなる頃（~32s）にUI表示
   setTimeout(()=>{ spBtn     && spBtn.classList.add('on');     }, 31500);
-  setTimeout(()=>{ scrollInd && scrollInd.classList.add('on'); }, 32000);
+  // scroll-indはskip-btnに統合済み
 
   function runLoop(){
     // ① 集合(濃い) → ランダムに白く明るく → 白いまま散る
@@ -1322,9 +1809,9 @@ function processImages(callback){
     onDone();
   };
   tmpL.onerror=onDone;
-  tmpL.src='景色.png';
+  tmpL.src='assets/img/site/景色.png';
 
-  makeWhiteTransparent('ノート.png','.tl-note',onDone);
+  makeWhiteTransparent('assets/img/site/ノート.png','.tl-note',onDone);
 }
 
 /* ─────────────────────────────────────────────
@@ -1479,11 +1966,10 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
     requestAnimationFrame(()=> requestAnimationFrame(()=> intro.classList.add('fade-out')));
   }, 11200);
 
-  // ④ 白が消えたらアニメーション開始
+  // ④ 白フェードアウト完了後、page-introをDOM上非表示にするのみ
+  //    （カラー演出・スライドショーの開始はSKIPボタンのみがトリガー）
   setTimeout(()=>{
     intro.classList.add('done');
-    startColorTransition();
-    startSlideshow();
   }, 15000); // 11200 + 3500 + 300ms余裕
 }));
 
@@ -1500,6 +1986,47 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
     cur = (cur + 1) % slides.length;
     slides[cur].classList.add('active');
   }, 5000);
+})();
+
+/* 幹事コメント：ゆっくり自動横スクロール（右方向のみ・操作時は一時停止・最後まで行ったら停止） */
+(()=>{
+  const list = document.querySelector('.kanji-list');
+  if(!list) return;
+  let paused = false;
+  let resumeTimer = null;
+  let intervalId = null;
+  const STEP_PX = 1;
+  const TICK_MS = 45; /* 1px / 45ms ≈ 22px/秒 のゆっくりした速度 */
+
+  function pause(){
+    paused = true;
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(()=>{ paused = false; }, 2800);
+  }
+  ['touchstart','mousedown','wheel'].forEach(evt=>
+    list.addEventListener(evt, pause, { passive:true })
+  );
+
+  function tick(){
+    if(paused) return;
+    const max = list.scrollWidth - list.clientWidth;
+    if(max <= 0) return;
+    if(list.scrollLeft >= max){
+      list.scrollLeft = max;
+      clearInterval(intervalId);
+      return;
+    }
+    list.scrollLeft += STEP_PX;
+  }
+
+  /* 画面に入ってきたタイミングでスタート */
+  const startObserver = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      intervalId = setInterval(tick, TICK_MS);
+      startObserver.disconnect();
+    }
+  }, { threshold:.3 });
+  startObserver.observe(list);
 })();
 
 
@@ -1559,57 +2086,45 @@ document.getElementById('rsvp-form')?.addEventListener('keydown', function(e){
   if(e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') e.preventDefault();
 });
 
-document.getElementById('rsvp-form')?.addEventListener('submit', async function(e){
-  e.preventDefault();
-  const form = this;
-  const btn  = form.querySelector('.sbtn');
-  const res  = document.getElementById('rsvp-result');
-
-  const name = form.querySelector('#f-name').value.trim();
-  const att  = form.querySelector('input[name="att"]:checked')?.value;
-  if(!name){ alert('お名前を入力してください。'); return; }
-  if(!att) { alert('出欠を選択してください。');   return; }
-
-  btn.textContent = '送信中';
-  btn.classList.add('loading');
-  btn.disabled = true;
-
-  // reCAPTCHA v3 トークン取得
-  let recaptchaToken = '';
-  try {
-    recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action:'rsvp_submit'});
-  } catch(_){}
-
-  const payload = {
-    timestamp:  new Date().toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}),
-    name,
-    attendance: att === 'y' ? '出席' : '欠席',
-    phone:      form.querySelector('#f-phone').value.trim(),
-    address:    form.querySelector('#f-address').value.trim(),
-    message:    form.querySelector('#f-message').value.trim(),
-    recaptcha:  recaptchaToken
-  };
-
-  try {
-    await fetch(GAS_URL, {
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify(payload),
-      redirect:'follow'
-    });
-    // 成功：フォームを隠してメッセージ表示
-    form.querySelectorAll('.ff,.sbtn,.dl-note').forEach(el=>el.style.display='none');
-    res.innerHTML = `<p style="text-align:center;padding:2.5rem 0;line-height:2.2;
-      letter-spacing:.08em;color:var(--bm)">ありがとうございます。<br>
-      ご回答を受け付けました。</p>`;
-  } catch(err){
-    btn.textContent = '送信する　→';
-    btn.classList.remove('loading');
-    btn.disabled = false;
-    res.innerHTML = `<p style="color:#b00;font-size:.78rem;margin-top:.6rem;letter-spacing:.05em">
-      送信に失敗しました。時間をおいて再度お試しください。</p>`;
-  }
+/* アレルギー有無でフィールド表示切替 */
+document.querySelectorAll('input[name="allergy"]').forEach(r=>{
+  r.addEventListener('change', ()=>{
+    const show = document.querySelector('input[name="allergy"]:checked')?.value === 'yes';
+    document.getElementById('allergy-detail').style.display = show ? 'block' : 'none';
+  });
 });
+
+
+/* ═══════════════════════════════════════════
+   4b. ナビゲーションメニュー（ハンバーガー）
+═══════════════════════════════════════════ */
+(()=>{
+  const btns    = document.querySelectorAll('.nav-menu-btn');
+  const panel   = document.getElementById('nav-menu-panel');
+  const overlay = document.getElementById('nav-menu-overlay');
+  const closeBtn = document.getElementById('nav-menu-close');
+  if(!panel || !overlay) return;
+
+  function openMenu(){
+    panel.classList.add('show');
+    overlay.classList.add('show');
+    panel.setAttribute('aria-hidden','false');
+    btns.forEach(b=> b.setAttribute('aria-expanded','true'));
+  }
+  function closeMenu(){
+    panel.classList.remove('show');
+    overlay.classList.remove('show');
+    panel.setAttribute('aria-hidden','true');
+    btns.forEach(b=> b.setAttribute('aria-expanded','false'));
+  }
+  btns.forEach(btn=> btn.addEventListener('click', ()=>{
+    panel.classList.contains('show') ? closeMenu() : openMenu();
+  }));
+  overlay.addEventListener('click', closeMenu);
+  closeBtn && closeBtn.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeMenu(); });
+  panel.querySelectorAll('.nav-menu-link').forEach(link=> link.addEventListener('click', closeMenu));
+})();
 
 
 /* ═══════════════════════════════════════════

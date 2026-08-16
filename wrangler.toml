@@ -7,3 +7,13 @@ account_id = "16926b58d7236778da0f284220152e36"
 directory = "./"
 binding = "ASSETS"
 run_worker_first = true
+
+# テスト用環境（staging ブランチから自動デプロイ）
+# 本番とは別のURL（higashiyama1993-staging.<サブドメイン>.workers.dev）で確認できます
+[env.staging]
+name = "higashiyama1993-staging"
+
+[env.staging.assets]
+directory = "./"
+binding = "ASSETS"
+run_worker_first = true

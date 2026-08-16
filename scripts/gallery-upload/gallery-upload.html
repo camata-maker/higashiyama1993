@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写真アップロード｜東山中14期生同窓会</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c:#faf5ec; --c2:#f3e9d4; --c3:#e8dbc4;
+  --br:#3d2b1f; --bm:#6b4a28; --bl:#9a7a5a;
+  --go:#c8a060;
+  --font:'Noto Serif JP','Yu Mincho','游明朝',serif;
+}
+body{
+  font-family:var(--font);background:var(--c);color:var(--br);
+  min-height:100vh;
+}
+header{
+  background:#2a1a10;color:rgba(255,245,228,.9);
+  text-align:center;padding:1.6rem 1.2rem 1.3rem;
+  border-bottom:1px solid rgba(200,160,96,.3);
+}
+header .lbl{font-size:.66rem;letter-spacing:.4em;color:var(--go);margin-bottom:.5rem}
+header h1{font-size:clamp(1.1rem,4vw,1.4rem);font-weight:400;letter-spacing:.08em}
+
+main{max-width:640px;margin:0 auto;padding:1.6rem 1.2rem 4rem}
+
+/* ── ログイン画面 ── */
+#gate{
+  max-width:360px;margin:3rem auto;padding:2rem 1.6rem;
+  background:#fff;border:1px solid rgba(200,160,96,.3);
+  text-align:center;
+}
+#gate p{font-size:.84rem;color:var(--bm);line-height:1.9;margin-bottom:1.4rem}
+#gate input{
+  width:100%;font-family:var(--font);font-size:.95rem;font-weight:300;
+  background:var(--c);border:1px solid rgba(200,160,96,.4);
+  padding:.75rem .9rem;color:var(--br);outline:none;text-align:center;
+  letter-spacing:.1em;
+}
+#gate input:focus{border-color:var(--go)}
+#gate button{
+  display:block;width:100%;margin-top:.9rem;padding:.8rem;
+  background:var(--br);border:1px solid var(--br);
+  color:#fff8ee;font-family:var(--font);font-size:.82rem;
+  letter-spacing:.3em;cursor:pointer;transition:opacity .2s;
+}
+#gate button:hover{opacity:.85}
+#gate button:disabled{opacity:.5;cursor:not-allowed}
+#gate-err{margin-top:.9rem;font-size:.78rem;color:#a33;display:none}
+
+/* ── アップロード画面（ログイン後） ── */
+#app{display:none}
+.panel{
+  background:#fff;border:1px solid rgba(200,160,96,.25);
+  padding:1.4rem 1.3rem;margin-bottom:1.6rem;
+}
+.panel-title{
+  font-size:.68rem;letter-spacing:.32em;color:var(--bl);
+  margin-bottom:.9rem;text-transform:uppercase;
+}
+#file-input{display:none}
+.pick-btn{
+  display:block;width:100%;padding:1rem;
+  background:var(--c2);border:1.5px dashed var(--go);
+  color:var(--bm);font-family:var(--font);font-size:.86rem;
+  letter-spacing:.15em;text-align:center;cursor:pointer;
+  transition:background .2s;
+}
+.pick-btn:hover{background:var(--c3)}
+
+#preview-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));
+  gap:.5rem;margin-top:1rem;
+}
+.pv-item{position:relative;aspect-ratio:1;overflow:hidden;background:var(--c2)}
+.pv-item img{width:100%;height:100%;object-fit:cover;display:block}
+.pv-remove{
+  position:absolute;top:2px;right:2px;
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(20,10,4,.65);color:#fff;
+  border:none;font-size:.7rem;cursor:pointer;line-height:1;
+}
+
+#upload-btn{
+  display:block;width:100%;margin-top:1.2rem;padding:.85rem;
+  background:transparent;border:1px solid var(--go);
+  color:var(--bm);font-family:var(--font);font-size:.8rem;
+  letter-spacing:.35em;cursor:pointer;transition:background .3s,color .3s;
+}
+#upload-btn:hover:not(:disabled){background:var(--go);color:var(--c)}
+#upload-btn:disabled{opacity:.55;cursor:not-allowed}
+
+#progress{margin-top:1rem;display:none}
+#progress-bar-track{
+  width:100%;height:6px;background:var(--c2);
+  border-radius:3px;overflow:hidden;
+}
+#progress-bar-fill{
+  height:100%;width:0%;background:var(--go);
+  transition:width .3s ease;
+}
+#progress-text{
+  margin-top:.55rem;font-size:.78rem;color:var(--bl);
+  text-align:center;line-height:1.8;
+}
+
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:.6rem;
+}
+.gallery-item{position:relative}
+.gallery-item img{
+  width:100%;aspect-ratio:1;object-fit:cover;display:block;
+  background:var(--c2);
+}
+.gallery-item.is-hidden img{opacity:.4}
+.gallery-hidden-badge{
+  position:absolute;top:4px;left:4px;
+  font-size:.56rem;letter-spacing:.08em;
+  color:#fff;background:rgba(20,10,4,.72);
+  padding:2px 6px;border-radius:2px;
+  pointer-events:none;
+}
+.vis-toggle{
+  display:flex;align-items:center;gap:.4rem;
+  margin-top:.4rem;cursor:pointer;user-select:none;
+}
+.vis-toggle input{position:absolute;opacity:0;width:0;height:0}
+.vis-toggle-track{
+  position:relative;flex-shrink:0;
+  width:32px;height:18px;
+  background:var(--bl);border-radius:9px;
+  transition:background .2s;
+}
+.vis-toggle-thumb{
+  position:absolute;top:2px;left:2px;
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;transition:transform .2s;
+  box-shadow:0 1px 2px rgba(0,0,0,.3);
+}
+.vis-toggle input:checked ~ .vis-toggle-track{background:var(--go)}
+.vis-toggle input:checked ~ .vis-toggle-track .vis-toggle-thumb{transform:translateX(14px)}
+.vis-toggle-label{font-size:.62rem;letter-spacing:.05em;color:var(--bm)}
+.vis-toggle.is-disabled{opacity:.5;pointer-events:none}
+#gallery-empty{font-size:.8rem;color:var(--bl);text-align:center;padding:1rem 0}
+#gallery-count{font-size:.72rem;color:var(--bl);margin-left:.5rem}
+
+.logout-btn{
+  display:inline-block;margin-top:.4rem;
+  font-size:.68rem;color:var(--bl);letter-spacing:.1em;
+  text-decoration:underline;cursor:pointer;background:none;border:none;
+  font-family:var(--font);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="lbl">GALLERY UPLOAD</p>
+  <h1>東山中14期生同窓会　写真アップロード</h1>
+</header>
+
+<main>
+
+  <!-- ログインゲート -->
+  <div id="gate">
+    <p>幹事用のページです。<br>共通の合言葉を入力してください。</p>
+    <input id="gate-pw" type="password" placeholder="合言葉" autocomplete="off" inputmode="text">
+    <button id="gate-btn">ログイン</button>
+    <p id="gate-err">合言葉が違います。もう一度お試しください。</p>
+  </div>
+
+  <!-- ログイン後のアップロードUI -->
+  <div id="app">
+
+    <div class="panel">
+      <p class="panel-title">写真を選んでアップロード</p>
+      <input id="file-input" type="file" accept="image/*" multiple>
+      <label class="pick-btn" for="file-input">タップして写真を選択（複数選択可）</label>
+      <div id="preview-grid"></div>
+      <button id="upload-btn" disabled>アップロードする</button>
+      <div id="progress">
+        <div id="progress-bar-track"><div id="progress-bar-fill"></div></div>
+        <p id="progress-text"></p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <p class="panel-title">アップロード済みの写真<span id="gallery-count"></span></p>
+      <div id="gallery-grid" class="gallery-grid"></div>
+      <p id="gallery-empty" style="display:none">まだ写真がありません。</p>
+    </div>
+
+    <button class="logout-btn" id="logout-btn">ログアウト</button>
+
+  </div>
+
+</main>
+
+<script>
+/* ★ GAS_URL を gallery-upload.gs のデプロイURLに差し替えてください */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbw1EQQGSREOjlyGTAjsUQwwxTxhiTiY_7dYpdvLO8-5BJttVRWnTXcIXOdIIYVWQ7Gs/exec';
+
+const SESSION_KEY = 'dousokai_gallery_pw';
+let selectedFiles = [];
+
+const gate      = document.getElementById('gate');
+const gatePw    = document.getElementById('gate-pw');
+const gateBtn   = document.getElementById('gate-btn');
+const gateErr   = document.getElementById('gate-err');
+const app       = document.getElementById('app');
+const fileInput = document.getElementById('file-input');
+const previewGrid = document.getElementById('preview-grid');
+const uploadBtn  = document.getElementById('upload-btn');
+const progressEl = document.getElementById('progress');
+const progressBarFill = document.getElementById('progress-bar-fill');
+const progressText    = document.getElementById('progress-text');
+const galleryGrid  = document.getElementById('gallery-grid');
+const galleryEmpty = document.getElementById('gallery-empty');
+const galleryCount = document.getElementById('gallery-count');
+const logoutBtn = document.getElementById('logout-btn');
+
+function callGas(payload){
+  return fetch(GAS_URL, {
+    method:'POST',
+    body: JSON.stringify(payload)
+  }).then(r => r.json());
+}
+
+async function tryLogin(password){
+  gateErr.style.display = 'none';
+  gateBtn.disabled = true;
+  gateBtn.textContent = '確認中…';
+  try{
+    const res = await callGas({ action:'list', password });
+    if(res.ok){
+      sessionStorage.setItem(SESSION_KEY, password);
+      showApp(res.files);
+    } else {
+      gateErr.textContent = res.error || '合言葉が違います。もう一度お試しください。';
+      gateErr.style.display = 'block';
+    }
+  }catch(err){
+    gateErr.textContent = '通信エラーが発生しました。時間をおいて再度お試しください。';
+    gateErr.style.display = 'block';
+  }finally{
+    gateBtn.disabled = false;
+    gateBtn.textContent = 'ログイン';
+  }
+}
+
+gateBtn.addEventListener('click', ()=> tryLogin(gatePw.value.trim()));
+gatePw.addEventListener('keydown', e=>{ if(e.key === 'Enter') tryLogin(gatePw.value.trim()); });
+
+logoutBtn.addEventListener('click', ()=>{
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+});
+
+function showApp(files){
+  gate.style.display = 'none';
+  app.style.display = 'block';
+  renderGallery(files);
+}
+
+function renderGallery(files){
+  galleryGrid.innerHTML = '';
+  galleryCount.textContent = files.length ? `（${files.length}枚）` : '';
+  galleryEmpty.style.display = files.length ? 'none' : 'block';
+  files.forEach(f=>{
+    const item = document.createElement('div');
+    item.className = 'gallery-item' + (f.isPublic ? '' : ' is-hidden');
+
+    const img = document.createElement('img');
+    img.src = f.url;
+    img.alt = f.name;
+    img.loading = 'lazy';
+    item.appendChild(img);
+
+    if(!f.isPublic){
+      const badge = document.createElement('span');
+      badge.className = 'gallery-hidden-badge';
+      badge.textContent = '非公開';
+      item.appendChild(badge);
+    }
+
+    const toggle = document.createElement('label');
+    toggle.className = 'vis-toggle';
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = !!f.isPublic;
+    const track = document.createElement('span');
+    track.className = 'vis-toggle-track';
+    const thumb = document.createElement('span');
+    thumb.className = 'vis-toggle-thumb';
+    track.appendChild(thumb);
+    const label = document.createElement('span');
+    label.className = 'vis-toggle-label';
+    label.textContent = f.isPublic ? '公開' : '非公開';
+    toggle.appendChild(cb);
+    toggle.appendChild(track);
+    toggle.appendChild(label);
+    cb.addEventListener('change', ()=> toggleVisibility(f.id, cb.checked, toggle, cb, label));
+    item.appendChild(toggle);
+
+    galleryGrid.appendChild(item);
+  });
+}
+
+async function toggleVisibility(id, makePublic, toggle, cb, label){
+  const password = sessionStorage.getItem(SESSION_KEY);
+  toggle.classList.add('is-disabled');
+  label.textContent = '更新中…';
+  try{
+    const res = await callGas({ action:'setVisibility', password, id, public: makePublic });
+    if(res.ok){
+      const listRes = await callGas({ action:'list', password });
+      if(listRes.ok) renderGallery(listRes.files);
+    } else {
+      cb.checked = !makePublic;
+      toggle.classList.remove('is-disabled');
+      label.textContent = makePublic ? '非公開' : '公開';
+    }
+  }catch(err){
+    cb.checked = !makePublic;
+    toggle.classList.remove('is-disabled');
+    label.textContent = makePublic ? '非公開' : '公開';
+  }
+}
+
+/* ファイル選択 → プレビュー表示 */
+fileInput.addEventListener('change', ()=>{
+  selectedFiles = [...fileInput.files];
+  renderPreview();
+});
+
+function renderPreview(){
+  previewGrid.innerHTML = '';
+  selectedFiles.forEach((file, idx)=>{
+    const item = document.createElement('div');
+    item.className = 'pv-item';
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(file);
+    const rm = document.createElement('button');
+    rm.className = 'pv-remove';
+    rm.textContent = '×';
+    rm.addEventListener('click', ()=>{
+      selectedFiles.splice(idx, 1);
+      renderPreview();
+    });
+    item.appendChild(img);
+    item.appendChild(rm);
+    previewGrid.appendChild(item);
+  });
+  uploadBtn.disabled = selectedFiles.length === 0;
+}
+
+function fileToBase64(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=> resolve(reader.result.split(',')[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* 画像を最大1000px（長辺）にリサイズしてJPEGに変換（アップロード高速化） */
+const MAX_DIMENSION = 1000;
+const JPEG_QUALITY = 0.85;
+
+function resizeImage(file){
+  return new Promise((resolve, reject)=>{
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = ()=>{
+      let { width, height } = img;
+      if(width > MAX_DIMENSION || height > MAX_DIMENSION){
+        if(width >= height){
+          height = Math.round(height * (MAX_DIMENSION / width));
+          width = MAX_DIMENSION;
+        } else {
+          width = Math.round(width * (MAX_DIMENSION / height));
+          height = MAX_DIMENSION;
+        }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(blob=>{
+        if(!blob){ reject(new Error('resize failed')); return; }
+        const reader = new FileReader();
+        reader.onload = ()=> resolve({
+          base64: reader.result.split(',')[1],
+          mimeType: 'image/jpeg',
+          name: file.name.replace(/\.[^.]+$/, '') + '.jpg'
+        });
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      }, 'image/jpeg', JPEG_QUALITY);
+    };
+    img.onerror = ()=>{ URL.revokeObjectURL(url); reject(new Error('decode failed')); };
+    img.src = url;
+  });
+}
+
+function formatSeconds(s){
+  if(s < 60) return `${s}秒`;
+  return `${Math.floor(s / 60)}分${s % 60}秒`;
+}
+
+uploadBtn.addEventListener('click', async ()=>{
+  if(selectedFiles.length === 0) return;
+  const password = sessionStorage.getItem(SESSION_KEY);
+  const filesToUpload = selectedFiles;
+  const total = filesToUpload.length;
+
+  uploadBtn.disabled = true;
+  progressEl.style.display = 'block';
+  progressBarFill.style.width = '0%';
+
+  let completed = 0;
+  let succeeded = 0;
+  const startTime = Date.now();
+
+  function updateProgress(){
+    progressBarFill.style.width = Math.round((completed / total) * 100) + '%';
+    let etaText = '';
+    if(completed > 0 && completed < total){
+      const elapsed = (Date.now() - startTime) / 1000;
+      const remaining = Math.max(0, Math.round((elapsed / completed) * (total - completed)));
+      etaText = `　残り約${formatSeconds(remaining)}`;
+    }
+    progressText.textContent = `アップロード中… ${completed} / ${total}${etaText}`;
+  }
+  updateProgress();
+
+  /* 複数枚を同時並行でアップロードして高速化（同時3件まで） */
+  const CONCURRENCY = 3;
+  let nextIndex = 0;
+
+  async function worker(){
+    while(nextIndex < filesToUpload.length){
+      const file = filesToUpload[nextIndex++];
+      try{
+        let payload;
+        try{
+          payload = await resizeImage(file);
+        }catch(e){
+          payload = {
+            base64: await fileToBase64(file),
+            mimeType: file.type || 'image/jpeg',
+            name: file.name
+          };
+        }
+        const res = await callGas({
+          action: 'upload',
+          password,
+          file: { name: payload.name, mimeType: payload.mimeType, data: payload.base64 }
+        });
+        if(res.ok) succeeded++;
+      }catch(err){ /* このファイルはスキップして続行 */ }
+      completed++;
+      updateProgress();
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(CONCURRENCY, total) }, worker));
+
+  progressBarFill.style.width = '100%';
+  progressText.textContent = `${succeeded} / ${total} 枚アップロードしました`;
+  selectedFiles = [];
+  fileInput.value = '';
+  renderPreview();
+
+  try{
+    const listRes = await callGas({ action:'list', password });
+    if(listRes.ok) renderGallery(listRes.files);
+  }catch(err){}
+
+  uploadBtn.disabled = true;
+  setTimeout(()=>{ progressEl.style.display = 'none'; }, 4000);
+});
+
+/* セッションに合言葉が残っていれば自動ログイン */
+(function init(){
+  const saved = sessionStorage.getItem(SESSION_KEY);
+  if(saved) tryLogin(saved);
+})();
+</script>
+</body>
+</html>

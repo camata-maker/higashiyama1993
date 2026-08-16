@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>写真ギャラリー｜東山中14期生同窓会</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c:#faf5ec; --c2:#f3e9d4;
+  --br:#3d2b1f; --bm:#6b4a28; --bl:#9a7a5a;
+  --go:#c8a060;
+  --font:'Noto Serif JP','Yu Mincho','游明朝',serif;
+}
+body{
+  font-family:var(--font);background:var(--c);color:var(--br);
+  min-height:100vh;
+}
+header{
+  background:#2a1a10;color:rgba(255,245,228,.9);
+  text-align:center;padding:2.2rem 1.2rem 1.8rem;
+  border-bottom:1px solid rgba(200,160,96,.3);
+}
+header .lbl{font-size:.68rem;letter-spacing:.42em;color:var(--go);margin-bottom:.7rem}
+header h1{font-size:clamp(1.2rem,4.5vw,1.6rem);font-weight:400;letter-spacing:.1em}
+header p{font-size:.76rem;color:rgba(255,245,228,.6);margin-top:.8rem;line-height:1.8}
+
+main{max-width:960px;margin:0 auto;padding:2rem 1.2rem 4rem}
+
+/* ── 読み込み中 ── */
+#loading{
+  text-align:center;padding:4rem 1rem;color:var(--bl);font-size:.85rem;
+}
+
+/* ── 準備中（画像0枚） ── */
+#empty{display:none;max-width:420px;margin:3rem auto;text-align:center}
+#empty p{font-size:.88rem;font-weight:300;line-height:2.1;color:var(--bm)}
+.rule{width:36px;height:1px;background:var(--go);margin:0 auto 1.4rem}
+
+/* ── ギャラリーグリッド ── */
+#grid{
+  display:none;
+  grid-template-columns:repeat(3,1fr);
+  gap:.7rem;
+}
+.thumb{
+  display:block;aspect-ratio:1;overflow:hidden;background:var(--c2);
+  cursor:pointer;border:none;padding:0;
+}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.thumb:hover img{transform:scale(1.06)}
+
+#count{font-size:.72rem;color:var(--bl);text-align:center;margin-bottom:1.3rem;letter-spacing:.08em}
+#scroll-sentinel{height:1px}
+#load-hint{text-align:center;font-size:.72rem;color:var(--bl);padding:1.4rem 0;display:none}
+
+.back{
+  display:block;width:fit-content;margin:2.4rem auto 0;padding:.7rem 1.8rem;
+  border:1px solid var(--go);color:var(--bm);
+  font-size:.72rem;letter-spacing:.28em;text-decoration:none;
+  transition:background .3s,color .3s;
+}
+.back:hover{background:var(--go);color:var(--c)}
+
+/* ── ライトボックス ── */
+#lightbox{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(10,6,3,.94);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease;
+}
+#lightbox.show{opacity:1;pointer-events:auto}
+.lb-stage{
+  max-width:92vw;max-height:82vh;
+  display:flex;flex-direction:column;align-items:center;
+}
+#lb-img{
+  max-width:92vw;max-height:78vh;
+  object-fit:contain;display:block;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+}
+#lb-counter{
+  margin-top:.9rem;font-size:.74rem;letter-spacing:.12em;
+  color:rgba(255,245,228,.75);
+}
+#lb-original{
+  margin-top:.5rem;font-size:.68rem;color:rgba(255,245,228,.55);
+  text-decoration:underline;
+}
+.lb-btn{
+  position:absolute;background:none;border:none;cursor:pointer;
+  color:rgba(255,245,228,.85);
+  font-family:var(--font);
+  transition:color .2s,opacity .2s;
+}
+.lb-btn:hover{color:var(--go)}
+.lb-btn:disabled{opacity:.25;cursor:default;color:rgba(255,245,228,.85)}
+#lb-close{top:1.1rem;right:1.3rem;font-size:1.8rem;line-height:1}
+#lb-prev,#lb-next{
+  top:50%;transform:translateY(-50%);
+  font-size:2.6rem;line-height:1;padding:.5rem .7rem;
+}
+#lb-prev{left:.4rem}
+#lb-next{right:.4rem}
+@media(max-width:640px){
+  #lb-prev,#lb-next{font-size:2.1rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="lbl">PHOTO GALLERY</p>
+  <h1>写真ギャラリー</h1>
+  <p>幹事が撮影・アップロードした写真を随時掲載しています</p>
+</header>
+
+<main>
+  <p id="loading">読み込み中…</p>
+
+  <div id="empty">
+    <div class="rule"></div>
+    <p>
+      まだ写真がありません。<br>
+      幹事の投稿があり次第、順次こちらに掲載されます。<br>
+      しばらくしてから再度ご覧ください。
+    </p>
+  </div>
+
+  <p id="count"></p>
+  <div id="grid"></div>
+  <div id="scroll-sentinel"></div>
+  <p id="load-hint">読み込み中…</p>
+
+  <a href="../index.html" class="back">トップへ戻る　→</a>
+</main>
+
+<!-- ライトボックス（前後の写真へ移動可） -->
+<div id="lightbox" aria-hidden="true">
+  <button id="lb-close" class="lb-btn" aria-label="閉じる">×</button>
+  <button id="lb-prev" class="lb-btn" aria-label="前の写真">‹</button>
+  <button id="lb-next" class="lb-btn" aria-label="次の写真">›</button>
+  <div class="lb-stage">
+    <img id="lb-img" src="" alt="">
+    <p id="lb-counter"></p>
+    <a id="lb-original" href="#" target="_blank" rel="noopener">元画像を新しいタブで開く</a>
+  </div>
+</div>
+
+<script>
+/* ★ GAS_URL を gallery-upload.gs のデプロイURLに差し替えてください */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbw1EQQGSREOjlyGTAjsUQwwxTxhiTiY_7dYpdvLO8-5BJttVRWnTXcIXOdIIYVWQ7Gs/exec';
+const RENDER_BATCH = 24;
+
+const loadingEl  = document.getElementById('loading');
+const emptyEl    = document.getElementById('empty');
+const gridEl     = document.getElementById('grid');
+const countEl    = document.getElementById('count');
+const sentinel   = document.getElementById('scroll-sentinel');
+const loadHint   = document.getElementById('load-hint');
+
+const lightbox   = document.getElementById('lightbox');
+const lbImg      = document.getElementById('lb-img');
+const lbCounter  = document.getElementById('lb-counter');
+const lbOriginal = document.getElementById('lb-original');
+const lbClose    = document.getElementById('lb-close');
+const lbPrev     = document.getElementById('lb-prev');
+const lbNext     = document.getElementById('lb-next');
+
+let allFiles = [];      // 新着順（GAS側でソート済み）
+let renderedCount = 0;
+let currentIndex = -1;
+let scrollObserver = null;
+
+function renderNextBatch(){
+  const next = allFiles.slice(renderedCount, renderedCount + RENDER_BATCH);
+  next.forEach((f, i)=>{
+    const idx = renderedCount + i;
+    const thumb = document.createElement('button');
+    thumb.className = 'thumb';
+    thumb.type = 'button';
+    thumb.addEventListener('click', ()=> openLightbox(idx));
+    const img = document.createElement('img');
+    img.src = f.url;
+    img.alt = f.name;
+    img.loading = 'lazy';
+    thumb.appendChild(img);
+    gridEl.appendChild(thumb);
+  });
+  renderedCount += next.length;
+
+  if(renderedCount >= allFiles.length && scrollObserver){
+    scrollObserver.disconnect();
+    loadHint.style.display = 'none';
+  }
+}
+
+function setupInfiniteScroll(){
+  if(allFiles.length <= RENDER_BATCH) return;
+  scrollObserver = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      loadHint.style.display = 'block';
+      renderNextBatch();
+      if(renderedCount < allFiles.length){
+        loadHint.style.display = 'block';
+      } else {
+        loadHint.style.display = 'none';
+      }
+    }
+  }, { rootMargin: '600px' });
+  scrollObserver.observe(sentinel);
+}
+
+/* ── ライトボックス（前後移動対応） ── */
+function largeUrl(f){ return `https://drive.google.com/thumbnail?id=${f.id}&sz=w1600`; }
+function originalUrl(f){ return `https://drive.google.com/file/d/${f.id}/view`; }
+
+function updateLightbox(){
+  const f = allFiles[currentIndex];
+  lbImg.src = largeUrl(f);
+  lbImg.alt = f.name;
+  lbCounter.textContent = `${currentIndex + 1} / ${allFiles.length}`;
+  lbOriginal.href = originalUrl(f);
+  lbPrev.disabled = currentIndex <= 0;
+  lbNext.disabled = currentIndex >= allFiles.length - 1;
+}
+
+function openLightbox(idx){
+  currentIndex = idx;
+  updateLightbox();
+  lightbox.classList.add('show');
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(){
+  lightbox.classList.remove('show');
+  lightbox.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+function showPrev(){ if(currentIndex > 0){ currentIndex--; updateLightbox(); } }
+function showNext(){ if(currentIndex < allFiles.length - 1){ currentIndex++; updateLightbox(); } }
+
+lbClose.addEventListener('click', closeLightbox);
+lbPrev.addEventListener('click', showPrev);
+lbNext.addEventListener('click', showNext);
+lightbox.addEventListener('click', e=>{ if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e=>{
+  if(!lightbox.classList.contains('show')) return;
+  if(e.key === 'Escape') closeLightbox();
+  if(e.key === 'ArrowLeft') showPrev();
+  if(e.key === 'ArrowRight') showNext();
+});
+
+/* ── 一覧取得（GAS側で新着順ソート済み） ── */
+fetch(GAS_URL + '?action=list')
+  .then(r => r.json())
+  .then(res => {
+    loadingEl.style.display = 'none';
+    if(!res.ok || !res.files || res.files.length === 0){
+      emptyEl.style.display = 'block';
+      return;
+    }
+    allFiles = res.files;
+    countEl.textContent = `全 ${allFiles.length} 枚`;
+    gridEl.style.display = 'grid';
+    renderNextBatch();
+    setupInfiniteScroll();
+  })
+  .catch(()=>{
+    loadingEl.textContent = '読み込みに失敗しました。時間をおいて再度お試しください。';
+  });
+</script>
+</body>
+</html>

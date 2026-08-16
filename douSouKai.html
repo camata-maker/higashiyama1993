@@ -5,10 +5,10 @@ def image_to_base64(path):
         return base64.b64encode(image_file.read()).decode('utf-8')
 
 # 画像パス（アップロードされたファイル名に基づき）
-leaf_b64 = image_to_base64('leaf.png')
-kousha_b64 = image_to_base64('kousha.png')
-landscape_b64 = image_to_base64('image.png')
-leaf2_b64 = image_to_base64('leaf2.png')
+leaf_b64 = image_to_base64('assets/img/legacy/leaf.png')
+kousha_b64 = image_to_base64('assets/img/legacy/kousha.png')
+landscape_b64 = image_to_base64('はがき/image.png')
+leaf2_b64 = image_to_base64('assets/img/site/leaf2.png')
 
 html_content = f"""
 <!DOCTYPE html>
