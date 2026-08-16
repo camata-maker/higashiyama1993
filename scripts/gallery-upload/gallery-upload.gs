@@ -27,7 +27,7 @@
 
 const FOLDER_ID = '1vteMlHHeiE38MFAYcY_ZkuDDJEyatdPF';
 const HIDDEN_FOLDER_ID = '1ntxOf1uNVN57IFx8AqDRIzk1vSdPr05U';
-const SHARED_PASSWORD = 'kan2027';
+const SHARED_PASSWORD = 'kanji2027';
 
 function doPost(e) {
   try {
