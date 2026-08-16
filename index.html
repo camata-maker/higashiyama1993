@@ -1709,6 +1709,14 @@ function beginIntroAnimation(){
   startSlideshow();
 }
 
+// ロゴ表示中に掛けたスクロールロックを解除し、アニメーション開始前に
+// 必ずページ最上部へ戻す（途中でロゴをスクロールされていても画面途中から始まらないようにする）
+function releaseIntroScrollLock(){
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
+  window.scrollTo(0, 0);
+}
+
 (()=>{
   const btn   = document.getElementById('skip-btn');
   const intro = document.getElementById('page-intro');
@@ -1726,6 +1734,7 @@ function beginIntroAnimation(){
       setTimeout(()=>{ intro.classList.add('done'); }, 420);
     }
     // アニメーション開始（早送り。自動開始が既に走っていれば何もしない）
+    releaseIntroScrollLock();
     beginIntroAnimation();
 
     // 幹事からセクションへスムーズスクロール
@@ -1975,6 +1984,12 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   const intro = document.getElementById('page-intro');
   const logo  = document.getElementById('intro-logo');
 
+  // ロゴ表示中はスクロールできないようにし、後続のアニメーションが
+  // 必ずページ最上部（画面途中ではなく）から始まるようにする
+  window.scrollTo(0, 0);
+  document.documentElement.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
+
   // ① ロゴ フェードイン（2.5秒）
   logo.style.transition = 'opacity 2.5s ease';
   requestAnimationFrame(()=> requestAnimationFrame(()=> logo.classList.add('show')));
@@ -1995,6 +2010,7 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   //    （SKIPボタンは文字アニメーション中も表示したままにする）
   setTimeout(()=>{
     intro.classList.add('done');
+    releaseIntroScrollLock();
     beginIntroAnimation();
   }, 9500); // 5700 + 3500 + 300ms余裕
 }));
