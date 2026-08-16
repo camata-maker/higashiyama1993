@@ -1696,8 +1696,9 @@ function beginIntroAnimation(){
   const intro = document.getElementById('page-intro');
   const target = document.getElementById('sec-tl'); // 幹事からセクション
 
-  // イントロ開始1.5秒後にボタン表示
-  setTimeout(()=> btn && btn.classList.add('show'), 1500);
+  // ロゴアニメーション（フェードイン5s+静止3s+フェードアウト3s=11.2s）が
+  // 最初から最後まで再生し終わってからボタンを表示する
+  setTimeout(()=> btn && btn.classList.add('show'), 11200);
 
   btn && btn.addEventListener('click', ()=>{
     // イントロを即非表示

@@ -194,7 +194,7 @@ main{max-width:640px;margin:0 auto;padding:1.6rem 1.2rem 4rem}
       <p id="gallery-empty" style="display:none">まだ写真がありません。</p>
     </div>
 
-    <button class="logout-btn" id="logout-btn">ログアウト</button>
+    <a class="logout-btn" href="./index.html">サイトに戻る</a>
 
   </div>
 
@@ -221,7 +221,6 @@ const progressText    = document.getElementById('progress-text');
 const galleryGrid  = document.getElementById('gallery-grid');
 const galleryEmpty = document.getElementById('gallery-empty');
 const galleryCount = document.getElementById('gallery-count');
-const logoutBtn = document.getElementById('logout-btn');
 
 function callGas(payload){
   return fetch(GAS_URL, {
@@ -254,11 +253,6 @@ async function tryLogin(password){
 
 gateBtn.addEventListener('click', ()=> tryLogin(gatePw.value.trim()));
 gatePw.addEventListener('keydown', e=>{ if(e.key === 'Enter') tryLogin(gatePw.value.trim()); });
-
-logoutBtn.addEventListener('click', ()=>{
-  sessionStorage.removeItem(SESSION_KEY);
-  location.reload();
-});
 
 function showApp(files){
   gate.style.display = 'none';
