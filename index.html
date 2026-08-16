@@ -974,7 +974,6 @@ img{display:block;max-width:100%}
   width:100%;height:100%;
   object-fit:cover;
   display:block;
-  filter:sepia(72%) brightness(.92) contrast(1.05);
 }
 
 
@@ -1537,16 +1536,7 @@ html.sp-preview #scene-wrap::after{
         </tr>
       </table>
 
-      <div class="gal-show gal-show-det fi d2">
-        <div class="gal2-slide active"><img src="assets/img/site/school-building.png" alt="校舎"></div>
-        <div class="gal2-slide"><img src="assets/img/site/scenery.png" alt="景色"></div>
-        <div class="gal2-slide"><img src="assets/img/site/corridor-floor.png" alt="廊下"></div>
-        <div class="gal2-slide"><img src="assets/img/site/classroom.png" alt="教室"></div>
-        <div class="gal2-slide"><img src="assets/img/site/gymnasium.png" alt="体育館"></div>
-        <div class="gal2-slide"><img src="assets/img/site/exterior.png" alt="外観"></div>
-        <div class="gal2-slide"><img src="assets/img/site/shoe-locker.png" alt="下駄箱"></div>
-        <div class="gal2-slide"><img src="assets/img/site/speaker.png" alt="スピーカー"></div>
-      </div>
+      <div class="gal-show gal-show-det fi d2" id="gal-det" style="display:none"></div>
 
     </section>
 
@@ -2027,20 +2017,44 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   }, 5000);
 })();
 
-/* 開催情報下部 ギャラリー：ランダムスライドショー */
+/* 開催情報下部 ギャラリー：幹事アップロードのGoogleドライブ公開写真をランダムスライドショー */
 (()=>{
-  const slides = Array.from(document.querySelectorAll('.gal2-slide'));
-  if(slides.length < 2) return;
-  let cur = Math.floor(Math.random() * slides.length);
-  slides.forEach(s=> s.classList.remove('active'));
-  slides[cur].classList.add('active');
-  setInterval(()=>{
-    slides[cur].classList.remove('active');
-    let next;
-    do{ next = Math.floor(Math.random() * slides.length); }while(next === cur);
-    cur = next;
-    slides[cur].classList.add('active');
-  }, 5000);
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbw1EQQGSREOjlyGTAjsUQwwxTxhiTiY_7dYpdvLO8-5BJttVRWnTXcIXOdIIYVWQ7Gs/exec';
+  const container = document.getElementById('gal-det');
+  if(!container) return;
+
+  fetch(GAS_URL + '?action=list')
+    .then(r => r.json())
+    .then(res => {
+      if(!res.ok || !res.files || res.files.length === 0) return;
+      const files = res.files.slice();
+      // シャッフル（Fisher-Yates）
+      for(let i = files.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [files[i], files[j]] = [files[j], files[i]];
+      }
+      files.forEach((f, i)=>{
+        const slide = document.createElement('div');
+        slide.className = 'gal2-slide' + (i === 0 ? ' active' : '');
+        const img = document.createElement('img');
+        img.src = f.url;
+        img.alt = f.name || '';
+        img.loading = 'lazy';
+        slide.appendChild(img);
+        container.appendChild(slide);
+      });
+      container.style.display = '';
+
+      if(files.length < 2) return;
+      let cur = 0;
+      const slideEls = container.querySelectorAll('.gal2-slide');
+      setInterval(()=>{
+        slideEls[cur].classList.remove('active');
+        cur = (cur + 1) % slideEls.length;
+        slideEls[cur].classList.add('active');
+      }, 5000);
+    })
+    .catch(()=>{});
 })();
 
 /* ═══════════════════════════════════════════
