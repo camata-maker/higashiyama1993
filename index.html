@@ -46,7 +46,7 @@ body{font-family:var(--font);background:var(--c);color:var(--br);overflow-x:hidd
   position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
   opacity:0;
-  transition:opacity 5s ease;
+  transition:opacity 2.5s ease;
 }
 #intro-logo.show{opacity:1}
 #intro-logo img{
@@ -1697,9 +1697,9 @@ function beginIntroAnimation(){
   const intro = document.getElementById('page-intro');
   const target = document.getElementById('sec-tl'); // 幹事からセクション
 
-  // ロゴアニメーション（フェードイン5s+静止3s+フェードアウト3s=11.2s）が
+  // ロゴアニメーション（フェードイン2.5s+静止1.5s+フェードアウト1.5s=5.7s）が
   // 最初から最後まで再生し終わってからボタンを表示する
-  setTimeout(()=> btn && btn.classList.add('show'), 11200);
+  setTimeout(()=> btn && btn.classList.add('show'), 5700);
 
   btn && btn.addEventListener('click', ()=>{
     // イントロを即非表示
@@ -1961,20 +1961,20 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
   const intro = document.getElementById('page-intro');
   const logo  = document.getElementById('intro-logo');
 
-  // ① ロゴ フェードイン（5秒）
-  logo.style.transition = 'opacity 5s ease';
+  // ① ロゴ フェードイン（2.5秒）
+  logo.style.transition = 'opacity 2.5s ease';
   requestAnimationFrame(()=> requestAnimationFrame(()=> logo.classList.add('show')));
 
-  // ② フェードイン5s + 静止3s = 8s後にフェードアウト開始（3秒）
+  // ② フェードイン2.5s + 静止1.5s = 4s後にフェードアウト開始（1.5秒）
   setTimeout(()=>{
-    logo.style.transition = 'opacity 3s ease';
+    logo.style.transition = 'opacity 1.5s ease';
     logo.classList.remove('show');
-  }, 8000);
+  }, 4000);
 
-  // ③ ロゴ消滅後（8s+3s=11s）に白フェードアウト開始（3.5s）
+  // ③ ロゴ消滅後（4s+1.5s=5.5s）に白フェードアウト開始（3.5s）
   setTimeout(()=>{
     requestAnimationFrame(()=> requestAnimationFrame(()=> intro.classList.add('fade-out')));
-  }, 11200);
+  }, 5700);
 
   // ④ 白フェードアウト完了後、page-introを非表示にし、
   //    まだSKIPされていなければここで自動的に演出を開始する
@@ -1983,7 +1983,7 @@ window.addEventListener('DOMContentLoaded', ()=> processImages(()=>{
     beginIntroAnimation();
     const skipBtn = document.getElementById('skip-btn');
     skipBtn && skipBtn.classList.remove('show');
-  }, 15000); // 11200 + 3500 + 300ms余裕
+  }, 9500); // 5700 + 3500 + 300ms余裕
 }));
 
 
